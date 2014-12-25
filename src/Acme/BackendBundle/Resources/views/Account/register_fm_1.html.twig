@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {{ form_start(form) }}
+    <div class="registration-form fm_step_two">
+        <ul>
+            <li>
+                <label>电台LOGO</label>
+                {{ form_widget(form.fm.strLogo,  {'attr': {'novalidate': 'novalidate'}}) }}
+                <span class="form_errors">{{ form_errors(form.fm.strLogo) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strFullName) }}
+                {{ form_widget(form.fm.strFullName) }}
+                <span class="form_errors">{{ form_errors(form.fm.strFullName) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strShortName) }}
+                {{ form_widget(form.fm.strShortName) }}
+                <span class="form_errors">{{ form_errors(form.fm.strShortName) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.intLevel) }}
+                {{ form_widget(form.fm.intLevel) }}
+                <span class="form_errors">{{ form_errors(form.fm.intLevel) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.intFMType) }}
+                {{ form_widget(form.fm.intFMType) }}
+                <span class="form_errors">{{ form_errors(form.fm.intFMType) }}</span>
+            </li>
+            <li>
+                <label>电台频率</label>
+                {{ form_widget(form.fm.intFMValueType) }}
+                {{ form_widget(form.fm.floatFMValue) }}
+                <span class="form_errors">{{ form_errors(form.fm.intFMValueType) }} {{ form_errors(form.fm.floatFMValue) }}</span>
+            </li>
+            <li>
+                <label>电台地址</label>
+                {{ form_widget(form.fm.intProvinceId) }}
+                {{ form_widget(form.fm.intCityId) }}
+                {{ form_widget(form.fm.strAddressInfo) }}
+                <span class="form_errors">{{ form_errors(form.fm.intProvinceId) }} {{ form_errors(form.fm.floatFMValue) }} {{ form_errors(form.fm.strAddressInfo) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strFMFactor) }}
+                {{ form_widget(form.fm.strFMFactor) }}
+                <span class="form_errors">{{ form_errors(form.fm.strFMFactor) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strSite) }}
+                {{ form_widget(form.fm.strSite) }}
+                <span class="form_errors">{{ form_errors(form.fm.strSite) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strFMFoundTime) }}
+                {{ form_widget(form.fm.strFMFoundTime) }}
+                <span class="form_errors">{{ form_errors(form.fm.strFMFoundTime) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strFMCoverPopular) }}
+                {{ form_widget(form.fm.strFMCoverPopular) }}
+                <span class="form_errors">{{ form_errors(form.fm.strFMCoverPopular) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strFMJoinAct) }}
+                {{ form_widget(form.fm.strFMJoinAct) }}
+                <span class="form_errors">{{ form_errors(form.fm.strFMJoinAct) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.boolIsOneRank) }}
+                {{ form_widget(form.fm.boolIsOneRank) }}
+                <span class="form_errors">{{ form_errors(form.fm.boolIsOneRank) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.intCastType) }}
+                {{ form_widget(form.fm.intCastType) }}
+                <span class="form_errors">{{ form_errors(form.fm.intCastType) }}</span>
+            </li>
+            <li>
+                <label>播出XX榜成品节目时间</label>
+                {{ form_widget(form.fm.intCastWeekDay) }}
+                从
+                {{ form_widget(form.fm.strCastTimeFrom) }}
+                到
+                {{ form_widget(form.fm.strCastTimeTo) }}
+                {{ form_widget(form.fm.boolCastTimeToTomorrow) }}(终止时间是否为次日)
+                <span class="form_errors">{{ form_errors(form.fm.intCastWeekDay) }} {{ form_errors(form.fm.strCastTimeFrom) }} {{ form_errors(form.fm.strCastTimeTo) }}</span>
+            </li>
+
+        </ul>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block otherjavascripts %}
+<script>
+    $(".citySelect").html('<option value="2">北京市</option>');
+    var city = {{ city|raw }};
+    city = city.provinces;
+    var optionhtml = "";
+    $(".provinceSelect").change(function(){
+        optionhtml = "";
+        for(var key in city){
+            if(city[key].id == $('.provinceSelect').val()){
+                for(var ikey in city[key].cities)
+                    for(var iikey in city[key].cities[ikey])
+                        optionhtml += "<option value=\""+iikey+"\">"+city[key].cities[ikey][iikey]+"</option>";
+            }
+        }
+        $(".citySelect").html(optionhtml);
+    });
+</script>
+{% endblock %}

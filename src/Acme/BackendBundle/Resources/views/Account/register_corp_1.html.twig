@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="registration-form corp_step_two">
+        {{ form(form) }}
+    </div>
+{% endblock %}
+{% block otherjavascripts %}
+<script>
+    $(".citySelect").html('<option value="2">北京市</option>');
+    var city = {{ city|raw }};
+    city = city.provinces;
+    var optionhtml = "";
+    $(".provinceSelect").change(function(){
+        optionhtml = "";
+        for(var key in city){
+            if(city[key].id == $('.provinceSelect').val()){
+                for(var ikey in city[key].cities)
+                    for(var iikey in city[key].cities[ikey])
+                        optionhtml += "<option value=\""+iikey+"\">"+city[key].cities[ikey][iikey]+"</option>";
+            }
+        }
+        $(".citySelect").html(optionhtml);
+    });
+    /*
+    var $province = $('.provinceSelect');
+    $province.change(function() {
+        var $form = $(this).closest('form');
+        console.log($form.attr('action'));
+        console.log($form.attr('method'));
+        var data = {};
+        data[$province.attr('name')] = $province.val();
+        $.ajax({
+            url : $form.attr('action'),
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+                console.log($province.val());
+                console.log($(html).find('.citySelect').html());
+                $('.citySelect').replaceWith(
+                        $(html).find('.citySelect')
+                );
+            }
+        });
+    });*/
+</script>
+{% endblock %}

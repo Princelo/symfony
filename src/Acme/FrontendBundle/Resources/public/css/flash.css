@@ -1,0 +1,37 @@
+/****----------------slide show------------------****/
+.product-img-box { height:361px; width:985px; position:relative; overflow: hidden; left:7px; top:29px;/*margin:0 auto; /*border:10px solid #fff; border-bottom:none; border-radius:5px 5px 0px 0px;*/}
+.product-img-box .media-head { height:430px; position:absolute; z-index:10; }
+.product-img-box .product-image { float: left; width:985px; height:361px; margin:0px; padding:0px; z-index:991; }
+.pubduct-img-box .product-image a img{width:985px !important; height:361px !important; border:none;}
+.product-slide { position:relative; z-index:0;}
+.product-slide .banner-right { position: absolute; right:-75px; top:1px; width:76px; height:429px; /*background:url(../images/new/banner_right.png) no-repeat; */}
+.product-img-box .product-image img { display:block; /*width:960px !important; height:430px !important;*/ z-index:1000; z-index:1000 !important;z-index:1000; }
+.product-img-box .product-shop { position:absolute; right:auto; left:50px; top:50px; width:747px; }
+.product-img-box .gallery-over { cursor: pointer; }
+.banner-more .more-views { position:absolute; bottom:35px; z-index:100; /*width:961px;*/ height:10px; overflow: hidden; /*background:#0b0b13; /*background:#951f23; /*background:url(../images/new/banner_bg.png) no-repeat;*/ }
+.more-views li {margin-left:3px;}
+/*.banner-more .more-views .more-left { float: left; width:50px; height:66px; line-height:50px; text-align: center; display:none; position:absolute; top:-200px; left:-70px; }
+.banner-more .more-views .more-right { float: left; width: 50px; height:66px; line-height:50px; text-align: center; display:none; position:absolute; right:-95px; top:-200px; }*/
+.banner-more .more-views .pre-over, .banner-more .more-views .next-over { cursor: pointer; }
+/*.banner-more .more-views .more-left span { background:url(images/left.png) no-repeat; overflow: hidden; width:50px; height:66px; cursor: pointer; text-indent:-9999px; display:block; }*/
+.banner-more { height:20px; overflow:visible; /*background:url(../images/new/ban_bg_img.png) no-repeat left bottom;padding-bottom:19px;*/ /*border:10px solid #fff; border-top:none; border-radius:0px 0px 5px 5px;*/ }
+/*.banner-more .more-views .more-left span:hover { background-position:27px 0px; display:block; overflow: hidden; width: 50px; height: 50px; cursor: pointer; }*/
+/*.banner-more .more-views .more-right span { background:url(images/right.png) no-repeat; overflow: hidden; width:50px; height:66px; cursor: pointer; display:block; text-indent:-9999px; }
+/*.banner-more .more-views .more-right span:hover { background-position: -80px top; display:block; overflow: hidden; width: 50px; height: 50px; cursor: pointer; }*/
+.banner-more .more-views .move-content { float: left; /*height:100px; width:960px !important;*/ }
+.banner-more .more-views .nubmer-bar { float: left; height:20px;/*height:100px; width: 960px !important;*/ width:985px !important;}
+.banner-more .more-views .image-bar ul { left: 0; }
+.banner-more .more-views li img { width:170px; height:75px; display:block; cursor: pointer; filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity:0.8; opacity:0.8; margin:0px auto; }
+.banner-more .more-views li .imgover { filter:alpha(opacity=100); -moz-opacity:1; -khtml-opacity:1; opacity:1; width:170px; height:75px; display:block; margin: 0px auto; }
+.banner-more .more-views li .imgover1 { filter:alpha(opacity=100); -moz-opacity:1; -khtml-opacity:1; opacity:1; width:170px; height:75px; display:block; margin: 0px auto; }
+.banner-more .more-views .nubmer-bar ul { right: 0; padding-right:50px; float:right; top:0px; width: auto; /*position:absolute; top:-16px;<!--[if lt IE 7]>top:0px;<![endif]-->*/ margin:0; }
+.banner-more .more-views .nubmer-bar ul li { /*height:70px; padding:22px 15px 18px 15px; cursor: pointer; width:291px; float:left; list-style:none; display:block;*/ display:block; height:20px; width:11px; background:url('images/dot-white.png'); float:left; top:-10px; cursor:pointer; }
+.banner-more .more-views .nubmer-bar ul li.item2 { /*width:288px;*/ }
+.banner-more .more-views .nubmer-bar ul li.item0 .ico-img { padding-left:70px; background:url('images/dot-white.png');/*background:url(../images/new/ico1.png) 14px 0px no-repeat;*/ }
+.banner-more .more-views .nubmer-bar ul li.item1 .ico-img { padding-left:70px;background:url('images/dot-white.png');/* background:url(../images/new/ico1.png) 14px -85px no-repeat; */}
+.banner-more .more-views .nubmer-bar ul li.item2 .ico-img { padding-left:70px; background:url('images/dot-white.png');/*background:url(../images/new/ico1.png) 14px -161px no-repeat; */}
+.banner-more .more-views .nubmer-bar ul li h2 { color:#033b74; line-height:20px; margin-bottom:5px; font-size:16px; }
+.banner-more .more-views .nubmer-bar ul li p { line-height:18px; margin:0px; font-size:12px; color:#656565; }
+.banner-more .more-views .nubmer-bar ul li.imgover, .banner-more .more-views .nubmer-bar ul li:hover { background:url('images/dot-blue.png');/*background:url(../images/new/banner.png) no-repeat;*/height:20px; width:11px; /*background:#fff;*/ display:block; float:left;top:-10px; }
+.banner-more .more-views .nubmer-bar ul li.imgover p, .banner-more .more-views .nubmer-bar ul li:hover p, .banner-more .more-views .nubmer-bar ul li.imgover h2, .banner-more .more-views .nubmer-bar ul li:hover h2 { color:#fff; }
+.bann-content .corner{width:58px; height:58px; background:url('images/corner.png'); position:absolute; right:0; bottom:14px; z-index: 10;}

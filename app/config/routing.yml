@@ -1,3 +1,15 @@
+acme_frontend:
+    resource: "@AcmeFrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acme_backend:
+    resource: "@AcmeBackendBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acme_store:
+    resource: "@AcmeStoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: @AppBundle/Controller/
     type:     annotation

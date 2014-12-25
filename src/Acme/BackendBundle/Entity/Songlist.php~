@@ -1,0 +1,44 @@
+<?php
+
+namespace Acme\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Songlist
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Acme\BackendBundle\Entity\SonglistRepository")
+ */
+class Songlist
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Rank", inversedBy="songlists")
+     * @ORM\JoinColumn(name="rank_id", referencedColumnName="id")
+     */
+    protected $rank;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intSongId;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

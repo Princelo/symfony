@@ -1,0 +1,258 @@
+<?php
+
+namespace Acme\BackendBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Rank
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Acme\BackendBundle\Entity\RankRepository")
+ */
+class Rank
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intTermNo;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intType;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intZone;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intMemberId;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Song", inversedBy="ranks")
+     */
+    protected $songs;
+
+    public function __construct()
+    {
+        $this->songs = new ArrayCollection();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set intTermNo
+     *
+     * @param integer $intTermNo
+     * @return Rank
+     */
+    public function setIntTermNo($intTermNo)
+    {
+        $this->intTermNo = $intTermNo;
+
+        return $this;
+    }
+
+    /**
+     * Get intTermNo
+     *
+     * @return integer 
+     */
+    public function getIntTermNo()
+    {
+        return $this->intTermNo;
+    }
+
+
+    /**
+     * Set intType
+     *
+     * @param integer $intType
+     * @return Rank
+     */
+    public function setIntType($intType)
+    {
+        $this->intType = $intType;
+
+        return $this;
+    }
+
+    /**
+     * Get intType
+     *
+     * @return integer 
+     */
+    public function getIntType()
+    {
+        return $this->intType;
+    }
+
+    /**
+     * Set intZone
+     *
+     * @param integer $intZone
+     * @return Rank
+     */
+    public function setIntZone($intZone)
+    {
+        $this->intZone = $intZone;
+
+        return $this;
+    }
+
+    /**
+     * Get intZone
+     *
+     * @return integer 
+     */
+    public function getIntZone()
+    {
+        return $this->intZone;
+    }
+
+
+
+    /**
+     * Set intMemberId
+     *
+     * @param integer $intMemberId
+     * @return Rank
+     */
+    public function setIntMemberId($intMemberId)
+    {
+        $this->intMemberId = $intMemberId;
+
+        return $this;
+    }
+
+    /**
+     * Get intMemberId
+     *
+     * @return integer 
+     */
+    public function getIntMemberId()
+    {
+        return $this->intMemberId;
+    }
+
+    /**
+     * Set intRankSonglistId
+     *
+     * @param integer $intRankSonglistId
+     * @return Rank
+     */
+    public function setIntRankSonglistId($intRankSonglistId)
+    {
+        $this->intRankSonglistId = $intRankSonglistId;
+
+        return $this;
+    }
+
+    /**
+     * Get intRankSonglistId
+     *
+     * @return integer 
+     */
+    public function getIntRankSonglistId()
+    {
+        return $this->intRankSonglistId;
+    }
+
+    /**
+     * Set songs
+     *
+     * @param integer $songs
+     * @return Rank
+     */
+    public function setSongs($songs)
+    {
+        $this->songs = $songs;
+
+        return $this;
+    }
+
+    /**
+     * Get songs
+     *
+     * @return integer 
+     */
+    public function getSongs()
+    {
+        return $this->songs;
+    }
+
+    /**
+     * Add songlist
+     *
+     * @param \Acme\BackendBundle\Entity\Songlist $songlist
+     * @return Rank
+     */
+    public function addSonglist(\Acme\BackendBundle\Entity\Songlist $songlist)
+    {
+        $this->songlist[] = $songlist;
+
+        return $this;
+    }
+
+    /**
+     * Remove songlist
+     *
+     * @param \Acme\BackendBundle\Entity\Songlist $songlist
+     */
+    public function removeSonglist(\Acme\BackendBundle\Entity\Songlist $songlist)
+    {
+        $this->songlist->removeElement($songlist);
+    }
+
+    /**
+     * Get songlist
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSonglist()
+    {
+        return $this->songlist;
+    }
+
+    /**
+     * Add songs
+     *
+     * @param \Acme\BackendBundle\Entity\Song $songs
+     * @return Rank
+     */
+    public function addSong(\Acme\BackendBundle\Entity\Song $songs)
+    {
+        $this->songs[] = $songs;
+
+        return $this;
+    }
+
+    /**
+     * Remove songs
+     *
+     * @param \Acme\BackendBundle\Entity\Song $songs
+     */
+    public function removeSong(\Acme\BackendBundle\Entity\Song $songs)
+    {
+        $this->songs->removeElement($songs);
+    }
+}

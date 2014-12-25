@@ -1,0 +1,1611 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Princelo
+ * Date: 12/16/14
+ * Time: 23:16
+ */
+
+namespace Acme\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * @ORM\Entity(repositoryClass="Acme\BackendBundle\Entity\UserRepository")
+ * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class User {
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intType;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $strLogo;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $strAvatar;
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $strFullName;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    protected $strShortName;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intProvinceId;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intCityId;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $strAddressInfo;
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $strZipCode;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strTel;
+    /**
+     * @ORM\Column(type="array")
+     */
+    protected $arrStrArtistName;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $strIntro;
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $strUserName;
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $strUserNickName;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intUserGender;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    protected $strUserCitizenId;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strUserMobile;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strUserTel;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strUserQQ;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intLastLoginTime;
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $strSite;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $boolIsValid;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intCreateTime;
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $strEMail;
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $strPassword;
+    //FM only
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intLevel;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intFMType;
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $floatFMValue;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intFMValueType;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strFMFactor;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intFMFoundTime;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strFMCoverPopular;
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $strFMJoinAct;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intCastWeekDay;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strCastTimeFrom;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strCastTimeTo;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $strSeniority;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intCastType;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayFrom1;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayFrom2;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayFrom3;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayFrom4;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayFrom5;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayTo1;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayTo2;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayTo3;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayTo4;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $intBusyWeekDayTo5;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeFrom1;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeFrom2;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeFrom3;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeFrom4;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeFrom5;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeTo1;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeTo2;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeTo3;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeTo4;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $strBusyTimeTo5;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set intType
+     *
+     * @param integer $intType
+     * @return User
+     */
+    public function setIntType($intType)
+    {
+        $this->intType = $intType;
+
+        return $this;
+    }
+
+    /**
+     * Get intType
+     *
+     * @return integer 
+     */
+    public function getIntType()
+    {
+        return $this->intType;
+    }
+
+    /**
+     * Set strLogo
+     *
+     * @param string $strLogo
+     * @return User
+     */
+    public function setStrLogo($strLogo)
+    {
+        $this->strLogo = $strLogo;
+
+        return $this;
+    }
+
+    /**
+     * Get strLogo
+     *
+     * @return string 
+     */
+    public function getStrLogo()
+    {
+        return $this->strLogo;
+    }
+
+    /**
+     * Set strAvatar
+     *
+     * @param string $strAvatar
+     * @return User
+     */
+    public function setStrAvatar($strAvatar)
+    {
+        $this->strAvatar = $strAvatar;
+
+        return $this;
+    }
+
+    /**
+     * Get strAvatar
+     *
+     * @return string 
+     */
+    public function getStrAvatar()
+    {
+        return $this->strAvatar;
+    }
+
+    /**
+     * Set strFullName
+     *
+     * @param string $strFullName
+     * @return User
+     */
+    public function setStrFullName($strFullName)
+    {
+        $this->strFullName = $strFullName;
+
+        return $this;
+    }
+
+    /**
+     * Get strFullName
+     *
+     * @return string 
+     */
+    public function getStrFullName()
+    {
+        return $this->strFullName;
+    }
+
+    /**
+     * Set strShortName
+     *
+     * @param string $strShortName
+     * @return User
+     */
+    public function setStrShortName($strShortName)
+    {
+        $this->strShortName = $strShortName;
+
+        return $this;
+    }
+
+    /**
+     * Get strShortName
+     *
+     * @return string 
+     */
+    public function getStrShortName()
+    {
+        return $this->strShortName;
+    }
+
+    /**
+     * Set intProvinceId
+     *
+     * @param integer $intProvinceId
+     * @return User
+     */
+    public function setIntProvinceId($intProvinceId)
+    {
+        $this->intProvinceId = $intProvinceId;
+
+        return $this;
+    }
+
+    /**
+     * Get intProvinceId
+     *
+     * @return integer 
+     */
+    public function getIntProvinceId()
+    {
+        return $this->intProvinceId;
+    }
+
+    /**
+     * Set intCityId
+     *
+     * @param integer $intCityId
+     * @return User
+     */
+    public function setIntCityId($intCityId)
+    {
+        $this->intCityId = $intCityId;
+
+        return $this;
+    }
+
+    /**
+     * Get intCityId
+     *
+     * @return integer 
+     */
+    public function getIntCityId()
+    {
+        return $this->intCityId;
+    }
+
+    /**
+     * Set strAddressInfo
+     *
+     * @param string $strAddressInfo
+     * @return User
+     */
+    public function setStrAddressInfo($strAddressInfo)
+    {
+        $this->strAddressInfo = $strAddressInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get strAddressInfo
+     *
+     * @return string 
+     */
+    public function getStrAddressInfo()
+    {
+        return $this->strAddressInfo;
+    }
+
+    /**
+     * Set strZipCode
+     *
+     * @param string $strZipCode
+     * @return User
+     */
+    public function setStrZipCode($strZipCode)
+    {
+        $this->strZipCode = $strZipCode;
+
+        return $this;
+    }
+
+    /**
+     * Get strZipCode
+     *
+     * @return string 
+     */
+    public function getStrZipCode()
+    {
+        return $this->strZipCode;
+    }
+
+    /**
+     * Set strTel
+     *
+     * @param string $strTel
+     * @return User
+     */
+    public function setStrTel($strTel)
+    {
+        $this->strTel = $strTel;
+
+        return $this;
+    }
+
+    /**
+     * Get strTel
+     *
+     * @return string 
+     */
+    public function getStrTel()
+    {
+        return $this->strTel;
+    }
+
+    /**
+     * Set arrStrArtistName
+     *
+     * @param array $arrStrArtistName
+     * @return User
+     */
+    public function setArrStrArtistName($arrStrArtistName)
+    {
+        $this->arrStrArtistName = $arrStrArtistName;
+
+        return $this;
+    }
+
+    /**
+     * Get arrStrArtistName
+     *
+     * @return array 
+     */
+    public function getArrStrArtistName()
+    {
+        return $this->arrStrArtistName;
+    }
+
+    /**
+     * Set strIntro
+     *
+     * @param string $strIntro
+     * @return User
+     */
+    public function setStrIntro($strIntro)
+    {
+        $this->strIntro = $strIntro;
+
+        return $this;
+    }
+
+    /**
+     * Get strIntro
+     *
+     * @return string 
+     */
+    public function getStrIntro()
+    {
+        return $this->strIntro;
+    }
+
+    /**
+     * Set strUserName
+     *
+     * @param string $strUserName
+     * @return User
+     */
+    public function setStrUserName($strUserName)
+    {
+        $this->strUserName = $strUserName;
+
+        return $this;
+    }
+
+    /**
+     * Get strUserName
+     *
+     * @return string 
+     */
+    public function getStrUserName()
+    {
+        return $this->strUserName;
+    }
+
+    /**
+     * Set strUserNickName
+     *
+     * @param string $strUserNickName
+     * @return User
+     */
+    public function setStrUserNickName($strUserNickName)
+    {
+        $this->strUserNickName = $strUserNickName;
+
+        return $this;
+    }
+
+    /**
+     * Get strUserNickName
+     *
+     * @return string 
+     */
+    public function getStrUserNickName()
+    {
+        return $this->strUserNickName;
+    }
+
+    /**
+     * Set intUserGender
+     *
+     * @param integer $intUserGender
+     * @return User
+     */
+    public function setIntUserGender($intUserGender)
+    {
+        $this->intUserGender = $intUserGender;
+
+        return $this;
+    }
+
+    /**
+     * Get intUserGender
+     *
+     * @return integer 
+     */
+    public function getIntUserGender()
+    {
+        return $this->intUserGender;
+    }
+
+    /**
+     * Set strUserCitizenId
+     *
+     * @param string $strUserCitizenId
+     * @return User
+     */
+    public function setStrUserCitizenId($strUserCitizenId)
+    {
+        $this->strUserCitizenId = $strUserCitizenId;
+
+        return $this;
+    }
+
+    /**
+     * Get strUserCitizenId
+     *
+     * @return string 
+     */
+    public function getStrUserCitizenId()
+    {
+        return $this->strUserCitizenId;
+    }
+
+    /**
+     * Set strUserMobile
+     *
+     * @param string $strUserMobile
+     * @return User
+     */
+    public function setStrUserMobile($strUserMobile)
+    {
+        $this->strUserMobile = $strUserMobile;
+
+        return $this;
+    }
+
+    /**
+     * Get strUserMobile
+     *
+     * @return string 
+     */
+    public function getStrUserMobile()
+    {
+        return $this->strUserMobile;
+    }
+
+    /**
+     * Set strUserTel
+     *
+     * @param string $strUserTel
+     * @return User
+     */
+    public function setStrUserTel($strUserTel)
+    {
+        $this->strUserTel = $strUserTel;
+
+        return $this;
+    }
+
+    /**
+     * Get strUserTel
+     *
+     * @return string 
+     */
+    public function getStrUserTel()
+    {
+        return $this->strUserTel;
+    }
+
+    /**
+     * Set strUserQQ
+     *
+     * @param string $strUserQQ
+     * @return User
+     */
+    public function setStrUserQQ($strUserQQ)
+    {
+        $this->strUserQQ = $strUserQQ;
+
+        return $this;
+    }
+
+    /**
+     * Get strUserQQ
+     *
+     * @return string 
+     */
+    public function getStrUserQQ()
+    {
+        return $this->strUserQQ;
+    }
+
+    /**
+     * Set intLastLoginTime
+     *
+     * @param integer $intLastLoginTime
+     * @return User
+     */
+    public function setIntLastLoginTime($intLastLoginTime)
+    {
+        $this->intLastLoginTime = $intLastLoginTime;
+
+        return $this;
+    }
+
+    /**
+     * Get intLastLoginTime
+     *
+     * @return integer 
+     */
+    public function getIntLastLoginTime()
+    {
+        return $this->intLastLoginTime;
+    }
+
+    /**
+     * Set strSite
+     *
+     * @param string $strSite
+     * @return User
+     */
+    public function setStrSite($strSite)
+    {
+        $this->strSite = $strSite;
+
+        return $this;
+    }
+
+    /**
+     * Get strSite
+     *
+     * @return string 
+     */
+    public function getStrSite()
+    {
+        return $this->strSite;
+    }
+
+    /**
+     * Set boolIsValid
+     *
+     * @param boolean $boolIsValid
+     * @return User
+     */
+    public function setBoolIsValid($boolIsValid)
+    {
+        $this->boolIsValid = $boolIsValid;
+
+        return $this;
+    }
+
+    /**
+     * Get boolIsValid
+     *
+     * @return boolean 
+     */
+    public function getBoolIsValid()
+    {
+        return $this->boolIsValid;
+    }
+
+    /**
+     * Set intCreateTime
+     *
+     * @param integer $intCreateTime
+     * @return User
+     */
+    public function setIntCreateTime($intCreateTime)
+    {
+        $this->intCreateTime = $intCreateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get intCreateTime
+     *
+     * @return integer 
+     */
+    public function getIntCreateTime()
+    {
+        return $this->intCreateTime;
+    }
+
+    /**
+     * Set strEMail
+     *
+     * @param string $strEMail
+     * @return User
+     */
+    public function setStrEMail($strEMail)
+    {
+        $this->strEMail = $strEMail;
+
+        return $this;
+    }
+
+    /**
+     * Get strEMail
+     *
+     * @return string 
+     */
+    public function getStrEMail()
+    {
+        return $this->strEMail;
+    }
+
+    /**
+     * Set strPassword
+     *
+     * @param string $strPassword
+     * @return User
+     */
+    public function setStrPassword($strPassword)
+    {
+        $this->strPassword = $strPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get strPassword
+     *
+     * @return string 
+     */
+    public function getStrPassword()
+    {
+        return $this->strPassword;
+    }
+
+    /**
+     * Set intLevel
+     *
+     * @param integer $intLevel
+     * @return User
+     */
+    public function setIntLevel($intLevel)
+    {
+        $this->intLevel = $intLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get intLevel
+     *
+     * @return integer 
+     */
+    public function getIntLevel()
+    {
+        return $this->intLevel;
+    }
+
+    /**
+     * Set intFMType
+     *
+     * @param integer $intFMType
+     * @return User
+     */
+    public function setIntFMType($intFMType)
+    {
+        $this->intFMType = $intFMType;
+
+        return $this;
+    }
+
+    /**
+     * Get intFMType
+     *
+     * @return integer 
+     */
+    public function getIntFMType()
+    {
+        return $this->intFMType;
+    }
+
+    /**
+     * Set floatFMValue
+     *
+     * @param string $floatFMValue
+     * @return User
+     */
+    public function setFloatFMValue($floatFMValue)
+    {
+        $this->floatFMValue = $floatFMValue;
+
+        return $this;
+    }
+
+    /**
+     * Get floatFMValue
+     *
+     * @return string 
+     */
+    public function getFloatFMValue()
+    {
+        return $this->floatFMValue;
+    }
+
+    /**
+     * Set intFMValueType
+     *
+     * @param integer $intFMValueType
+     * @return User
+     */
+    public function setIntFMValueType($intFMValueType)
+    {
+        $this->intFMValueType = $intFMValueType;
+
+        return $this;
+    }
+
+    /**
+     * Get intFMValueType
+     *
+     * @return integer 
+     */
+    public function getIntFMValueType()
+    {
+        return $this->intFMValueType;
+    }
+
+    /**
+     * Set strFMFactor
+     *
+     * @param string $strFMFactor
+     * @return User
+     */
+    public function setStrFMFactor($strFMFactor)
+    {
+        $this->strFMFactor = $strFMFactor;
+
+        return $this;
+    }
+
+    /**
+     * Get strFMFactor
+     *
+     * @return string 
+     */
+    public function getStrFMFactor()
+    {
+        return $this->strFMFactor;
+    }
+
+    /**
+     * Set intFMFoundTime
+     *
+     * @param integer $intFMFoundTime
+     * @return User
+     */
+    public function setIntFMFoundTime($intFMFoundTime)
+    {
+        $this->intFMFoundTime = $intFMFoundTime;
+
+        return $this;
+    }
+
+    /**
+     * Get intFMFoundTime
+     *
+     * @return integer 
+     */
+    public function getIntFMFoundTime()
+    {
+        return $this->intFMFoundTime;
+    }
+
+    /**
+     * Set strFMCoverPopular
+     *
+     * @param string $strFMCoverPopular
+     * @return User
+     */
+    public function setStrFMCoverPopular($strFMCoverPopular)
+    {
+        $this->strFMCoverPopular = $strFMCoverPopular;
+
+        return $this;
+    }
+
+    /**
+     * Get strFMCoverPopular
+     *
+     * @return string 
+     */
+    public function getStrFMCoverPopular()
+    {
+        return $this->strFMCoverPopular;
+    }
+
+    /**
+     * Set strFMJoinAct
+     *
+     * @param string $strFMJoinAct
+     * @return User
+     */
+    public function setStrFMJoinAct($strFMJoinAct)
+    {
+        $this->strFMJoinAct = $strFMJoinAct;
+
+        return $this;
+    }
+
+    /**
+     * Get strFMJoinAct
+     *
+     * @return string 
+     */
+    public function getStrFMJoinAct()
+    {
+        return $this->strFMJoinAct;
+    }
+
+    /**
+     * Set intCastWeekDay
+     *
+     * @param integer $intCastWeekDay
+     * @return User
+     */
+    public function setIntCastWeekDay($intCastWeekDay)
+    {
+        $this->intCastWeekDay = $intCastWeekDay;
+
+        return $this;
+    }
+
+    /**
+     * Get intCastWeekDay
+     *
+     * @return integer 
+     */
+    public function getIntCastWeekDay()
+    {
+        return $this->intCastWeekDay;
+    }
+
+    /**
+     * Set strCastTimeFrom
+     *
+     * @param string $strCastTimeFrom
+     * @return User
+     */
+    public function setStrCastTimeFrom($strCastTimeFrom)
+    {
+        $this->strCastTimeFrom = $strCastTimeFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get strCastTimeFrom
+     *
+     * @return string 
+     */
+    public function getStrCastTimeFrom()
+    {
+        return $this->strCastTimeFrom;
+    }
+
+    /**
+     * Set strCastTimeTo
+     *
+     * @param string $strCastTimeTo
+     * @return User
+     */
+    public function setStrCastTimeTo($strCastTimeTo)
+    {
+        $this->strCastTimeTo = $strCastTimeTo;
+
+        return $this;
+    }
+
+    /**
+     * Get strCastTimeTo
+     *
+     * @return string 
+     */
+    public function getStrCastTimeTo()
+    {
+        return $this->strCastTimeTo;
+    }
+
+    /**
+     * Set strSeniority
+     *
+     * @param string $strSeniority
+     * @return User
+     */
+    public function setStrSeniority($strSeniority)
+    {
+        $this->strSeniority = $strSeniority;
+
+        return $this;
+    }
+
+    /**
+     * Get strSeniority
+     *
+     * @return string 
+     */
+    public function getStrSeniority()
+    {
+        return $this->strSeniority;
+    }
+
+    /**
+     * Set intCastType
+     *
+     * @param integer $intCastType
+     * @return User
+     */
+    public function setIntCastType($intCastType)
+    {
+        $this->intCastType = $intCastType;
+
+        return $this;
+    }
+
+    /**
+     * Get intCastType
+     *
+     * @return integer 
+     */
+    public function getIntCastType()
+    {
+        return $this->intCastType;
+    }
+
+    /**
+     * Set intBusyWeekDayFrom1
+     *
+     * @param integer $intBusyWeekDayFrom1
+     * @return User
+     */
+    public function setIntBusyWeekDayFrom1($intBusyWeekDayFrom1)
+    {
+        $this->intBusyWeekDayFrom1 = $intBusyWeekDayFrom1;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayFrom1
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayFrom1()
+    {
+        return $this->intBusyWeekDayFrom1;
+    }
+
+    /**
+     * Set intBusyWeekDayFrom2
+     *
+     * @param integer $intBusyWeekDayFrom2
+     * @return User
+     */
+    public function setIntBusyWeekDayFrom2($intBusyWeekDayFrom2)
+    {
+        $this->intBusyWeekDayFrom2 = $intBusyWeekDayFrom2;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayFrom2
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayFrom2()
+    {
+        return $this->intBusyWeekDayFrom2;
+    }
+
+    /**
+     * Set intBusyWeekDayFrom3
+     *
+     * @param integer $intBusyWeekDayFrom3
+     * @return User
+     */
+    public function setIntBusyWeekDayFrom3($intBusyWeekDayFrom3)
+    {
+        $this->intBusyWeekDayFrom3 = $intBusyWeekDayFrom3;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayFrom3
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayFrom3()
+    {
+        return $this->intBusyWeekDayFrom3;
+    }
+
+    /**
+     * Set intBusyWeekDayFrom4
+     *
+     * @param integer $intBusyWeekDayFrom4
+     * @return User
+     */
+    public function setIntBusyWeekDayFrom4($intBusyWeekDayFrom4)
+    {
+        $this->intBusyWeekDayFrom4 = $intBusyWeekDayFrom4;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayFrom4
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayFrom4()
+    {
+        return $this->intBusyWeekDayFrom4;
+    }
+
+    /**
+     * Set intBusyWeekDayFrom5
+     *
+     * @param integer $intBusyWeekDayFrom5
+     * @return User
+     */
+    public function setIntBusyWeekDayFrom5($intBusyWeekDayFrom5)
+    {
+        $this->intBusyWeekDayFrom5 = $intBusyWeekDayFrom5;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayFrom5
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayFrom5()
+    {
+        return $this->intBusyWeekDayFrom5;
+    }
+
+    /**
+     * Set intBusyWeekDayTo1
+     *
+     * @param integer $intBusyWeekDayTo1
+     * @return User
+     */
+    public function setIntBusyWeekDayTo1($intBusyWeekDayTo1)
+    {
+        $this->intBusyWeekDayTo1 = $intBusyWeekDayTo1;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayTo1
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayTo1()
+    {
+        return $this->intBusyWeekDayTo1;
+    }
+
+    /**
+     * Set intBusyWeekDayTo2
+     *
+     * @param integer $intBusyWeekDayTo2
+     * @return User
+     */
+    public function setIntBusyWeekDayTo2($intBusyWeekDayTo2)
+    {
+        $this->intBusyWeekDayTo2 = $intBusyWeekDayTo2;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayTo2
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayTo2()
+    {
+        return $this->intBusyWeekDayTo2;
+    }
+
+    /**
+     * Set intBusyWeekDayTo3
+     *
+     * @param integer $intBusyWeekDayTo3
+     * @return User
+     */
+    public function setIntBusyWeekDayTo3($intBusyWeekDayTo3)
+    {
+        $this->intBusyWeekDayTo3 = $intBusyWeekDayTo3;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayTo3
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayTo3()
+    {
+        return $this->intBusyWeekDayTo3;
+    }
+
+    /**
+     * Set intBusyWeekDayTo4
+     *
+     * @param integer $intBusyWeekDayTo4
+     * @return User
+     */
+    public function setIntBusyWeekDayTo4($intBusyWeekDayTo4)
+    {
+        $this->intBusyWeekDayTo4 = $intBusyWeekDayTo4;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayTo4
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayTo4()
+    {
+        return $this->intBusyWeekDayTo4;
+    }
+
+    /**
+     * Set intBusyWeekDayTo5
+     *
+     * @param integer $intBusyWeekDayTo5
+     * @return User
+     */
+    public function setIntBusyWeekDayTo5($intBusyWeekDayTo5)
+    {
+        $this->intBusyWeekDayTo5 = $intBusyWeekDayTo5;
+
+        return $this;
+    }
+
+    /**
+     * Get intBusyWeekDayTo5
+     *
+     * @return integer 
+     */
+    public function getIntBusyWeekDayTo5()
+    {
+        return $this->intBusyWeekDayTo5;
+    }
+
+    /**
+     * Set strBusyTimeFrom1
+     *
+     * @param string $strBusyTimeFrom1
+     * @return User
+     */
+    public function setStrBusyTimeFrom1($strBusyTimeFrom1)
+    {
+        $this->strBusyTimeFrom1 = $strBusyTimeFrom1;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeFrom1
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeFrom1()
+    {
+        return $this->strBusyTimeFrom1;
+    }
+
+    /**
+     * Set strBusyTimeFrom2
+     *
+     * @param string $strBusyTimeFrom2
+     * @return User
+     */
+    public function setStrBusyTimeFrom2($strBusyTimeFrom2)
+    {
+        $this->strBusyTimeFrom2 = $strBusyTimeFrom2;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeFrom2
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeFrom2()
+    {
+        return $this->strBusyTimeFrom2;
+    }
+
+    /**
+     * Set strBusyTimeFrom3
+     *
+     * @param string $strBusyTimeFrom3
+     * @return User
+     */
+    public function setStrBusyTimeFrom3($strBusyTimeFrom3)
+    {
+        $this->strBusyTimeFrom3 = $strBusyTimeFrom3;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeFrom3
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeFrom3()
+    {
+        return $this->strBusyTimeFrom3;
+    }
+
+    /**
+     * Set strBusyTimeFrom4
+     *
+     * @param string $strBusyTimeFrom4
+     * @return User
+     */
+    public function setStrBusyTimeFrom4($strBusyTimeFrom4)
+    {
+        $this->strBusyTimeFrom4 = $strBusyTimeFrom4;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeFrom4
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeFrom4()
+    {
+        return $this->strBusyTimeFrom4;
+    }
+
+    /**
+     * Set strBusyTimeFrom5
+     *
+     * @param string $strBusyTimeFrom5
+     * @return User
+     */
+    public function setStrBusyTimeFrom5($strBusyTimeFrom5)
+    {
+        $this->strBusyTimeFrom5 = $strBusyTimeFrom5;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeFrom5
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeFrom5()
+    {
+        return $this->strBusyTimeFrom5;
+    }
+
+    /**
+     * Set strBusyTimeTo1
+     *
+     * @param string $strBusyTimeTo1
+     * @return User
+     */
+    public function setStrBusyTimeTo1($strBusyTimeTo1)
+    {
+        $this->strBusyTimeTo1 = $strBusyTimeTo1;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeTo1
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeTo1()
+    {
+        return $this->strBusyTimeTo1;
+    }
+
+    /**
+     * Set strBusyTimeTo2
+     *
+     * @param string $strBusyTimeTo2
+     * @return User
+     */
+    public function setStrBusyTimeTo2($strBusyTimeTo2)
+    {
+        $this->strBusyTimeTo2 = $strBusyTimeTo2;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeTo2
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeTo2()
+    {
+        return $this->strBusyTimeTo2;
+    }
+
+    /**
+     * Set strBusyTimeTo3
+     *
+     * @param string $strBusyTimeTo3
+     * @return User
+     */
+    public function setStrBusyTimeTo3($strBusyTimeTo3)
+    {
+        $this->strBusyTimeTo3 = $strBusyTimeTo3;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeTo3
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeTo3()
+    {
+        return $this->strBusyTimeTo3;
+    }
+
+    /**
+     * Set strBusyTimeTo4
+     *
+     * @param string $strBusyTimeTo4
+     * @return User
+     */
+    public function setStrBusyTimeTo4($strBusyTimeTo4)
+    {
+        $this->strBusyTimeTo4 = $strBusyTimeTo4;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeTo4
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeTo4()
+    {
+        return $this->strBusyTimeTo4;
+    }
+
+    /**
+     * Set strBusyTimeTo5
+     *
+     * @param string $strBusyTimeTo5
+     * @return User
+     */
+    public function setStrBusyTimeTo5($strBusyTimeTo5)
+    {
+        $this->strBusyTimeTo5 = $strBusyTimeTo5;
+
+        return $this;
+    }
+
+    /**
+     * Get strBusyTimeTo5
+     *
+     * @return string 
+     */
+    public function getStrBusyTimeTo5()
+    {
+        return $this->strBusyTimeTo5;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setIntCreateTimeAuto()
+    {
+        $this->setIntCreateTime(time());
+    }
+}
