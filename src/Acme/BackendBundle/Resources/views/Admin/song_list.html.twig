@@ -1,0 +1,87 @@
+<form action="{{ path('_admin_song_list') }}" method="get">
+    <select name="zone">
+        <option value>全部</option>
+        <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::PRCZONE') }}">內地榜</option>
+        <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::HKTWZONE') }}">內地榜</option>
+    </select>
+    <select name="status">
+        <option value>全部</option>
+        <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::RANKING') }}">正在打榜</option>
+        <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::RANK_WAITING') }}">等待打榜</option>
+        <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::RANK_EXPIRE') }}">已经结束</option>
+        <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::NOT_RANK') }}">暂不打榜</option>
+    </select>
+    <input name="search" type="text" placeholder="SEARCH" />
+    <input type="submit" />
+</form>
+{# total items count #}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+<table class="table table-striped">
+    <tr>
+        {# sorting of properties based on query components #}
+        <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+        <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+    </tr>
+
+    {# table body #}
+    {% for item in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <td>{{ item.id }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.zone==0?'內地榜':'港台榜' }}</td>
+            <td>
+                {% for artist in item.artists %}
+                        {{ artist.name }}
+                {% endfor %}
+            </td>
+            <td>
+                {{ item.corp }}
+            </td>
+            <td>
+                {% if item.rank_from != null %}
+                    {{ item.rank_from|date('Y-m-d') }}
+                {% endif %}
+            </td>
+            <td>
+                {% if item.rank_to != null %}
+                    {{ item.rank_to|date('Y-m-d') }}
+                {% endif %}
+            </td>
+            <td>
+                {{ item.uploader }}
+            </td>
+            <td>
+                {{ item.upload_time|date('Y-m-d') }}
+            </td>
+            <td>
+                {% if item.is_ranking == true %}
+                    <span class="red">正在打榜</span>
+                    {% elseif item.is_wait == true %}
+                    等待打榜
+                    {% elseif item.is_expire == true %}
+                    <span class="gray">已经结束</span>
+                    {% elseif item.is_rank == false %}
+                    <span class="green">暂不打榜</span>
+                {% endif %}
+            </td>
+            <td>
+                {{ item.download }}
+            </td>
+            <td>
+                <a href="{{ path('_unvadmin_song_comment', {'id': item.id}) }}" >我要点评({{ item.comment_count }})</a>
+            </td>
+            <td>
+                <a href="{{ path('_admin_song_edit', {'id': item.id} ) }}">编辑</a>
+            </td>
+            <td>
+                <a href="{{ path('_admin_song_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>

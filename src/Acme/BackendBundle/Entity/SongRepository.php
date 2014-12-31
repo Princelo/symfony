@@ -12,4 +12,105 @@ use Doctrine\ORM\EntityRepository;
  */
 class SongRepository extends EntityRepository
 {
+
+    public function getQuerySonglist($where = null)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT
+                        s.id,
+                        s.strTitle title,
+                        s.arrStrArtistName artists,
+                        s.intRankZone zone,
+                        s.strCorpName corp,
+                        (CASE WHEN(
+                            s.boolIsRank = true
+                            AND
+                            s.timeRankTimeFrom IS NOT NULL
+                            AND s.timeRankTimeTo IS NOT NULL
+                            ) THEN s.timeRankTimeFrom ELSE s.timeRankTime
+                        END
+                        ) AS rank_from,
+                        (CASE WHEN(
+                            s.boolIsRank = true
+                            AND
+                            s.timeRankTimeFrom IS NOT NULL
+                            AND s.timeRankTimeTo IS NOT NULL
+                            ) THEN s.timeRankTimeTo ELSE DATE_ADD(s.timeRankTime, 60, 'DAY')
+                        END
+                        ) AS rank_to,
+                        s.timeUploadDateTime upload_time,
+                        s.strSongFile download,
+                        (CASE WHEN(
+                         s.boolIsRank = TRUE
+                         AND (
+                             (
+                                (
+                                    CURRENT_DATE() BETWEEN s.timeRankTimeFrom AND s.timeRankTimeTo
+                                )
+                                AND s.timeRankTimeFrom IS NOT NULL
+                                AND s.timeRankTimeTo IS NOT NULL
+                            )OR(
+                                (
+                                    CURRENT_DATE() BETWEEN s.timeRankTime AND DATE_ADD(s.timeRankTime, 60, 'DAY')
+                                )
+                                AND s.timeRankTimeFrom IS NULL
+                                AND s.timeRankTimeTo IS NULL
+                            )
+                         )
+                        ) THEN TRUE ELSE FALSE
+                        END) AS is_ranking,
+                        (CASE WHEN(
+                         s.boolIsRank = TRUE
+                         AND (
+                            (
+                                (
+                                    CURRENT_DATE() < s.timeRankTimeFrom
+                                )
+                                AND s.timeRankTimeFrom IS NOT NULL
+                                AND s.timeRankTimeTo IS NOT NULL
+                            )OR(
+                                (
+                                    CURRENT_DATE() < s.timeRankTime
+                                )
+                                AND s.timeRankTimeFrom IS NULL
+                                AND s.timeRankTimeTo IS NULL
+                            )
+                         )
+                        ) THEN TRUE ELSE FALSE
+                        END) AS is_wait,
+                        (CASE WHEN(
+                         s.boolIsRank = TRUE
+                         AND (
+                             (
+                                (
+                                    CURRENT_DATE() > s.timeRankTimeTo
+                                )
+                                AND s.timeRankTimeFrom IS NOT NULL
+                                AND s.timeRankTimeTo IS NOT NULL
+                             )OR(
+                                (
+                                    CURRENT_DATE() > DATE_ADD(s.timeRankTime, 60, 'DAY')
+                                )
+                                AND s.timeRankTimeFrom IS NULL
+                                AND s.timeRankTimeTo IS NULL
+                             )
+                         )
+                        ) THEN TRUE ELSE FALSE
+                        END) AS is_expire,
+                        s.boolIsRank is_rank,
+                        m.strShortName uploader,
+                        COUNT(c.id) AS comment_count
+                    FROM
+                    AcmeBackendBundle:Song s
+                    LEFT JOIN s.member m
+                    LEFT JOIN s.comments c
+                    WHERE 1 = 1
+                    {$where}
+                    GROUP BY s.id, s.strTitle, s.intRankZone, s.strCorpName, s.timeRankTimeFrom, s.timeRankTimeTo,
+                        s.timeRankTime, s.timeUploadDateTime, m.strShortName
+                    ORDER BY upload_time DESC
+                    "
+            );
+    }
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" charset="utf-8"><![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}Welcome!{% endblock %}</title>
+{% block javascripts %}
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.js') }}"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>-->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery-ui.js') }}"></script>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="{{ asset('bundles/acmefrontend/js/load-image.all.min.js') }}"></script>
+    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="{{ asset('bundles/acmefrontend/js/canvas-to-blob.min.js') }}"></script>
+    <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+    <script src="{{ asset('bundles/acmefrontend/js/bootstrap.min.js') }}"></script>
+    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.iframe-transport.js') }}"></script>
+    <!-- The basic File Upload plugin -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload.js') }}"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-process.js') }}"></script>
+    <!-- The File Upload image preview & resize plugin -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-image.js') }}"></script>
+    <!-- The File Upload audio preview plugin -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-audio.js') }}"></script>
+    <!-- The File Upload video preview plugin -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-video.js') }}"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-validate.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/verify.notify.js') }}"></script>
+{% endblock %}
+{% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
+<link rel="stylesheet" href="{{ asset_url }}"/>
+{% endstylesheets %}
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+{% if (alertjs is defined) %}{{ alertjs|raw }}{% endif %}
+<script>
+    $(document).ready(function(){
+        $('form').each(function()
+                {
+                    $(this).attr('novalidate', 'novalidate');
+                }
+        );
+        $('[required]').each(function(){
+            $(this).removeAttr('required');
+        });
+        $( ".datepicker" ).datepicker({
+            'dateFormat': 'yy-m-d',
+            'changeYear' : true
+        });
+    }
+    );
+</script>
+<style>
+    .notifyjs-corner {
+        position: fixed;
+        margin: 5px;
+        z-index: 1050;
+    }
+    .notifyjs-corner .notifyjs-wrapper,
+    .notifyjs-corner .notifyjs-container {
+        position: relative;
+        display: block;
+        height: inherit;
+        width: inherit;
+        margin: 3px;
+    }
+    .notifyjs-wrapper {
+        z-index: 1;
+        position: absolute;
+        display: inline-block;
+        height: 0;
+        width: 0;
+    }
+    .notifyjs-container {
+        display: none;
+        z-index: 1;
+        position: absolute;
+        cursor: pointer;
+    }
+    .notifyjs-text {
+        position: relative;
+    }
+    .notifyjs-arrow {
+        position: absolute;
+        z-index: 2;
+        width: 0;
+        height: 0;
+    }
+    .red{color:#f00;}
+</style>
+</head>
+<body>
+<ul>
+    {% for menu_block in menu %}
+        <li>
+            <span>{{ menu_block.name }}</span>
+            <ul class="sub-menu">
+                {% for item in menu_block.item %}
+                    <li><a href="{{ path(item.route) }}" target="_self">{{ item.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+{% block body %}{% endblock %}
+</body>
+</html>

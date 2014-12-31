@@ -161,8 +161,6 @@ class Corp implements UserInterface, \Serializable
     }
     public function iniArrStrArtistNameCollection()
     {
-        if($this->arrStrArtistName == "")
-            return $this;
         $this->arrStrArtistName = new ArrayCollection();
         return $this;
     }

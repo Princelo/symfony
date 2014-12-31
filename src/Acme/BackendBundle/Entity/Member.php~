@@ -4,7 +4,7 @@ namespace Acme\BackendBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Acme\BackendBundle\Entity\Constant;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -12,11 +12,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Member
  *
- * @ORM\Table()
  * @ORM\Entity(repositoryClass="Acme\BackendBundle\Entity\MemberRepository")
  * @UniqueEntity("email")
  */
-class Member implements UserInterface, \Serializable
+class Member implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -44,11 +43,6 @@ class Member implements UserInterface, \Serializable
      * @Assert\Email(message="請正確填寫郵箱格式")
      */
     private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean", nullable=true)
-     */
-    private $isActive;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -341,12 +335,16 @@ class Member implements UserInterface, \Serializable
      */
     protected $strBodyPhoto;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Song", mappedBy="member")
+     */
+    protected $songs;
+
 
 
 
     public function __construct(){
         //$this->arrStrArtistName = new ArrayCollection();
-        $this->isActive = false;
     }
 
     public function iniArrStrArtistName()
@@ -2137,5 +2135,52 @@ class Member implements UserInterface, \Serializable
     public function getBoolBusyTimeTo5Tomorrow()
     {
         return $this->boolBusyTimeTo5Tomorrow;
+    }
+
+
+    public function isAccountNonExpired(){
+        return true;
+    }
+    public function isAccountNonLocked(){
+        return true;
+    }
+    public function isCredentialsNonExpired(){
+        return true;
+    }
+    public function isEnabled(){
+        return $this->boolIsValid;
+    }
+
+    /**
+     * Add songs
+     *
+     * @param \Acme\BackendBundle\Entity\Song $songs
+     * @return Member
+     */
+    public function addSong(\Acme\BackendBundle\Entity\Song $songs)
+    {
+        $this->songs[] = $songs;
+
+        return $this;
+    }
+
+    /**
+     * Remove songs
+     *
+     * @param \Acme\BackendBundle\Entity\Song $songs
+     */
+    public function removeSong(\Acme\BackendBundle\Entity\Song $songs)
+    {
+        $this->songs->removeElement($songs);
+    }
+
+    /**
+     * Get songs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSongs()
+    {
+        return $this->songs;
     }
 }

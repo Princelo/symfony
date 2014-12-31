@@ -39,7 +39,43 @@ class FMController extends DefaultController
      */
     public function fmIndexAction()
     {
-        return $this->render('AcmeBackendBundle:FM:index.html.twig');
+        parent::init();
+        $arrMemberInfo = array(
+            'short_name'    =>  $this->objMember->getStrShortName(),
+            'ip'            =>  $this->get('request')->getClientIp(),
+            'login_time'    =>  $this->objMember->getTimeLastLoginTime()->format('Y-m-d H:i:s'),
+        );
+        return $this->render('AcmeBackendBundle:FM:index.html.twig',
+            array(
+                'm' =>  $arrMemberInfo,
+                'menu' => $this->menu,
+            ));
     }
 
+    /**
+     * @return Response
+     * @Route("/fm/fm_info_edit", name="_fm_info_edit")
+     */
+    public function fmInfoEditAction()
+    {
+        return new Response();
+    }
+
+    /**
+     * @return Response
+     * @Route("/fm/fm_prc_vote", name="_fm_prc_vote")
+     */
+    public function fmPRCVoteAction()
+    {
+        return new Response();
+    }
+
+    /**
+     * @return Response
+     * @Route("/fm/fm_hktw_vote", name="_fm_hktw_vote")
+     */
+    public function fmHKTWVoteAction()
+    {
+        return new Response();
+    }
 }

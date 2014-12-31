@@ -21,21 +21,22 @@ class Comment
      */
     private $id;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $intFromMemberId;
+    protected $intMemberId;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $intToMemberId;
+    protected $timeDateTime;
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $intDateTime;
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strContent;
+    /**
+     * @ORM\ManyToOne(targetEntity="Song", inversedBy="comments")
+     * @ORM\JoinColumn(name="song_id", referencedColumnName="id")
+     */
+    protected $song;
 
 
     /**
@@ -162,5 +163,74 @@ class Comment
     public function getIntToMemberId()
     {
         return $this->intToMemberId;
+    }
+
+    /**
+     * Set song
+     *
+     * @param \Acme\BackendBundle\Entity\Song $song
+     * @return Comment
+     */
+    public function setSong(\Acme\BackendBundle\Entity\Song $song = null)
+    {
+        $this->song = $song;
+
+        return $this;
+    }
+
+    /**
+     * Get song
+     *
+     * @return \Acme\BackendBundle\Entity\Song 
+     */
+    public function getSong()
+    {
+        return $this->song;
+    }
+
+    /**
+     * Set intMemberId
+     *
+     * @param integer $intMemberId
+     * @return Comment
+     */
+    public function setIntMemberId($intMemberId)
+    {
+        $this->intMemberId = $intMemberId;
+
+        return $this;
+    }
+
+    /**
+     * Get intMemberId
+     *
+     * @return integer 
+     */
+    public function getIntMemberId()
+    {
+        return $this->intMemberId;
+    }
+
+    /**
+     * Set timeDateTime
+     *
+     * @param \DateTime $timeDateTime
+     * @return Comment
+     */
+    public function setTimeDateTime($timeDateTime)
+    {
+        $this->timeDateTime = $timeDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeDateTime()
+    {
+        return $this->timeDateTime;
     }
 }

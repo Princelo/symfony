@@ -16,7 +16,6 @@ class DefaultController extends Controller
         $objORM = $this->getDoctrine()->getManager();
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getObjFrontendInfo();
-        $objFrontendInfo = $objFrontendInfo[0];
         $objFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->getObjFlashlist();
         $objRankInfoPRC = $objORM->getRepository('AcmeBackendBundle:Rank')

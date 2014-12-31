@@ -22,7 +22,7 @@ class RankRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT s.strTitle title,
-                        s.arrStrArtist artists,
+                        s.arrStrArtistName artists,
                         s.id id,
                         r.intTermNo term_no
                     FROM

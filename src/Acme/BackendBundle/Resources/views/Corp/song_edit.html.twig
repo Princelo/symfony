@@ -1,0 +1,132 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <div class="backend-form song-add-form">
+        {{ form_start(form) }}
+        <table class="table table-striped">
+            <tr>
+                <td>{{ form_label(form.song.strTitle) }}<span class="red">*</span></td>
+                <td>{{ form_widget(form.song.strTitle) }}<span class="form_errors">{{ form_errors(form.song.strTitle) }}</span></td>
+            </tr>
+            <tr>
+                <td><label>歌手</label><span class="red">*</span></td>
+                <td>
+                    <ul class="tags" data-prototype="{% if form.song.arrStrArtistName.vars.prototype is defined %}
+                                    {{ form_widget(form.song.arrStrArtistName.vars.prototype.name)|e }}
+                                    {% endif %}">
+                        {# iterate over each existing tag and render its only field: name #}
+                        {% for tag in form.song.arrStrArtistName %}
+                            {% if loop.index == 1 %}
+                                <li>{{ form_widget(tag.name,  { 'attr': {'data-validate' : 'required'} }) }}</li>
+                            {% else %}
+                                <li>{{ form_widget(tag.name) }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <span class="tip">(请至少填写一名歌手)</span>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.strSpecial) }}</td>
+                <td>{{ form_widget(form.song.strSpecial) }}<span class="form_errors">{{ form_errors(form.song.strSpecial) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.strLyricist) }}</td>
+                <td>{{ form_widget(form.song.strLyricist) }}<span class="form_errors">{{ form_errors(form.song.strLyricist) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.strComposer) }}</td>
+                <td>{{ form_widget(form.song.strComposer) }}<span class="form_errors">{{ form_errors(form.song.strComposer) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.strCorpName) }}<span class="red">*</span></td>
+                <td>{{ form_widget(form.song.strCorpName) }}<span class="form_errors">{{ form_errors(form.song.strCorpName) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.boolIsRank) }}</td>
+                <td>{{ form_widget(form.song.boolIsRank) }}<span class="form_errors">{{ form_errors(form.song.boolIsRank) }}</span></td>
+            </tr>
+            <tr>
+                <td><label>打榜时间</label></td>
+                <td>从{{ form_widget(form.song.timeRankTimeFrom) }}到{{ form_widget(form.song.timeRankTimeTo) }}
+                    <span class="form_errors">{{ form_errors(form.song.timeRankTimeFrom) }}</span>
+                    <span class="form_errors">{{ form_errors(form.song.timeRankTimeTo) }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.intRankZone) }}<span class="red">*</span></td>
+                <td>{{ form_widget(form.song.intRankZone) }}<span class="form_errors">{{ form_errors(form.song.intRankZone) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.boolIsPremiere) }}</td>
+                <td>{{ form_widget(form.song.boolIsPremiere) }}<span class="form_errors">{{ form_errors(form.song.boolIsPremiere) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.boolIsMain) }}</td>
+                <td>{{ form_widget(form.song.boolIsMain) }}<span class="form_errors">{{ form_errors(form.song.boolIsMain) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.intCategory) }}<span class="red">*</span></td>
+                <td>{{ form_widget(form.song.intCategory) }}<span class="form_errors">{{ form_errors(form.song.intCategory) }}</span></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.song.intStyle) }}<span class="red">*</span></td>
+                <td>{{ form_widget(form.song.intStyle) }}<span class="form_errors">{{ form_errors(form.song.intStyle) }}</span></td>
+            </tr>
+            <tr>
+                <td><label>添加试听外部链接</label></td>
+                <td>
+                    试听地址1: {{ form_widget(form.song.strOtherLink1) }}<span class="form_errors">{{ form_errors(form.song.strOtherLink1) }}</span><br />
+                    试听地址1: {{ form_widget(form.song.strOtherLink2) }}<span class="form_errors">{{ form_errors(form.song.strOtherLink2) }}</span><br />
+                    试听地址1: {{ form_widget(form.song.strOtherLink3) }}<span class="form_errors">{{ form_errors(form.song.strOtherLink3) }}</span><br />
+                </td>
+            </tr>
+        </table>
+        {{ form_end(form) }}
+    </div>
+    <script>
+        var $collectionHolder;
+
+        // setup an "add a tag" link
+        var $addTagLink = $('<a href="#" class="add_tag_link">添加歌手</a>');
+        var $newLinkLi = $('<li></li>').append($addTagLink);
+
+        jQuery(document).ready(function() {
+            //var $addTagLink = $('.add_tag_link');
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('ul.tags');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.bind('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+        });
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.attr('data-prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+    </script>
+{% endblock %}

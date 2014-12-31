@@ -1,6 +1,8 @@
-<div class="welcome-info">
-    您好！ <span>{{ m.short_name }}</span> 。您的IP是： <span>{{ m.ip }}</span> , 登录时间是 <span>{{ m.login_time }}</span>
-</div>
-<div class="backend-memo">
-    距xx榜本期投票截止还有： sys.lastRankTime ，我家 foreach
-</div>
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <div class="welcome-info">
+        您好！ <span>{{ m.short_name }}</span> 。您的IP是： <span>{{ m.ip }}</span> , 登录时间是 <span>{{ m.login_time }}</span>
+    </div>
+    <div class="backend-memo">
+        距xx榜本期投票截止还有： sys.lastRankTime ，我家 foreach
+{% endblock %}

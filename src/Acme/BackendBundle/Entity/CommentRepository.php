@@ -12,4 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
+    public function getObjCommentlist($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT c.strContent content,
+                        c.timeDateTime comment_time,
+                        m.strShortName member_name
+                    FROM
+                    AcmeBackendBundle:Comment c
+                    JOIN c.song s
+                    JOIN AcmeBackendBundle:Member m
+                    WITH c.intMemberId = m.id
+                    WHERE s.id = {$id}
+                    ORDER BY c.timeDateTime DESC
+                    "
+            )
+            ->getResult();
+    }
 }

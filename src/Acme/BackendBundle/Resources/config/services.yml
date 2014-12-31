@@ -9,3 +9,10 @@ services:
         class: Acme\BackendBundle\Handler\AuthenticationHandler
         calls:
             - [ setContainer, [ @service_container ] ]
+
+    acme_backend.upload_listenr:
+        class: Acme\BackendBundle\EventListener\UploadListener
+        argument: ['@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+

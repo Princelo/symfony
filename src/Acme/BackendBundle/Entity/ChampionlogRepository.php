@@ -16,7 +16,7 @@ class ChampionlogRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT c, s.strTitle, s.arrStrArtist, m.strShortName
+                "SELECT c, s.strTitle, s.arrStrArtistName, m.strShortName
                  FROM AcmeBackendBundle:Championlog c
                 JOIN AcmeBackendBundle:Song s
                 WITH c.intSongId = s.id

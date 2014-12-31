@@ -2295,15 +2295,19 @@
             },
             email: {
                 regex: /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Invalid email address"
+                //message: "Invalid email address"
+                message: "无效邮件地址"
             },
             url: {
-                regex: /^https?:\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]/,
-                message: "Invalid URL"
+                //regex: /^https?:\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]/,
+                regex: /^:\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]/,
+                //message: "Invalid URL"
+                message: "无效链接"
             },
             alphanumeric: {
                 regex: /^[0-9A-Za-z]+$/,
-                message: "Use digits and letters only"
+                //message: "Use digits and letters only"
+                message: "只允许使用字母或数字"
             },
             street_number: {
                 regex: /^\d+[A-Za-z]?(-\d+)?[A-Za-z]?$/,
@@ -2311,7 +2315,8 @@
             },
             number: {
                 regex: /^\d+$/,
-                message: "Use digits only"
+                //message: "Use digits only"
+                message: "只允许使用数字"
             },
             numberSpace: {
                 regex: /^[\d\ ]+$/,

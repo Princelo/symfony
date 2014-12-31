@@ -21,6 +21,6 @@ class OtherInfoRepository extends EntityRepository
                     AcmeFrontendBundle:OtherInfo o
                     '
             )
-            ->getResult();
+            ->getResult()[0];
     }
 }

@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Song
@@ -21,123 +23,153 @@ class Song
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $strTitle;
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
-    protected $arrStrArtist;
+    protected $arrStrArtistName;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intMemberId;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intSpecialId;
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $strLyricist;
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $strComposer;
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $strCorpName;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $boolIsRank;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intRankZone;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $boolIsPremiere;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $boolIsMain;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intCategory;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intStyle;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strPromotionFile;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *     maxSize = "6M",
+     *     mimeTypesMessage="无效图片格式",
+     *     maxSizeMessage="文件超过6M",
+     *     groups={"song_edit"}
+     * )
      */
     protected $strCoverFile;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strLyricFile;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strSongFile;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *     maxSize = "6M",
+     *     mimeTypesMessage="无效图片格式",
+     *     maxSizeMessage="文件超过6M",
+     *     groups={"song_edit"}
+     * )
      */
     protected $strAuthFile;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strOtherLink1;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strOtherLink2;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strOtherLink3;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="datetime", length=10, nullable=true)
      */
-    protected $strRankTimeFrom;
+    protected $timeRankTime;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="datetime", length=10, nullable=true)
      */
-    protected $strRankTimeTo;
+    protected $timeRankTimeFrom;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", length=10, nullable=true)
+     */
+    protected $timeRankTimeTo;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intPRCResult;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intHKTWResult;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intPlayTimes;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $intUploadDateTime;
+    protected $timeUploadDateTime;
     /**
      * @ORM\ManyToOne(targetEntity="Special", inversedBy="songs")
      * @ORM\JoinColumn(name="special_id", referencedColumnName="id")
      */
     protected $special;
+    /**
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="songs")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
+     */
+    protected $member;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $strSpecial;
 
     /**
      * @ORM\ManyToMany(targetEntity="Rank", inversedBy="songs")
      */
     protected $ranks;
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="song")
+     */
+    protected $comments;
 
     public function __construct()
     {
@@ -178,28 +210,6 @@ class Song
         return $this->strTitle;
     }
 
-    /**
-     * Set arrStrArtist
-     *
-     * @param array $arrStrArtist
-     * @return Song
-     */
-    public function setArrStrArtist($arrStrArtist)
-    {
-        $this->arrStrArtist = $arrStrArtist;
-
-        return $this;
-    }
-
-    /**
-     * Get arrStrArtist
-     *
-     * @return array 
-     */
-    public function getArrStrArtist()
-    {
-        return $this->arrStrArtist;
-    }
 
 
     /**
@@ -616,51 +626,6 @@ class Song
         return $this->strOtherLink3;
     }
 
-    /**
-     * Set strRankTimeFrom
-     *
-     * @param string $strRankTimeFrom
-     * @return Song
-     */
-    public function setStrRankTimeFrom($strRankTimeFrom)
-    {
-        $this->strRankTimeFrom = $strRankTimeFrom;
-
-        return $this;
-    }
-
-    /**
-     * Get strRankTimeFrom
-     *
-     * @return string 
-     */
-    public function getStrRankTimeFrom()
-    {
-        return $this->strRankTimeFrom;
-    }
-
-    /**
-     * Set strRankTimeTo
-     *
-     * @param string $strRankTimeTo
-     * @return Song
-     */
-    public function setStrRankTimeTo($strRankTimeTo)
-    {
-        $this->strRankTimeTo = $strRankTimeTo;
-
-        return $this;
-    }
-
-    /**
-     * Get strRankTimeTo
-     *
-     * @return string 
-     */
-    public function getStrRankTimeTo()
-    {
-        return $this->strRankTimeTo;
-    }
 
     /**
      * Set intPRCResult
@@ -731,28 +696,6 @@ class Song
         return $this->intPlayTimes;
     }
 
-    /**
-     * Set intUploadDateTime
-     *
-     * @param integer $intUploadDateTime
-     * @return Song
-     */
-    public function setIntUploadDateTime($intUploadDateTime)
-    {
-        $this->intUploadDateTime = $intUploadDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get intUploadDateTime
-     *
-     * @return integer 
-     */
-    public function getIntUploadDateTime()
-    {
-        return $this->intUploadDateTime;
-    }
 
     /**
      * Set special
@@ -834,5 +777,214 @@ class Song
     public function getRanks()
     {
         return $this->ranks;
+    }
+
+    /**
+     * Set strSpecial
+     *
+     * @param string $strSpecial
+     * @return Song
+     */
+    public function setStrSpecial($strSpecial)
+    {
+        $this->strSpecial = $strSpecial;
+
+        return $this;
+    }
+
+    /**
+     * Get strSpecial
+     *
+     * @return string 
+     */
+    public function getStrSpecial()
+    {
+        return $this->strSpecial;
+    }
+
+    public function iniArrStrArtistNameCollection()
+    {
+        /*if($this->arrStrArtistName == "")
+            return $this;*/
+        $this->arrStrArtistName = new ArrayCollection();
+        return $this;
+    }
+
+    /**
+     * Set arrStrArtistName
+     *
+     * @param array $arrStrArtistName
+     * @return Song
+     */
+    public function setArrStrArtistName($arrStrArtistName)
+    {
+        $this->arrStrArtistName = $arrStrArtistName;
+
+        return $this;
+    }
+
+    /**
+     * Get arrStrArtistName
+     *
+     * @return array 
+     */
+    public function getArrStrArtistName()
+    {
+        return $this->arrStrArtistName;
+    }
+
+    public function createAt()
+    {
+        $this->setTimeUploadDateTime( new \DateTime());
+        if($this->getBoolIsRank())
+            $this->setTimeRankTime( new \DateTime());
+    }
+
+    /**
+     * Set timeUploadDateTime
+     *
+     * @param \DateTime $timeUploadDateTime
+     * @return Song
+     */
+    public function setTimeUploadDateTime($timeUploadDateTime)
+    {
+        $this->timeUploadDateTime = $timeUploadDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeUploadDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeUploadDateTime()
+    {
+        return $this->timeUploadDateTime;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \Acme\BackendBundle\Entity\Member $member
+     * @return Song
+     */
+    public function setMember(\Acme\BackendBundle\Entity\Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \Acme\BackendBundle\Entity\Member 
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * Set timeRankTimeFrom
+     *
+     * @param \DateTime $timeRankTimeFrom
+     * @return Song
+     */
+    public function setTimeRankTimeFrom($timeRankTimeFrom)
+    {
+        $this->timeRankTimeFrom = $timeRankTimeFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get timeRankTimeFrom
+     *
+     * @return \DateTime 
+     */
+    public function getTimeRankTimeFrom()
+    {
+        return $this->timeRankTimeFrom;
+    }
+
+    /**
+     * Set timeRankTimeTo
+     *
+     * @param \DateTime $timeRankTimeTo
+     * @return Song
+     */
+    public function setTimeRankTimeTo($timeRankTimeTo)
+    {
+        $this->timeRankTimeTo = $timeRankTimeTo;
+
+        return $this;
+    }
+
+    /**
+     * Get timeRankTimeTo
+     *
+     * @return \DateTime 
+     */
+    public function getTimeRankTimeTo()
+    {
+        return $this->timeRankTimeTo;
+    }
+
+    /**
+     * Set timeRankTime
+     *
+     * @param \DateTime $timeRankTime
+     * @return Song
+     */
+    public function setTimeRankTime($timeRankTime)
+    {
+        $this->timeRankTime = $timeRankTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeRankTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeRankTime()
+    {
+        return $this->timeRankTime;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Acme\BackendBundle\Entity\Comment $comments
+     * @return Song
+     */
+    public function addComment(\Acme\BackendBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Acme\BackendBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Acme\BackendBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

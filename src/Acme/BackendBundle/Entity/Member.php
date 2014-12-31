@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Member
  *
- * @ORM\Table()
  * @ORM\Entity(repositoryClass="Acme\BackendBundle\Entity\MemberRepository")
  * @UniqueEntity("email")
  */
@@ -335,6 +334,11 @@ class Member implements AdvancedUserInterface, \Serializable
      * @Assert\NotBlank(message="半身照必須上傳", groups={"admin_registration_step_three"})
      */
     protected $strBodyPhoto;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Song", mappedBy="member")
+     */
+    protected $songs;
 
 
 
@@ -2145,5 +2149,38 @@ class Member implements AdvancedUserInterface, \Serializable
     }
     public function isEnabled(){
         return $this->boolIsValid;
+    }
+
+    /**
+     * Add songs
+     *
+     * @param \Acme\BackendBundle\Entity\Song $songs
+     * @return Member
+     */
+    public function addSong(\Acme\BackendBundle\Entity\Song $songs)
+    {
+        $this->songs[] = $songs;
+
+        return $this;
+    }
+
+    /**
+     * Remove songs
+     *
+     * @param \Acme\BackendBundle\Entity\Song $songs
+     */
+    public function removeSong(\Acme\BackendBundle\Entity\Song $songs)
+    {
+        $this->songs->removeElement($songs);
+    }
+
+    /**
+     * Get songs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSongs()
+    {
+        return $this->songs;
     }
 }

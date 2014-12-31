@@ -22,21 +22,26 @@ class Rank
      */
     private $id;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intTermNo;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intType;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intZone;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intMemberId;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $timeCreateTime;
 
     /**
      * @ORM\ManyToMany(targetEntity="Song", inversedBy="ranks")
@@ -154,28 +159,6 @@ class Rank
         return $this->intMemberId;
     }
 
-    /**
-     * Set intRankSonglistId
-     *
-     * @param integer $intRankSonglistId
-     * @return Rank
-     */
-    public function setIntRankSonglistId($intRankSonglistId)
-    {
-        $this->intRankSonglistId = $intRankSonglistId;
-
-        return $this;
-    }
-
-    /**
-     * Get intRankSonglistId
-     *
-     * @return integer 
-     */
-    public function getIntRankSonglistId()
-    {
-        return $this->intRankSonglistId;
-    }
 
     /**
      * Set songs
@@ -200,38 +183,6 @@ class Rank
         return $this->songs;
     }
 
-    /**
-     * Add songlist
-     *
-     * @param \Acme\BackendBundle\Entity\Songlist $songlist
-     * @return Rank
-     */
-    public function addSonglist(\Acme\BackendBundle\Entity\Songlist $songlist)
-    {
-        $this->songlist[] = $songlist;
-
-        return $this;
-    }
-
-    /**
-     * Remove songlist
-     *
-     * @param \Acme\BackendBundle\Entity\Songlist $songlist
-     */
-    public function removeSonglist(\Acme\BackendBundle\Entity\Songlist $songlist)
-    {
-        $this->songlist->removeElement($songlist);
-    }
-
-    /**
-     * Get songlist
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSonglist()
-    {
-        return $this->songlist;
-    }
 
     /**
      * Add songs
@@ -254,5 +205,28 @@ class Rank
     public function removeSong(\Acme\BackendBundle\Entity\Song $songs)
     {
         $this->songs->removeElement($songs);
+    }
+
+    /**
+     * Set timeCreateTime
+     *
+     * @param \DateTime $timeCreateTime
+     * @return Rank
+     */
+    public function setTimeCreateTime($timeCreateTime)
+    {
+        $this->timeCreateTime = $timeCreateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeCreateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeCreateTime()
+    {
+        return $this->timeCreateTime;
     }
 }

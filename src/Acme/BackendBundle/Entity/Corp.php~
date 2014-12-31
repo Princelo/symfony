@@ -162,6 +162,7 @@ class Corp implements UserInterface, \Serializable
     public function iniArrStrArtistNameCollection()
     {
         $this->arrStrArtistName = new ArrayCollection();
+        return $this;
     }
 
     public function setId($id)
@@ -784,4 +785,5 @@ class Corp implements UserInterface, \Serializable
     {
         return $this->strLogo;
     }
+
 }

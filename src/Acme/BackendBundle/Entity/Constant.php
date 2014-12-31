@@ -41,5 +41,15 @@ class Constant {
     const FMTYPE7   =  '其他';
     const MALE  =   0;
     const FEMALE    =   1;
+    const ORIGINAL  =   0;
+    const COVER =   1;
+    const OTHER =   99;
+    const POP   =   0;
+    const FOLK  =   1;
+    const AMERICAN  =   2;
+    const RANKING   =   1;
+    const RANK_WAITING  =   2;
+    const RANK_EXPIRE   =   3;
+    const NOT_RANK  =   4;
 
 } 

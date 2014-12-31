@@ -36,3 +36,6 @@ _fm:
 _admin:
     resource: "@AcmeBackendBundle/Controller/AdminController.php"
     type:     annotation
+oneup_uploader:
+    resource: .
+    type: uploader

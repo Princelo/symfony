@@ -71,4 +71,27 @@ class Choice {
             Constant::FEMALE   =>  '女'
         );
     }
+    public function getZonelist()
+    {
+        return array(
+            Constant::PRCZONE   => '內地榜',
+            Constant::HKTWZONE   => '港台榜',
+        );
+    }
+    public function getSongCategorylist()
+    {
+        return array(
+            Constant::ORIGINAL  =>  '原创',
+            Constant::COVER  =>  '翻唱',
+            Constant::OTHER =>  '其他'
+        );
+    }
+    public function getSongStylelist()
+    {
+        return array(
+            Constant::POP   =>  '流行',
+            Constant::FOLK  =>  '民歌',
+            Constant::AMERICAN  =>  '美声',
+        );
+    }
 }

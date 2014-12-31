@@ -5,7 +5,6 @@
     <!--<title>{% block title %}Welcome!{% endblock %}</title>-->
     <title>{{ otherinfo.strsitetitle }} - {{ otherinfo.strsitesubtitle }}</title>
     {% javascripts 'bundles/acmefrontend/js/*' %}
-        <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     {% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
         <link rel="stylesheet" href="{{ asset_url }}"/>
@@ -239,6 +238,10 @@
                         $(this).attr('novalidate', 'novalidate');
                     }
             );
+            $('input[required]').each(function(){
+                console.log($(this));
+                $(this).removeAttr('required');
+            });
             $( ".datepicker" ).datepicker({
                 'dateFormat': 'yy-m-d',
                 'changeYear' : true
@@ -313,10 +316,10 @@
                 <a href="" >协作媒体</a>
             </li>
             <li>
-                <a href="{{ path('register_corp') }}" >唱片公司</a>
+                <a href="{{ path('_register_corp') }}" >唱片公司</a>
             </li>
             <li>
-                <a href="{{ path('register_fm') }}" >电台加盟</a>
+                <a href="{{ path('_register_fm') }}" >电台加盟</a>
             </li>
             <li>
                 <a href="{{ path('_login') }}" >用户登录</a>
