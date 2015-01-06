@@ -26,6 +26,7 @@ use Acme\BackendBundle\Entity\City;
 use Acme\BackendBundle\Entity\Artist;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Acme\BackendBundle\Form\Type\BasicType;
 
 /**
  * Class DefaultController
@@ -77,7 +78,33 @@ class AdminController extends DefaultController
      */
     public function adminRankSettingAction()
     {
-        return new Response();
+        parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objBasic =
+            $objORM->getRepository('AcmeBackendBundle:Basic')->find(1);
+        $type = new BasicType();
+        $form = $this->createForm($type, $objBasic, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_rank_setting'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:rank_setting.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
     }
 
     /**
@@ -276,6 +303,7 @@ class AdminController extends DefaultController
                             AND s.timeRankTimeFrom IS NOT NULL AND s.timeRankTimeTo IS NOT NULL)
                             OR(
                             CURRENT_DATE() < DATE_ADD(s.timeRankTime, 60, 'DAY')
+                            AND s.timeRankTimeFrom IS NULL AND s.timeRankTimeTo IS NULL
                             )
                             )";
         if($intStatus == Constant::RANK_WAITING)

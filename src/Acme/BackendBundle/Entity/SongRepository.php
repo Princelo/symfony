@@ -113,4 +113,73 @@ class SongRepository extends EntityRepository
                     "
             );
     }
+
+    public function getObjRankingByTermNo($intTermNo, $intZone)
+    {
+        $intLastTermNo = $intTermNo - 1;
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT s.id sid,
+                    (
+                        SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 FROM AcmeBackendBundle:Votelog lv WHERE lv.intTermNo = {$intTermNo}
+                            AND lv.intSongId = s.id AND lv.intZone = {$intZone}
+                    ) AS fm_score,
+                    s.boolIsPremiere is_pre,
+                    (
+                        SELECT lr2.intIndex FROM AcmeBackendBundle:Rank lr2 WHERE lr2.song = s.id
+                            AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
+                    ) AS last_index,
+                    (
+                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone}
+                    ) AS count_rank
+                FROM
+                    AcmeBackendBundle:Song s
+                WHERE
+                    s.intRankZone = {$intZone}
+                GROUP BY s.id
+            "
+            )
+            ->getResult();
+    }
+
+    public function getArrRankingForVote($intTermNo, $intZone)
+    {
+        $intLastTermNo = $intTermNo - 1;
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT s.id id,
+                    (
+                        SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 FROM AcmeBackendBundle:Votelog lv WHERE lv.intTermNo = {$intTermNo}
+                            AND lv.intSongId = s.id AND lv.intZone = {$intZone}
+                    ) AS fm_score,
+                    s.boolIsPremiere is_pre,
+                    s.strTitle title,
+                    s.arrStrArtistName artists,
+                    s.strCorpName corp,
+                    s.intRankZone zone,
+                    (
+                        SELECT lr2.intIndex FROM AcmeBackendBundle:Rank lr2 WHERE lr2.song = s.id
+                            AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
+                    ) AS last_index,
+                    (
+                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone}
+                    ) AS count_rank,
+                    (
+                        SELECT lr3.intScore FROM AcmeBackendBundle:Rank lr3 WHERE lr3.song = s.id AND lr3.intZone = {$intZone}
+                            AND lr3.intTermNo = {$intLastTermNo}
+                    ) AS last_score
+                FROM
+                    AcmeBackendBundle:Song s
+                WHERE
+                    s.intRankZone = {$intZone}
+                GROUP BY s.id
+
+            "
+            )
+            ->getResult();
+    }
+
+
 }

@@ -163,7 +163,7 @@ class Song
     protected $strSpecial;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Rank", inversedBy="songs")
+     * @ORM\OneToMany(targetEntity="Rank", mappedBy="song")
      */
     protected $ranks;
     /**

@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class VotelogRepository extends EntityRepository
 {
+
+    public function getArrVotedList($intTermNo, $intMemberId, $strSortType)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "
+                SELECT v.intSongId sid
+                FROM AcmeBackendBundle:Votelog v
+                WHERE v.intTermNo = {$intTermNo}
+                    AND v.intMemberId = {$intMemberId}
+                ORDER BY v.intIndex {$strSortType}
+            "
+            )
+            ->getResult();
+    }
+
+
 }

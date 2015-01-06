@@ -187,4 +187,50 @@ class Comment
     {
         return $this->song;
     }
+
+    /**
+     * Set intMemberId
+     *
+     * @param integer $intMemberId
+     * @return Comment
+     */
+    public function setIntMemberId($intMemberId)
+    {
+        $this->intMemberId = $intMemberId;
+
+        return $this;
+    }
+
+    /**
+     * Get intMemberId
+     *
+     * @return integer 
+     */
+    public function getIntMemberId()
+    {
+        return $this->intMemberId;
+    }
+
+    /**
+     * Set timeDateTime
+     *
+     * @param \DateTime $timeDateTime
+     * @return Comment
+     */
+    public function setTimeDateTime($timeDateTime)
+    {
+        $this->timeDateTime = $timeDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeDateTime()
+    {
+        return $this->timeDateTime;
+    }
 }

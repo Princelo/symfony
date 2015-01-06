@@ -3,6 +3,7 @@
 namespace Acme\BackendBundle\Controller;
 
 use Acme\BackendBundle\Entity\Constant;
+use Acme\BackendBundle\Entity\Votelog;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -62,13 +63,44 @@ class FMController extends DefaultController
     }
 
     /**
+     * @param Request $request
      * @return Response
      * @Route("/fm/fm_prc_vote", name="_fm_prc_vote")
      */
-    public function fmPRCVoteAction()
+    public function fmPRCVoteAction(Request $request)
     {
-        return new Response();
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
+            ->getIntLatestTermNo();
+        $strWhere = "";
+        /*$strWhere .= " AND s.intRankZone = " . Constant::PRCZONE;
+        $strWhere .= " AND s.boolIsRank = true AND (
+                            (CURRENT_DATE() BETWEEN s.timeRankTimeFrom AND s.timeRankTimeTo
+                            AND s.timeRankTimeFrom IS NOT NULL AND s.timeRankTimeTo IS NOT NULL)
+                            OR(
+                            CURRENT_DATE() < DATE_ADD(s.timeRankTime, 60, 'DAY')
+                            AND s.timeRankTimeFrom IS NULL AND s.timeRankTimeTo IS NULL
+                            )
+                            )";*/
+        $arrSonglist = $objORM->getRepository('AcmeBackendBundle:Song')
+            ->getArrRankingForVote($intLatestTermNo + 1, Constant::PRCZONE);
+        $jsonSonglist = json_encode($arrSonglist);
+        $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
+            ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC');
+
+        return $this->render('AcmeBackendBundle:FM:prc_vote.html.twig',
+            array(
+                'menu' => $this->menu,
+                //'temp_info'=>$temp_info,
+                'songlist_json' => $jsonSonglist,
+                'songlist' => $arrSonglist,
+                'term_no' => $intLatestTermNo + 1,
+                'voted_list_json' => json_encode($arrVotedList),
+            ));
     }
+
 
     /**
      * @return Response
@@ -77,5 +109,52 @@ class FMController extends DefaultController
     public function fmHKTWVoteAction()
     {
         return new Response();
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/fm/fm_votelog_persist", name="_fm_votelog_persist")
+     */
+    public function fmVotelogPersistAction(Request $request)
+    {
+        parent::init();
+        if ($request->getMethod() == 'POST') {
+            $objORM = $this->getDoctrine()->getManager();
+            $intMemberId = $this->objMember->getId();
+            $strSids = $request->request->get('sidlist');
+            $arrStrSid = explode(",", $strSids);
+            if(count($arrStrSid) > 10)
+            {
+                return new Response('歌曲数量错误!');
+            }
+            $session = $request->getSession();
+            $objVoteLog = $objORM->getRepository('AcmeBackendBundle:Votelog')
+                ->findAll(array(
+                    'intMemberId' => $intMemberId,
+                    'intTermNo' => $session->get('current_term_no')
+                ));
+            foreach($objVoteLog as $k => $v)
+            {
+                $objORM->remove($v);
+            }
+            $intIndex = 0;
+            foreach($arrStrSid as $k => $v)
+            {
+                $intIndex ++;
+                $objVoteLog = new Votelog();
+                $objVoteLog->setIntTermNo($session->get('current_term_no'));
+                $objVoteLog->setIntIndex($intIndex);
+                $objVoteLog->setIntMemberId($intMemberId);
+                $objVoteLog->setIntZone($request->request->get('zone'));
+                $objVoteLog->setIntSongId($v);
+                $objVoteLog->setTimeVoteDateTime(new \DateTime());
+                $objORM->persist($objVoteLog);
+            }
+            $objORM->flush();
+            return new Response("投票成功");
+        }else{
+            return new Response();
+        }
     }
 }

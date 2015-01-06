@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class BasicRepository extends EntityRepository
 {
+    public function getRankWeekDay()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            'SELECT b.intWeekDay
+                FROM
+                AcmeBackendBundle:Basic b
+                WHERE b.id = 1'
+            )
+            ->getSingleScalarResult();
+    }
 }

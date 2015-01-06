@@ -27,13 +27,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Acme\BackendBundle\Entity\Menu;
 use Acme\BackendBundle\Form\Type\CommentType;
-
+use Acme\CoreBundle\Controller\CustomerController;
 /**
  * Class DefaultController
  * @package Acme\BackendBundle\Controller
  * @Route("/unvadmin")
  */
-class DefaultController extends Controller
+class DefaultController extends CustomerController
 {
     protected $objMember;
     protected $intType;

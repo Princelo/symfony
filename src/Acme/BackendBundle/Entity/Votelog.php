@@ -21,26 +21,31 @@ class Votelog
      */
     private $id;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intSongId;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intMemberId;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $intTermId;
+    protected $intTermNo;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $intRank;
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $intVoteDateTime;
+    protected $timeVoteDateTime;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intIndex;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intZone;
 
     /**
      * Get id
@@ -77,73 +82,29 @@ class Votelog
 
 
     /**
-     * Set intTermId
+     * Set intTermNo
      *
-     * @param integer $intTermId
+     * @param integer $intTermNo
      * @return Votelog
      */
-    public function setIntTermId($intTermId)
+    public function setIntTermNo($intTermNo)
     {
-        $this->intTermId = $intTermId;
+        $this->intTermNo = $intTermNo;
 
         return $this;
     }
 
     /**
-     * Get intTermId
+     * Get intTermNo
      *
      * @return integer 
      */
-    public function getIntTermId()
+    public function getIntTermNo()
     {
-        return $this->intTermId;
+        return $this->intTermNo;
     }
 
-    /**
-     * Set intRank
-     *
-     * @param integer $intRank
-     * @return Votelog
-     */
-    public function setIntRank($intRank)
-    {
-        $this->intRank = $intRank;
 
-        return $this;
-    }
-
-    /**
-     * Get intRank
-     *
-     * @return integer 
-     */
-    public function getIntRank()
-    {
-        return $this->intRank;
-    }
-
-    /**
-     * Set intVoteDateTime
-     *
-     * @param integer $intVoteDateTime
-     * @return Votelog
-     */
-    public function setIntVoteDateTime($intVoteDateTime)
-    {
-        $this->intVoteDateTime = $intVoteDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get intVoteDateTime
-     *
-     * @return integer 
-     */
-    public function getIntVoteDateTime()
-    {
-        return $this->intVoteDateTime;
-    }
 
     /**
      * Set intMemberId
@@ -166,5 +127,79 @@ class Votelog
     public function getIntMemberId()
     {
         return $this->intMemberId;
+    }
+
+    /**
+     * Set intIndex
+     *
+     * @param integer $intIndex
+     * @return Votelog
+     */
+    public function setIntIndex($intIndex)
+    {
+        $this->intIndex = $intIndex;
+
+        return $this;
+    }
+
+    /**
+     * Get intIndex
+     *
+     * @return integer 
+     */
+    public function getIntIndex()
+    {
+        return $this->intIndex;
+    }
+
+    /**
+     * Set intZone
+     *
+     * @param integer $intZone
+     * @return Votelog
+     */
+    public function setIntZone($intZone)
+    {
+        $this->intZone = $intZone;
+
+        return $this;
+    }
+
+    /**
+     * Get intZone
+     *
+     * @return integer 
+     */
+    public function getIntZone()
+    {
+        return $this->intZone;
+    }
+
+    public function createAt()
+    {
+        $this->setTimeVoteDateTime(new \DateTime());
+    }
+
+    /**
+     * Set timeVoteDateTime
+     *
+     * @param \DateTime $timeVoteDateTime
+     * @return Votelog
+     */
+    public function setTimeVoteDateTime($timeVoteDateTime)
+    {
+        $this->timeVoteDateTime = $timeVoteDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeVoteDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeVoteDateTime()
+    {
+        return $this->timeVoteDateTime;
     }
 }

@@ -4,12 +4,17 @@ namespace Acme\BackendBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Rank
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Acme\BackendBundle\Entity\RankRepository")
+ * @UniqueEntity(
+ *     fields={"intTermNo", "song"},
+ *     message="System is busy, Please wait for a moment"
+ * )
  */
 class Rank
 {
@@ -28,30 +33,43 @@ class Rank
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $intType;
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
     protected $intZone;
+
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $intMemberId;
+    protected $intIndex;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intLastIndex;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $timeCreateTime;
+    protected $intCountOnList;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Song", inversedBy="ranks")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $songs;
+    protected $intFMScore;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intScore;
 
-    public function __construct()
-    {
-        $this->songs = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $boolIsPrePlus;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Song", inversedBy="ranks")
+     * @ORM\JoinColumn(name="song_id", referencedColumnName="id")
+     */
+    protected $song;
+
+
 
 
     /**
@@ -88,28 +106,6 @@ class Rank
     }
 
 
-    /**
-     * Set intType
-     *
-     * @param integer $intType
-     * @return Rank
-     */
-    public function setIntType($intType)
-    {
-        $this->intType = $intType;
-
-        return $this;
-    }
-
-    /**
-     * Get intType
-     *
-     * @return integer 
-     */
-    public function getIntType()
-    {
-        return $this->intType;
-    }
 
     /**
      * Set intZone
@@ -136,97 +132,165 @@ class Rank
 
 
 
+
     /**
-     * Set intMemberId
+     * Set intLastIndex
      *
-     * @param integer $intMemberId
+     * @param integer $intLastIndex
      * @return Rank
      */
-    public function setIntMemberId($intMemberId)
+    public function setIntLastIndex($intLastIndex)
     {
-        $this->intMemberId = $intMemberId;
+        $this->intLastIndex = $intLastIndex;
 
         return $this;
     }
 
     /**
-     * Get intMemberId
+     * Get intLastIndex
      *
      * @return integer 
      */
-    public function getIntMemberId()
+    public function getIntLastIndex()
     {
-        return $this->intMemberId;
+        return $this->intLastIndex;
     }
 
-
     /**
-     * Set songs
+     * Set intCountOnList
      *
-     * @param integer $songs
+     * @param integer $intCountOnList
      * @return Rank
      */
-    public function setSongs($songs)
+    public function setIntCountOnList($intCountOnList)
     {
-        $this->songs = $songs;
+        $this->intCountOnList = $intCountOnList;
 
         return $this;
     }
 
     /**
-     * Get songs
+     * Get intCountOnList
      *
      * @return integer 
      */
-    public function getSongs()
+    public function getIntCountOnList()
     {
-        return $this->songs;
+        return $this->intCountOnList;
     }
 
-
     /**
-     * Add songs
+     * Set song
      *
-     * @param \Acme\BackendBundle\Entity\Song $songs
+     * @param \Acme\BackendBundle\Entity\Song $song
      * @return Rank
      */
-    public function addSong(\Acme\BackendBundle\Entity\Song $songs)
+    public function setSong(\Acme\BackendBundle\Entity\Song $song = null)
     {
-        $this->songs[] = $songs;
+        $this->song = $song;
 
         return $this;
     }
 
     /**
-     * Remove songs
+     * Get song
      *
-     * @param \Acme\BackendBundle\Entity\Song $songs
+     * @return \Acme\BackendBundle\Entity\Song 
      */
-    public function removeSong(\Acme\BackendBundle\Entity\Song $songs)
+    public function getSong()
     {
-        $this->songs->removeElement($songs);
+        return $this->song;
     }
 
     /**
-     * Set timeCreateTime
+     * Set intIndex
      *
-     * @param \DateTime $timeCreateTime
+     * @param integer $intIndex
      * @return Rank
      */
-    public function setTimeCreateTime($timeCreateTime)
+    public function setIntIndex($intIndex)
     {
-        $this->timeCreateTime = $timeCreateTime;
+        $this->intIndex = $intIndex;
 
         return $this;
     }
 
     /**
-     * Get timeCreateTime
+     * Get intIndex
      *
-     * @return \DateTime 
+     * @return integer 
      */
-    public function getTimeCreateTime()
+    public function getIntIndex()
     {
-        return $this->timeCreateTime;
+        return $this->intIndex;
+    }
+
+    /**
+     * Set intFMScore
+     *
+     * @param integer $intFMScore
+     * @return Rank
+     */
+    public function setIntFMScore($intFMScore)
+    {
+        $this->intFMScore = $intFMScore;
+
+        return $this;
+    }
+
+    /**
+     * Get intFMScore
+     *
+     * @return integer 
+     */
+    public function getIntFMScore()
+    {
+        return $this->intFMScore;
+    }
+
+    /**
+     * Set intScore
+     *
+     * @param integer $intScore
+     * @return Rank
+     */
+    public function setIntScore($intScore)
+    {
+        $this->intScore = $intScore;
+
+        return $this;
+    }
+
+    /**
+     * Get intScore
+     *
+     * @return integer 
+     */
+    public function getIntScore()
+    {
+        return $this->intScore;
+    }
+
+    /**
+     * Set boolIsPrePlus
+     *
+     * @param boolean $boolIsPrePlus
+     * @return Rank
+     */
+    public function setBoolIsPrePlus($boolIsPrePlus)
+    {
+        $this->boolIsPrePlus = $boolIsPrePlus;
+
+        return $this;
+    }
+
+    /**
+     * Get boolIsPrePlus
+     *
+     * @return boolean 
+     */
+    public function getBoolIsPrePlus()
+    {
+        return $this->boolIsPrePlus;
     }
 }

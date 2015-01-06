@@ -23,10 +23,11 @@ use Acme\BackendBundle\Entity\City;
 use Acme\BackendBundle\Entity\Artist;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Acme\CoreBundle\Controller\CustomerController;
 /**
  * @Route("/")
  */
-class AccountController extends Controller
+class AccountController extends CustomerController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
