@@ -3,9 +3,11 @@
 namespace Acme\BackendBundle\Controller;
 
 use Acme\BackendBundle\Entity\Constant;
+use Acme\BackendBundle\Form\Type\ArticleType;
 use Acme\BackendBundle\Form\Type\SongModelType;
 use Acme\BackendBundle\Form\Model\SongModel;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
+use Acme\FrontendBundle\Entity\Article;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -134,13 +136,56 @@ class AdminController extends DefaultController
         return new Response();
     }
 
+    /*
+     * @return Response
+     * @Route("/haha", name="admin_sonata_media_media_browser")
+     */
+    public function haha()
+    {
+        return new Response();
+    }
+
+    /*
+     * @return Response
+     * @Route("/hahaha", name="admin_sonata_media_media_upload")
+     */
+    public function hahaha()
+    {
+        return new Response();
+    }
+
     /**
      * @return Response
      * @Route("/admin/article_edit", name="_admin_article_edit")
      */
     public function adminArticleEditAction()
     {
-        return new Response();
+         parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objArticle = new Article();
+        $type = new ArticleType();
+        $form = $this->createForm($type, $objArticle, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_article_edit'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:article_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
     }
 
     /**

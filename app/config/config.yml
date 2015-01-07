@@ -49,6 +49,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -59,6 +61,15 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        #entity_managers:
+            #default:
+                #mappings:
+                    #SonataMediaBundle: ~
+                    #CoopTilleulsCKEditorSonataMediaBundle: ~
+                    #ApplicationSonataMediaBundle: ~
+                    #IvoryCKEditorBundle: ~
+                    #AcmeBackendBundle: ~
+                    #AcmeFrontendBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -89,3 +100,33 @@ knp_paginator:
 
 igorw_file_serve:
     factory: sendfile
+
+
+
+ivory_ck_editor:
+    default_config: default
+    configs:
+        default:
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters:
+                instance: default
+
+
+fm_elfinder:
+    instances:
+        default:
+            locale: %locale% # defaults to current request locale
+            editor: ckeditor # other choices are tinymce or simple, and form
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            #compression: false # enable if you configured the uglifycss and uglifyjs2 assetic filters and want compression
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        showhidden: false # defaults to false
+                        driver: LocalFileSystem
+                        path: uploads/editor
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 2M

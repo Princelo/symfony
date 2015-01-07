@@ -46,4 +46,6 @@ security:
         - { path: ^/unvadmin/admin/*, roles: ROLE_ADMIN }
         - { path: ^/unvadmin/fm/*, roles: ROLE_FM }
         - { path: ^/unvadmin/corp/*, roles: ROLE_CORP }
+        - { path: ^/efconnect, role: ROLE_ADMIN }
+        - { path: ^/elfinder, role: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

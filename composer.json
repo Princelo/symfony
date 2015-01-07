@@ -21,7 +21,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "oneup/uploader-bundle": "~1.3",
         "knplabs/knp-paginator-bundle": "~2.4",
-        "igorw/file-serve-bundle": "~1.0"
+        "igorw/file-serve-bundle": "~1.0",
+        "egeloen/ckeditor-bundle": "2.*",
+        "helios-ag/fm-elfinder-bundle": "~2.3"
     },
     "scripts": {
         "post-install-cmd": [

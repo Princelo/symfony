@@ -179,4 +179,27 @@ class Votelog
     {
         $this->setTimeVoteDateTime(new \DateTime());
     }
+
+    /**
+     * Set timeVoteDateTime
+     *
+     * @param \DateTime $timeVoteDateTime
+     * @return Votelog
+     */
+    public function setTimeVoteDateTime($timeVoteDateTime)
+    {
+        $this->timeVoteDateTime = $timeVoteDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeVoteDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeVoteDateTime()
+    {
+        return $this->timeVoteDateTime;
+    }
 }
