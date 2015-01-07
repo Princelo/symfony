@@ -1,14 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Princelo
- * Date: 1/2/15
- * Time: 02:21
- */
 
 namespace Acme\CoreBundle\Model;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
-class InitializableControllerInterface {
-
-} 
+/**
+ * @author Matt Drollette <matt@drollette.com>
+ */
+interface InitializableControllerInterface
+{
+    public function initialize(Request $request/*, SecurityContextInterface $security_context*/);
+}

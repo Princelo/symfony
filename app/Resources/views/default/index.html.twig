@@ -62,38 +62,6 @@
             </a>
         </div>
         main
-        {% for item in rank_prc %}
-            {{ item.intTerm }}
-            {% for songId in item.arrIntSongId %}
-                {{ songId }}
-            {% endfor %}
-        {% endfor %}
-        {% for item in rank_hktw %}
-            {{ item.intTerm }}
-            {% for songid in item.arrIntSongid %}
-                {{ songid }}
-            {% endfor %}
-        {% endfor %}
-        {% for item in champion_log_prc %}
-            {{ item.intUserId }}
-            {{ item.intSongId }}
-            {{ item.timeCreateTime }}
-        {% endfor %}
-        {% for item in champion_log_hktw %}
-            {{ item.intUserId }}
-            {{ item.intSongId }}
-            {{ item.timeCreateTime }}
-        {% endfor %}
-        {% for item in star_interview %}
-            {{ item.strTitle }}
-            {{ item.timeCreateTime }}
-            {{ item.textContent }}
-            {{ item.strThumb }}
-        {% endfor %}
-        {% for item in fm %}
-            {{ item.strFullName }}
-            {{ item.id }}
-        {% endfor %}
         <div class="home-ad2">
             <a href="{{ otherinfo.strAdLink2 }}">
                 <img src="{{ otherinfo.strAdImg2 }}" />

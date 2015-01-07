@@ -2,11 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use Acme\CoreBundle\Controller\CustomerController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\BackendBundle\Entity\Constant;
 
-class DefaultController extends Controller
+class DefaultController extends CustomerController
 {
     /**
      * @Route("/", name="homepage")

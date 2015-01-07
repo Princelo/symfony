@@ -67,7 +67,7 @@
                 {% endif %}
             </td>
             <td>
-                {{ item.download }}
+                <a href="{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a>
             </td>
             <td>
                 <a href="{{ path('_unvadmin_song_comment', {'id': item.id}) }}" >我要点评({{ item.comment_count }})</a>

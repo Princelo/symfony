@@ -1,25 +1,136 @@
 <?php
-namespace Acme\CustomerBundle\Controller;
+namespace Acme\CoreBundle\Controller;
 
+use Acme\BackendBundle\Entity\Constant;
+use Acme\BackendBundle\Entity\RankLog;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\CoreBundle\Model\InitializableControllerInterface;
+use DateTime;
+use Acme\BackendBundle\Entity\Rank;
 
-/**
- * @author Matt Drollette <matt@drollette.com>
- */
-class CustomerController implements InitializableControllerInterface
+class CustomerController extends Controller implements InitializableControllerInterface
 {
     private $user;
-    private $company;
+    //private $company;
 
-    public function initialize(Request $request, SecurityContextInterface $security_context)
+    public function initialize(Request $request/*, SecurityContextInterface $security_context*/)
     {
-        $this->user = $security_context->getToken()->getUser();
-        echo date('w');exit;
+        //$this->user = $security_context->getToken()->getUser();
+        //echo date('w');exit;
+        //get rank week day
+        $objORM = $this->getDoctrine()->getManager();
+        $intRankWeekDay = $objORM->getRepository('AcmeBackendBundle:Basic')
+            ->getRankWeekDay();
+        //generate should_rank_log
+        $timeNow = new \DateTime('now');
+        $intWeek = date('w', $timeNow->getTimestamp());
+        $floatShouldRank = $this->datediffInWeeks('12/7/2014', $timeNow->format('m/d/Y'));
+        //get latest rank log
+        $intCountRanked = $objORM->getRepository('AcmeBackendBundle:RankLog')
+            ->getIntCountRanked();
+        $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
+            ->getIntLatestTermNo();
+        $session = $request->getSession();
+        $session->set('current_term_no', $intLatestTermNo + 1);
+        if($intWeek >= $intRankWeekDay)
+            $floatShouldRank += 1;
+        //if should_rank_log's count > rank_log's count
+        //generate rank
+        if($floatShouldRank > $intCountRanked){
+            $this->generateRank($floatShouldRank - $intCountRanked, $intLatestTermNo);
+        }
+
     }
 
-    // ... rest of controller actions
+    public function datediffInWeeks($date1, $date2)
+    {
+        $first = DateTime::createFromFormat('m/d/Y', $date1);
+        $second = DateTime::createFromFormat('m/d/Y', $date2);
+        if($date1 > $date2) return $this->datediffInWeeks($date2, $date1);
+        return floor($first->diff($second)->days/7);
+    }
+
+    public function generateRank($intCount, $intLatestTermNo)
+    {
+        $arrShouldGen = array();
+        for($i = 1; $i <= $intCount; $i ++)
+        {
+            array_push($arrShouldGen, $intLatestTermNo + $i);
+        }
+        /*$objORM = $this->getDoctrine()->getManager();
+        $objORM->getRepository('AcmeBackendBundle:Rank')
+            ->generateRank($arrShouldGen);*/
+        $objORM = $this->getDoctrine()->getManager();
+        foreach($arrShouldGen as $key => $val){
+            $ranklog = new RankLog();
+            $ranklog->setIntTermNo($val);
+            $objORM->persist($ranklog);
+            $arrSongPRC = $objORM->getRepository('AcmeBackendBundle:Song')
+                ->getObjRankingByTermNo($arrShouldGen[$key], Constant::PRCZONE);
+            $arrSongHKTW = $objORM->getRepository('AcmeBackendBundle:Song')
+                ->getObjRankingByTermNo($arrShouldGen[$key], Constant::HKTWZONE);
+            $arrSortedSongPRC = array();
+            $arrSortedSongHKTW = array();
+            foreach($arrSongPRC as $k => $v)
+            {
+                //$v['score'] = $v['fm_score'] + ($v['is_pre'])?300:0;
+                $v['score'] = $v['fm_score'];
+                if($v['fm_score'] > 0)
+                    array_push($arrSortedSongPRC, $v);
+            }
+            foreach($arrSongHKTW as $k => $v)
+            {
+                //$v['score'] = $v['fm_score'] + ($v['is_pre'])?300:0;
+                $v['score'] = $v['fm_score'];
+                if($v['fm_score'] > 0)
+                    array_push($arrSortedSongHKTW, $v);
+            }
+            if(!empty($arrSortedSongPRC)){
+                foreach ($arrSortedSongPRC as $ikey => $row) {
+                    $score[$ikey]  = $row['score'];
+                }
+                array_multisort($score, SORT_DESC, $arrSortedSongPRC);
+            }
+            if(!empty($arrSortedSongHKTW)){
+                foreach ($arrSortedSongHKTW as $ikey => $row) {
+                    $score[$ikey]  = $row['score'];
+                }
+                array_multisort($score, SORT_DESC, $arrSortedSongHKTW);
+            }
+            foreach($arrSortedSongPRC as $k => $v)
+            {
+                $objRank = new Rank();
+                $objRank->setIntTermNo($val);
+                $objRank->setIntZone(Constant::PRCZONE);
+                $objSong = $this->getDoctrine()->getRepository('AcmeBackendBundle:Song')->find($v['sid']);
+                $objRank->setSong($objSong);
+                $objRank->setIntIndex($k + 1);
+                $objRank->setIntLastIndex($v['last_index']);
+                $objRank->setIntCountOnList($v['count_rank']);
+                $objRank->setBoolIsPrePlus($v['is_pre']);
+                $objRank->setIntFMScore($v['fm_score']);
+                $objRank->setIntScore($v['score']);
+                $objORM->persist($objRank);
+            }
+            foreach($arrSortedSongHKTW as $k => $v)
+            {
+                $objRank = new Rank();
+                $objRank->setIntTermNo($val);
+                $objRank->setIntZone(Constant::HKTWZONE);
+                $objSong = $this->getDoctrine()->getRepository('AcmeBackendBundle:Song')->find($v['sid']);
+                $objRank->setSong($objSong);
+                $objRank->setIntIndex($k + 1);
+                $objRank->setIntLastIndex($v['last_index']);
+                $objRank->setIntCountOnList($v['count_rank']);
+                $objRank->setBoolIsPrePlus($v['is_pre']);
+                $objRank->setIntFMScore($v['fm_score']);
+                $objRank->setIntScore($v['score']);
+                $objORM->persist($objRank);
+            }
+            $objORM->flush();
+        }
+    }
+
 }

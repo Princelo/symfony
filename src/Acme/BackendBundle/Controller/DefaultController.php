@@ -181,4 +181,37 @@ class DefaultController extends CustomerController
         return new Response();
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return Response
+     * @Route("/download/{type}/{id}", name="_unvadmin_download")
+     */
+    public function downloadFileAction($type, $id)
+    {
+        switch($type){
+            case "song":
+                return $this->getSongDownloadResponse($id);
+            break;
+            default:
+            break;
+        }
+
+    }
+
+    protected function getSongDownloadResponse($id)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $song =
+            $objORM->getRepository('AcmeBackendBundle:Song')->find($id);
+
+        $options = array(
+            'serve_filename' => $song->getStrTitle().".".pathinfo($song->getStrSongFile(), PATHINFO_EXTENSION),
+            'absolute_path' => true,
+            'inline' => false,
+        );
+        return $this->get('igorw_file_serve.response_factory')
+            ->create('../web/uploads/gallery/'.$song->getStrSongFile(), 'application/octet-stream', $options);
+    }
+
 }

@@ -4,6 +4,8 @@ security:
             algorithm: bcrypt
 
     role_hierarchy:
+        ROLE_FM:          ROLE_USER
+        ROLE_CORP:          ROLE_USER
         ROLE_ADMIN:       ROLE_FM, ROLE_CROP
         ROLE_SUPER_ADMIN: [ROLE_FM, ROLE_CROP, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
@@ -40,6 +42,7 @@ security:
 
     access_control:
         #- { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
+        - { path: ^/unvadmin/*, roles: ROLE_USER }
         - { path: ^/unvadmin/admin/*, roles: ROLE_ADMIN }
         - { path: ^/unvadmin/fm/*, roles: ROLE_FM }
         - { path: ^/unvadmin/corp/*, roles: ROLE_CORP }

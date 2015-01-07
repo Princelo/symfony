@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Acme\FrontendBundle\AcmeFrontendBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Igorw\FileServeBundle\IgorwFileServeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
