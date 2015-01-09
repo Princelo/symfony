@@ -1,3 +1,5 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
 <form action="{{ path('_admin_song_list') }}" method="get">
     <select name="zone">
         <option value>全部</option>
@@ -14,6 +16,40 @@
     <input name="search" type="text" placeholder="SEARCH" />
     <input type="submit" />
 </form>
+<script src="http://kolber.github.io/audiojs/audiojs/audio.min.js"></script>
+<script>
+    var play = function(id)
+    {
+        $('audio').each(function(){
+            $(this).remove();
+            console.log('should remove');
+        });
+        $('.audiojs').remove();
+        var player = '<audio src="http://hdhsh.com/app_dev.php/unvadmin/download/song/'+id+'" preload="auto" />';
+        $('#songid' + id).append(player);
+        audiojs.events.ready(function() {
+            var as = audiojs.createAll();
+        });
+    }
+    var openDialog = function(id)
+    {
+        $('#dialog'+id).dialog('open');
+    }
+    /*$(document).ready(function(){
+        audiojs.events.ready(function() {
+            var as = audiojs.createAll();
+        });
+    })*/
+    $(document).ready(function(){
+        $(".dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            height: 600,
+            open: function(ev, ui){
+            }
+        });
+    });
+</script>
 {# total items count #}
 <div class="count">
     {{ pagination.getTotalItemCount }}
@@ -66,17 +102,25 @@
                     <span class="green">暂不打榜</span>
                 {% endif %}
             </td>
-            <td>
-                <a href="{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a>
+            <td id="songid{{ item.id }}">
+                <a href="{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a><br>
+                <a href="javascript:;" onclick="play({{ item.id }})" >PLAY</a>
             </td>
             <td>
-                <a href="{{ path('_unvadmin_song_comment', {'id': item.id}) }}" >我要点评({{ item.comment_count }})</a>
+                <a href="javascript:;" onclick="openDialog({{ item.id }})" >我要点评({{ item.comment_count }})</a>
+                <div class="dialog" id="dialog{{ item.id }}">
+                    Your Iframe Below
+                    <iframe id="" src="{{ path('_unvadmin_song_comment', {'id': item.id}) }}"></iframe>
+                </div>
             </td>
             <td>
                 <a href="{{ path('_admin_song_edit', {'id': item.id} ) }}">编辑</a>
             </td>
             <td>
                 <a href="{{ path('_admin_song_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+            </td>
+            <td>
+                {{ time_diff(item.upload_time) }}
             </td>
         </tr>
     {% endfor %}
@@ -85,3 +129,4 @@
 <div class="navigation">
     {{ knp_pagination_render(pagination) }}
 </div>
+{% endblock %}

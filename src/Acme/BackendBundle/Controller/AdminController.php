@@ -39,20 +39,37 @@ class AdminController extends DefaultController
 {
 
     /**
+     * @param Request $request
      * @return Response
      * @Route("/admin", name="_admin_index")
      */
-    public function adminIndexAction()
+    public function adminIndexAction(Request $request)
     {
         parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
         $arrMemberInfo = array(
             'short_name'    =>  $this->objMember->getStrShortName(),
             'ip'            =>  $this->get('request')->getClientIp(),
             'login_time'    =>  $this->objMember->getTimeLastLoginTime()->format('Y-m-d H:i:s'),
         );
+        $intRankWeekDay = $session->get('rank_week_day');
+        $intNextRankTime = $session->get('next_rank_time');
+        $arrObjChampionLogPRC =
+            $objORM->getRepository('AcmeBackendBundle:Championlog')
+            ->getArrChampionLog(Constant::PRCZONE, 20);
+        $arrObjChampionLogHKTW =
+            $objORM->getRepository('AcmeBackendBundle:Championlog')
+                ->getArrChampionLog(Constant::HKTWZONE, 20);
+        $arrForecast = $objORM->getRepository('AcmeBackendBundle:Forecast')
+            ->getArrForecastlist(100);
         return $this->render('AcmeBackendBundle:Admin:index.html.twig',
             array('m'=>$arrMemberInfo,
                 'menu'=>$this->menu,
+                'next_rank_time' => $intNextRankTime,
+                'championlogs_prc' => $arrObjChampionLogPRC,
+                'championlogs_hktw' => $arrObjChampionLogHKTW,
+                'forecasts' => $arrForecast,
                 ));
     }
 
@@ -215,7 +232,7 @@ class AdminController extends DefaultController
      */
     public function adminSongListAction(Request $request, $page = 1, $strAlertJs = null)
     {
-
+        parent::init();
         $objORM = $this->getDoctrine()->getManager();
         $where = "";
         if ($request->getMethod() == 'GET') {
@@ -234,6 +251,7 @@ class AdminController extends DefaultController
         );
         return $this->render('AcmeBackendBundle:Admin:song_list.html.twig',
             array('pagination' => $pagination,
+                'menu' => $this->menu,
                 'alertjs'=>$strAlertJs));
     }
 

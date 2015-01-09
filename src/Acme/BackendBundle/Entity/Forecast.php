@@ -21,17 +21,17 @@ class Forecast
      */
     private $id;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intMemberId;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strContent;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $intDateTime;
+    protected $timeDateTime;
 
 
     /**
@@ -68,28 +68,6 @@ class Forecast
         return $this->strContent;
     }
 
-    /**
-     * Set intDateTime
-     *
-     * @param integer $intDateTime
-     * @return Forecast
-     */
-    public function setIntDateTime($intDateTime)
-    {
-        $this->intDateTime = $intDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get intDateTime
-     *
-     * @return integer 
-     */
-    public function getIntDateTime()
-    {
-        return $this->intDateTime;
-    }
 
     /**
      * Set intMemberId
@@ -112,5 +90,29 @@ class Forecast
     public function getIntMemberId()
     {
         return $this->intMemberId;
+    }
+
+
+    /**
+     * Set timeDateTime
+     *
+     * @param \DateTime $timeDateTime
+     * @return Forecast
+     */
+    public function setTimeDateTime($timeDateTime)
+    {
+        $this->timeDateTime = $timeDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeDateTime()
+    {
+        return $this->timeDateTime;
     }
 }

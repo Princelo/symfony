@@ -1,8 +1,102 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
+    <script>
+        var openDialog = function()
+        {
+            $('#dialog').dialog('open');
+        }
+        function closeIframe()
+        {
+            $('#dialog').dialog('close');
+            return false;
+        }
+        $(document).ready(function(){
+            $(".dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                open: function(ev, ui){
+                    console.log(ev);
+                }
+            });
+        });
+    </script>
     <div class="welcome-info">
         您好！ <span>{{ m.short_name }}</span> 。您的IP是： <span>{{ m.ip }}</span> , 登录时间是 <span>{{ m.login_time }}</span>
     </div>
     <div class="backend-memo">
-        距xx榜本期投票截止还有： sys.lastRankTime ，我家 foreach
+        距xx榜本期投票截止还有： sys.nextRankTime<span id="countdown-holder"></span> ，我家 foreach
+    </div>
+    <div class="backend-championlog prc">
+        <ul>
+        {% for c in championlogs_prc %}
+            <li>
+                <label class="voter">{{ c.voter }}</label>将冠军投给了
+                <label class="artist">
+                    {% for a in c.artists %}
+                        {{ a.name }}
+                    {% endfor %}
+                </label>
+                <label class="song">
+                    {{ c.title }}
+                </label>
+                <label class="time">
+                    {{ time_diff(c.time) }}
+                </label>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="backend-championlog hktw">
+        <ul>
+            {% for c in championlogs_hktw %}
+                <li>
+                    <label class="voter">{{ c.voter }}</label>将冠军投给了
+                    <label class="artist">
+                        {% for a in c.artists %}
+                            {{ a.name }}
+                        {% endfor %}
+                    </label>
+                    <label class="song">
+                        {{ c.title }}
+                    </label>
+                    <label class="time">
+                        {{ time_diff(c.time) }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="javascript:;" onclick="openDialog()">发布公告</a>
+    <div class="dialog" id="dialog">
+        Your Iframe Below
+        <iframe id="" src="{{ path('_unvadmin_forecast') }}"></iframe>
+    </div>
+    <div class="forecast">
+        <ul>
+        {% for f in forecasts %}
+            <li>
+                <label class="member">
+                    {{ f.member_name }}
+                </label>
+                :
+                <label>
+                    {{ f.content }}
+                </label>
+                <label class="time">
+                    {{ time_diff(f.time) }}
+                </label>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <script>
+        var clock = document.getElementById("countdown-holder")
+                , targetDate = {{ next_rank_time }}*1000;
+
+        clock.innerHTML = countdown(targetDate).toString();
+        setInterval(function(){
+            clock.innerHTML = countdown(targetDate).toString();
+        }, 1000);
+    </script>
 {% endblock %}

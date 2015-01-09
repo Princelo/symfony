@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class ForecastRepository extends EntityRepository
 {
+    public function getArrForecastlist($intCount)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT f.strContent content,
+                        f.timeDateTime time,
+                        m.strShortName member_name
+                    FROM
+                    AcmeBackendBundle:Forecast f
+                    JOIN AcmeBackendBundle:Member m
+                    WITH f.intMemberId = m.id
+                    ORDER BY f.timeDateTime DESC
+                    "
+            )
+            ->setMaxResults($intCount)
+            ->getResult();
+    }
 }

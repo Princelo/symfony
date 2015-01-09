@@ -93,6 +93,7 @@ class CorpController extends DefaultController
             if ($form->isValid()) {
                 $songModel = $form->getData();
                 $song = $songModel->getSong();
+                $song->setTimeUploadDateTime(new \DateTime());
                 $current_member = $this->getUser();
                 $song->setMember($current_member);
                 if($song->getTimeRankTime() == null

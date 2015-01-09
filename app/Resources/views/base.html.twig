@@ -4,10 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--<title>{% block title %}Welcome!{% endblock %}</title>-->
     <title>{{ otherinfo.strsitetitle }} - {{ otherinfo.strsitesubtitle }}</title>
-    {% javascripts 'bundles/acmefrontend/js/*' %}
-    {% endjavascripts %}
+    {# javascripts 'bundles/acmefrontend/js/*' #}
+    {# endjavascripts #}
     {% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
-        <link rel="stylesheet" href="{{ asset_url }}"/>
+    <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     <script>

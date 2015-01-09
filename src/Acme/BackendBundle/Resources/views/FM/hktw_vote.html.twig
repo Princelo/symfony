@@ -15,13 +15,13 @@
 
             // Movable
             /*$(".sort").tableMove({
-                after: function(tr){
-                    $("div#log").append($("<p>", {text: $(tr).find("td").eq(1).text() + " moved!"}));
-                }
-            });*/
+             after: function(tr){
+             $("div#log").append($("<p>", {text: $(tr).find("td").eq(1).text() + " moved!"}));
+             }
+             });*/
         });
     </script>
-    <form action="{{ path('_fm_prc_vote') }}" method="get">
+    <form action="{{ path('_fm_hktw_vote') }}" method="get">
         <select name="zone">
             <option value>全部</option>
             <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::PRCZONE') }}">內地榜</option>
@@ -75,43 +75,43 @@
         </thead>
         <tbody>
         {% for s in songlist %}
-        <tr>
-            <td>{{ s.id }}</td>
-            <td>{{ s.title }}</td>
-            <td>
-                {% for a in s.artists %}
-                    {{ a.name }}
-                {% endfor %}
-            </td>
-            <td>{{ s.corp }}</td>
-            <td>{{ s.count_rank|number_format }}</td>
-            <td>{% if s.last_index > 0 %}
-                {{ s.last_index|number_format }}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.title }}</td>
+                <td>
+                    {% for a in s.artists %}
+                        {{ a.name }}
+                    {% endfor %}
+                </td>
+                <td>{{ s.corp }}</td>
+                <td>{{ s.count_rank|number_format }}</td>
+                <td>{% if s.last_index > 0 %}
+                        {{ s.last_index|number_format }}
                     {% else %}
-                    无排名
-                {% endif %}
-            </td>
-            <td>
-                {{ s.fm_score|number_format }}
-                {% if s.fm_score > s.last_score %}
-                    {% set change = "change-up" %}
-                {% elseif s.fm_score == s.last_score %}
-                    {% set change = "unchanged" %}
-                {% else %}
-                    {% set change = "change-down" %}
-                {% endif %}
-                <span class="{{ change }}"></span>
-            </td>
-            <td>
-                <a href="javascript:;" onclick="addVote({{ s.id }})">选择</a>
-            </td>
-        </tr>
+                        无排名
+                    {% endif %}
+                </td>
+                <td>
+                    {{ s.fm_score|number_format }}
+                    {% if s.fm_score > s.last_score %}
+                        {% set change = "change-up" %}
+                    {% elseif s.fm_score == s.last_score %}
+                        {% set change = "unchanged" %}
+                    {% else %}
+                        {% set change = "change-down" %}
+                    {% endif %}
+                    <span class="{{ change }}"></span>
+                </td>
+                <td>
+                    <a href="javascript:;" onclick="addVote({{ s.id }})">选择</a>
+                </td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
     <a href="javascript:;" onclick="vote()">确认投票</a>
     <script>
-    {% for s in songlist %}
+        {% for s in songlist %}
         {% if s.fm_score > s.last_score %}
         {% set change = "change-up" %}
         {% elseif s.fm_score == s.last_score %}
@@ -120,17 +120,17 @@
         {% set change = "change-down" %}
         {% endif %}
         var songid{{ s.id }}=" <tr id=\"remove{{ s.id }}\"> <td class=\"sid\">{{ s.id }}</td>" +
-                    "<td>{{ s.title }}</td> <td> {% for a in s.artists %} {{ a.name }} {% endfor %} </td>" +
-                    "<td>{{ s.corp }}</td> <td>{{ s.count_rank|number_format }}</td> " +
-                    "<td>{% if s.last_index > 0 %} {{ s.last_index|number_format }} {% else %} 无排名 {% endif %} </td>"+
-                    "<td> {{ s.fm_score|number_format }}" +
-                    "<span class=\"{{ change }}\"></span> </td> <td>" +
-                    "<a href=\"javascript:;\" onclick=\"removeVote({{ s.id }})\">刪除</a> </td>" +
-                    "<td> <a class=\"btn btn-default btn-xs up\" href=\"javascript:void(0)\">" +
-                    "<span class=\"glyphicon glyphicon-arrow-up\"></span></a>" +
-                    "<a class=\"btn btn-default btn-xs down\" href=\"javascript:void(0)\">" +
-                    "<span class=\"glyphicon glyphicon-arrow-down\"></span></a> </td></tr>";
-    {% endfor %}
+                "<td>{{ s.title }}</td> <td> {% for a in s.artists %} {{ a.name }} {% endfor %} </td>" +
+                "<td>{{ s.corp }}</td> <td>{{ s.count_rank|number_format }}</td> " +
+                "<td>{% if s.last_index > 0 %} {{ s.last_index|number_format }} {% else %} 无排名 {% endif %} </td>"+
+                "<td> {{ s.fm_score|number_format }}" +
+                "<span class=\"{{ change }}\"></span> </td> <td>" +
+                "<a href=\"javascript:;\" onclick=\"removeVote({{ s.id }})\">刪除</a> </td>" +
+                "<td> <a class=\"btn btn-default btn-xs up\" href=\"javascript:void(0)\">" +
+                "<span class=\"glyphicon glyphicon-arrow-up\"></span></a>" +
+                "<a class=\"btn btn-default btn-xs down\" href=\"javascript:void(0)\">" +
+                "<span class=\"glyphicon glyphicon-arrow-down\"></span></a> </td></tr>";
+        {% endfor %}
     </script>
     <div id="log"></div>
     <style>
@@ -142,10 +142,10 @@
         {
             var result = true;
             $(".sid").each(function(){
-               if($(this).html() == id) {
-                   alert('此歌曲已选');
-                   result = false;
-               }
+                if($(this).html() == id) {
+                    alert('此歌曲已选');
+                    result = false;
+                }
             });
             if($(".sid").length >= 10)
             {
@@ -176,7 +176,7 @@
         {
             var sid_list = "";
             $(".sid").each(function(){
-                sid_list += $(this).html() + ",";
+                        sid_list += $(this).html() + ",";
                     }
             );
             sid_list = sid_list.substring(0, sid_list.length-1);
@@ -189,7 +189,7 @@
             var request = $.ajax({
                 url: "{{ path('_fm_votelog_persist') }}",
                 type: "POST",
-                data: {"sidlist" : sid_list, "zone":{{ constant('Acme\\BackendBundle\\Entity\\Constant::PRCZONE') }}},
+                data: {"sidlist" : sid_list, "zone":{{ constant('Acme\\BackendBundle\\Entity\\Constant::HKTWZONE') }}},
                 dataType: "html"
             });
 

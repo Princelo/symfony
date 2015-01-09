@@ -2,6 +2,7 @@
 
 namespace Acme\BackendBundle\Controller;
 
+use Acme\BackendBundle\Entity\Championlog;
 use Acme\BackendBundle\Entity\Constant;
 use Acme\BackendBundle\Entity\Votelog;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
@@ -103,12 +104,32 @@ class FMController extends DefaultController
 
 
     /**
+     * @param Request $request
      * @return Response
      * @Route("/fm/fm_hktw_vote", name="_fm_hktw_vote")
      */
-    public function fmHKTWVoteAction()
+    public function fmHKTWVoteAction(Request $request)
     {
-        return new Response();
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
+            ->getIntLatestTermNo();
+        $arrSonglist = $objORM->getRepository('AcmeBackendBundle:Song')
+            ->getArrRankingForVote($intLatestTermNo + 1, Constant::HKTWZONE);
+        $jsonSonglist = json_encode($arrSonglist);
+        $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
+            ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC');
+
+        return $this->render('AcmeBackendBundle:FM:hktw_vote.html.twig',
+            array(
+                'menu' => $this->menu,
+                //'temp_info'=>$temp_info,
+                'songlist_json' => $jsonSonglist,
+                'songlist' => $arrSonglist,
+                'term_no' => $intLatestTermNo + 1,
+                'voted_list_json' => json_encode($arrVotedList),
+            ));
     }
 
     /**
@@ -129,12 +150,24 @@ class FMController extends DefaultController
                 return new Response('歌曲数量错误!');
             }
             $session = $request->getSession();
-            $objVoteLog = $objORM->getRepository('AcmeBackendBundle:Votelog')
+            //---------remove votelogs-----------//
+            $arrObjVoteLog = $objORM->getRepository('AcmeBackendBundle:Votelog')
                 ->findAll(array(
                     'intMemberId' => $intMemberId,
                     'intTermNo' => $session->get('current_term_no')
                 ));
-            foreach($objVoteLog as $k => $v)
+            foreach($arrObjVoteLog as $k => $v)
+            {
+                $objORM->remove($v);
+            }
+            //---------remove championlogs-----------//
+            $arrObjChampionLog = $objORM->getRepository('AcmeBackendBundle:Championlog')
+                ->findAll(array(
+                    'intTermNo' => $session->get('current_term_no'),
+                    'intMemberId' => $intMemberId,
+                    'intZone' => $request->request->get('zone'),
+                ));
+            foreach($arrObjChampionLog as $k => $v)
             {
                 $objORM->remove($v);
             }
@@ -150,6 +183,16 @@ class FMController extends DefaultController
                 $objVoteLog->setIntSongId($v);
                 $objVoteLog->setTimeVoteDateTime(new \DateTime());
                 $objORM->persist($objVoteLog);
+                if($intIndex == 1)
+                {
+                    $objChampionLog = new Championlog();
+                    $objChampionLog->setIntTermNo($session->get('current_term_no'));
+                    $objChampionLog->setIntMemberId($intMemberId);
+                    $objChampionLog->setIntZone($request->request->get('zone'));
+                    $objChampionLog->setIntSongId($v);
+                    $objChampionLog->setTimeDateTime(new \DateTime());
+                    $objORM->persist($objChampionLog);
+                }
             }
             $objORM->flush();
             return new Response("投票成功");

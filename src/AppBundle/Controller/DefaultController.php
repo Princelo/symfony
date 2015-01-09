@@ -10,7 +10,6 @@ use Acme\BackendBundle\Entity\Constant;
 class DefaultController extends CustomerController
 {
     /**
-     * @Route("/", name="homepage")
      */
     public function indexAction()
     {
@@ -31,7 +30,7 @@ class DefaultController extends CustomerController
             ->getObjArticlelist(Constant::STARINTERVIEW, 4, 'timeCreateTime', 'DESC');
         $objFMList = $objORM->getRepository('AcmeBackendBundle:Member')
             ->getObjMemberlist(Constant::FM, 20, 'timeCreateTime', 'DESC');
-        return $this->render('default/index.html.twig',
+        return $this->render('AcmeFrontendBundle:Default:index.html.twig',
                             array(
                                 'otherinfo' => $objFrontendInfo,
                                 'flash' => $objFlash,

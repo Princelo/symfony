@@ -1,5 +1,10 @@
 {{ form(form) }}
-{% for item in comment_list %}
-    {{ item.content }}
-    {{ item.comment_time|date('Y-m-d') }}
-{% endfor %}
+<ul>
+    {% for item in comment_list %}
+        <li>
+            {{ item.member_name }}:
+            {{ item.content }}
+            {{ item.comment_time|date('Y-m-d') }}
+        </li>
+    {% endfor %}
+</ul>

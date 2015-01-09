@@ -1,1 +1,71 @@
-Hello {{ name }}!
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+
+{% block body %}
+    {% block flash %}
+        <div class="flash">
+            <div class="bann-content">
+                <div class="corner"></div>
+                <div class="product-slide">
+                    <div class="product-img-box">
+                        {% for item in flash %}
+                            <div class="media-head" style="left: 0px;">
+                                <p class="product-image">
+                                    <a href="{{ item.strlink }}" target="_blank" alt="">
+                                        <img width="985px" height="361px" border="0" src="{{ item.strimg }}" title="">
+                                    </a>
+                                </p>
+                                <div class="product-shop">
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="product-img-box banner-more">
+                        <div class=" more-views">
+                            <div class="move-content nubmer-bar" style="width: 985px;">
+                                <ul>
+                                    <? if(isset($flash) && $flash != ""){?>
+                                    <? for($i = 0; $i < count($flash); $i ++) { ?>
+                                    <li class="item<?=$i?>">
+                                        <div class="ico-img">
+                                        </div>
+                                    </li>
+                                    <? } ?>
+                                    <? } ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    jQuery(function(){
+                        jQuery.bestnwSlider({
+                            baseUrl: "/",
+                            hasGallery: 0,
+                            hasArrow: 1,
+                            barType : 2,
+                            speed : 500,
+                            autoSpeed:5000,
+                            preText:'left',
+                            nextText: 'right'
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    {% endblock %}
+    <div class="main">
+        <div class="home-ad1">
+            <a href="{{ otherinfo.strAdLink1 }}">
+                <img src="{{ otherinfo.strAdImg1 }}" />
+            </a>
+        </div>
+        main
+        <div class="home-ad2">
+            <a href="{{ otherinfo.strAdLink2 }}">
+                <img src="{{ otherinfo.strAdImg2 }}" />
+            </a>
+        </div>
+    </div>
+{% endblock %}

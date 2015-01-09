@@ -1,0 +1,10 @@
+{{ form(form) }}
+<script>
+    console.log(window.parent);
+</script>
+{% if close == true %}
+    <script>
+        alert('提交公告成功!');
+        window.parent.closeIframe();
+    </script>
+{% endif %}

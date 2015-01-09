@@ -2,10 +2,6 @@ acme_backend_homepage:
     resource: "@AcmeBackendBundle/Controller/DefaultController.php"
     type: annotation
 
-_welcome:
-    pattern:  /
-    defaults: { _controller: AcmeDemoBundle:Welcome:index }
-
 _secured:
     resource: "@AcmeBackendBundle/Controller/SecuredController.php"
     type:     annotation
@@ -22,6 +18,10 @@ _demo:
     resource: "@AcmeDemoBundle/Controller/DemoController.php"
     type:     annotation
     prefix:   /demo
+
+_frontend:
+    resource: "@AcmeFrontendBundle/Controller/DefaultController.php"
+    type:     annotation
 
 random:
      path:     /random/{limit}

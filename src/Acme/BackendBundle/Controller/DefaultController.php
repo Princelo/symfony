@@ -4,7 +4,9 @@ namespace Acme\BackendBundle\Controller;
 
 use Acme\BackendBundle\Entity\Comment;
 use Acme\BackendBundle\Entity\Constant;
+use Acme\BackendBundle\Entity\Forecast;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
+use Acme\BackendBundle\Form\Type\ForecastType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,6 +148,49 @@ class DefaultController extends CustomerController
     }
 
     /**
+     * @param $close
+     * @return Response
+     * @Route("/forecast/{close}", name="_unvadmin_forecast")
+     */
+    public function forecastAction($close = false)
+    {
+        /*$objORM = $this->getDoctrine()->getManager();
+        return new Response();*/
+        $this->init();
+        $request = $this->get('request');
+        $objORM = $this->getDoctrine()->getManager();
+        $type = new ForecastType();
+        $objForecast = new Forecast();
+        $form = $this->createForm($type, $objForecast, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $objCurrentUser = $this->getUser();
+                $objForecast->setIntMemberId($objCurrentUser->getId());
+                $objForecast->setTimeDateTime(new \DateTime());
+                $objORM->persist($objForecast);
+                $objORM->flush();
+                if($objForecast->getId())
+                    $boolClose = true;
+
+                return $this->redirect($this->generateUrl('_unvadmin_forecast', array('close' => $boolClose)));
+            }
+        }
+
+
+        return $this->render(
+            'AcmeBackendBundle:Default:forecast.html.twig',
+            array('form' => $form->createView(),
+                  'close' => $close,
+            )
+        );
+    }
+
+    /**
      * @return Response
      * @Route("fm_contact_list", name="_unvadmin_fm_contact_list")
      */
@@ -207,11 +252,12 @@ class DefaultController extends CustomerController
 
         $options = array(
             'serve_filename' => $song->getStrTitle().".".pathinfo($song->getStrSongFile(), PATHINFO_EXTENSION),
-            'absolute_path' => true,
+            'absolute_path' => false,
             'inline' => false,
         );
         return $this->get('igorw_file_serve.response_factory')
             ->create('../web/uploads/gallery/'.$song->getStrSongFile(), 'application/octet-stream', $options);
     }
+
 
 }

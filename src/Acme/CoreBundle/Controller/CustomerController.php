@@ -34,6 +34,9 @@ class CustomerController extends Controller implements InitializableControllerIn
             ->getIntLatestTermNo();
         $session = $request->getSession();
         $session->set('current_term_no', $intLatestTermNo + 1);
+        $session->set('rank_week_day', $intRankWeekDay);
+        $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
+        $session->set('next_rank_time', $intNextRankTime);
         if($intWeek >= $intRankWeekDay)
             $floatShouldRank += 1;
         //if should_rank_log's count > rank_log's count
@@ -131,6 +134,39 @@ class CustomerController extends Controller implements InitializableControllerIn
             }
             $objORM->flush();
         }
+    }
+
+
+    protected function getIntNextRankTime($intRankWeekDay)
+    {
+        switch($intRankWeekDay)
+        {
+            case 0:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Sunday'):strtotime('Sunday');
+                break;
+            case 1:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Monday'):strtotime('Monday');
+                break;
+            case 2:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Tuesday'):strtotime('Tuesday');
+                break;
+            case 3:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Wednesday'):strtotime('Wednesday');
+                break;
+            case 4:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Thursday'):strtotime('Thursday');
+                break;
+            case 5:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Friday'):strtotime('Friday');
+                break;
+            case 6:
+                $intNextRankTime = $intRankWeekDay<=date('w')?strtotime('next Saturday'):strtotime('Saturday');
+                break;
+            default:
+                $intNextRankTime = 0;
+                break;
+        }
+        return $intNextRankTime;
     }
 
 }

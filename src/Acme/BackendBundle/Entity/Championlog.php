@@ -21,29 +21,25 @@ class Championlog
      */
     private $id;
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $intRankId;
-    /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intTermNo;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intMemberId;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intSongId;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $intDateTime;
+    protected $timeDateTime;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $intType;
+    protected $intZone;
 
 
     /**
@@ -54,29 +50,6 @@ class Championlog
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set intRankId
-     *
-     * @param integer $intRankId
-     * @return Championlog
-     */
-    public function setIntRankId($intRankId)
-    {
-        $this->intRankId = $intRankId;
-
-        return $this;
-    }
-
-    /**
-     * Get intRankId
-     *
-     * @return integer 
-     */
-    public function getIntRankId()
-    {
-        return $this->intRankId;
     }
 
     /**
@@ -100,54 +73,6 @@ class Championlog
     public function getIntTermNo()
     {
         return $this->intTermNo;
-    }
-
-
-
-    /**
-     * Set intDateTime
-     *
-     * @param integer $intDateTime
-     * @return Championlog
-     */
-    public function setIntDateTime($intDateTime)
-    {
-        $this->intDateTime = $intDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Get intDateTime
-     *
-     * @return integer 
-     */
-    public function getIntDateTime()
-    {
-        return $this->intDateTime;
-    }
-
-    /**
-     * Set intType
-     *
-     * @param integer $intType
-     * @return Championlog
-     */
-    public function setIntType($intType)
-    {
-        $this->intType = $intType;
-
-        return $this;
-    }
-
-    /**
-     * Get intType
-     *
-     * @return integer 
-     */
-    public function getIntType()
-    {
-        return $this->intType;
     }
 
 
@@ -196,5 +121,51 @@ class Championlog
     public function getIntSongId()
     {
         return $this->intSongId;
+    }
+
+    /**
+     * Set intZone
+     *
+     * @param integer $intZone
+     * @return Championlog
+     */
+    public function setIntZone($intZone)
+    {
+        $this->intZone = $intZone;
+
+        return $this;
+    }
+
+    /**
+     * Get intZone
+     *
+     * @return integer 
+     */
+    public function getIntZone()
+    {
+        return $this->intZone;
+    }
+
+    /**
+     * Set timeDateTime
+     *
+     * @param \DateTime $timeDateTime
+     * @return Championlog
+     */
+    public function setTimeDateTime($timeDateTime)
+    {
+        $this->timeDateTime = $timeDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeDateTime()
+    {
+        return $this->timeDateTime;
     }
 }

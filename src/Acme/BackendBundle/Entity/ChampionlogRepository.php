@@ -12,17 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class ChampionlogRepository extends EntityRepository
 {
-    public function getObjChampionlog($intType, $intLimit)
+    public function getArrChampionlog($intZone, $intLimit)
     {
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT c, s.strTitle, s.arrStrArtistName, m.strShortName
-                 FROM AcmeBackendBundle:Championlog c
-                JOIN AcmeBackendBundle:Song s
-                WITH c.intSongId = s.id
-                JOIN AcmeBackendBundle:Member m
-                WITH c.intMemberId = m.id
-                WHERE c.intType = {$intType}"
+                "SELECT
+                     s.strTitle title,
+                     s.arrStrArtistName artists,
+                     m.strShortName voter,
+                     c.timeDateTime time
+                FROM AcmeBackendBundle:Championlog c
+                    JOIN AcmeBackendBundle:Song s
+                    WITH c.intSongId = s.id
+                    JOIN AcmeBackendBundle:Member m
+                    WITH c.intMemberId = m.id
+                WHERE c.intZone = {$intZone}"
             )
             ->setMaxResults($intLimit)
             ->getResult();

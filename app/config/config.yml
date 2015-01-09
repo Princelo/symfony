@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -30,7 +30,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ AcmeBackendBundle ]
+    bundles:        [ AcmeBackendBundle, AcmeFrontendBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -49,8 +49,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        types:
-            json: Sonata\Doctrine\Types\JsonType
+        #types:
+            #json: Sonata\Doctrine\Types\JsonType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -99,7 +99,7 @@ knp_paginator:
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 
 igorw_file_serve:
-    factory: sendfile
+    factory: xsendfile
 
 
 
@@ -130,3 +130,9 @@ fm_elfinder:
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
                         upload_deny: ['all']
                         upload_max_size: 2M
+
+knp_time: ~      # Enable the helper for use in templates
+
+#framework:
+    # ...
+    #translator:      { fallback: %locale% } # uncomment this line if you see this line commented

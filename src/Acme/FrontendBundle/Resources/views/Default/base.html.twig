@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--<title>{% block title %}Welcome!{% endblock %}</title>-->
+<title>{{ otherinfo.strsitetitle }} - {{ otherinfo.strsitesubtitle }}</title>
+{# javascripts 'bundles/acmefrontend/js/*' #}
+{# endjavascripts #}
+<script src="{{ asset('bundles/acmefrontend/js/countdown.js') }}"></script>
+{% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
+<link rel="stylesheet" href="{{ asset_url }}"/>
+{% endstylesheets %}
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+<script>
+    function isValidDate( input ) {
+        var date = new Date( input );
+        input = input.split( '-' );
+        return date.getFullYear()  === +input[0] &&
+                date.getMonth() + 1 === +input[1] &&
+                date.getDate() === +input[2];
+    }
+    function isValidTime( input ){
+        if(input.indexOf(':')==-1)
+            return false;
+        input = input.split( ':' );
+        if(input.length!=2)
+            return false;
+        if(!isNumber(input[0])||!isNumber(input[1]))
+            return false;
+        if(+input[0]>24||+input[0]<0)
+            return false;
+        if(+input[1]>60||+input[1]<0)
+            return false;
+        if(isNumber(input[0])&&isNumber(input[1]))
+            return true;
+        return false;
+    }
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+</script>
+<script>$(document).ready(function(){
+    $(".timepicker").keydown(false);
+    $.verify.addRules({
+        uniqueemail: function(r) {
+            var ajax = $.ajax({url:"{{ app.url }}/ajax/check_unique_email/" + r.val().trim(), async:false});
+            var data = ajax.responseText;
+            if(data == 'false'){
+                return '此帐号已被占用';
+            }else if(data == 'true'){
+                return true;
+            }
+        },
+        mydate: function(r){
+            if(!isValidDate(r.val()))
+                return '无效日期';
+            else
+                return true;
+        },
+        mytime: function(r){
+            if(r.val()!="")
+                if(!isValidTime(r.val()))
+                    return '无效时间';
+            var f = $(".cast_time_from").val();
+            var t = $(".cast_time_to").val();
+            if(f!=""||t!=""){
+                if(f=="")
+                    return '起始结束时间必须完整';
+                if(t=="")
+                    return '起始结束时间必须完整';
+            }
+            var tomorrow = $(".cast_time_to_tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return '起始时间必须早于终止时间';
+                }
+            }
+            return true;
+        },
+        mytime1: function(r){
+            if(r.val()!="")
+                if(!isValidTime(r.val()))
+                    return '无效时间';
+            var f = $(".busy_time_from_1").val();
+            var t = $(".busy_time_to_1").val();
+            if(f!=""||t!=""){
+                if(f=="")
+                    return '起始结束时间必须完整';
+                if(t=="")
+                    return '起始结束时间必须完整';
+            }
+            var tomorrow = $(".busy_time_to_1_tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return '起始时间必须早于终止时间';
+                }
+            }
+            return true;
+        },
+        mytime2: function(r){
+            if(r.val()!="")
+                if(!isValidTime(r.val()))
+                    return '无效时间';
+            var f = $(".busy_time_from_2").val();
+            var t = $(".busy_time_to_2").val();
+            if(f!=""||t!=""){
+                if(f=="")
+                    return '起始结束时间必须完整';
+                if(t=="")
+                    return '起始结束时间必须完整';
+            }
+            var tomorrow = $(".busy_time_to_2_tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return '起始时间必须早于终止时间';
+                }
+            }
+            return true;
+        },
+        mytime3: function(r){
+            if(r.val()!="")
+                if(!isValidTime(r.val()))
+                    return '无效时间';
+            var f = $(".busy_time_from_3").val();
+            var t = $(".busy_time_to_3").val();
+            if(f!=""||t!=""){
+                if(f=="")
+                    return '起始结束时间必须完整';
+                if(t=="")
+                    return '起始结束时间必须完整';
+            }
+            var tomorrow = $(".busy_time_to_3_tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return '起始时间必须早于终止时间';
+                }
+            }
+            return true;
+        },
+        mytime4: function(r){
+            if(r.val()!="")
+                if(!isValidTime(r.val()))
+                    return '无效时间';
+            var f = $(".busy_time_from_4").val();
+            var t = $(".busy_time_to_4").val();
+            if(f!=""||t!=""){
+                if(f=="")
+                    return '起始结束时间必须完整';
+                if(t=="")
+                    return '起始结束时间必须完整';
+            }
+            var tomorrow = $(".busy_time_to_4_tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return '起始时间必须早于终止时间';
+                }
+            }
+            return true;
+        },
+        mytime5: function(r){
+            if(r.val()!="")
+                if(!isValidTime(r.val()))
+                    return '无效时间';
+            var f = $(".busy_time_from_5").val();
+            var t = $(".busy_time_to_5").val();
+            if(f!=""||t!=""){
+                if(f=="")
+                    return '起始结束时间必须完整';
+                if(t=="")
+                    return '起始结束时间必须完整';
+            }
+
+            var tomorrow = $(".busy_time_to_5_tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return '起始时间必须早于终止时间';
+                }
+            }
+            return true;
+        },
+        mypassword: function(r){
+            if(r.val().length<8)
+                return "密码长度不得小于8个字符";
+            if($('.password_original').val()!=""&&$('.password_confirmed').val()!="")
+                if($('.password_original').val() != $('.password_confirmed').val())
+                    return "两次输入密码不相同";
+            return true;
+        },
+        myconfirm: function(r){
+            if($('.password_original').val()!=""&&$('.password_confirmed').val()!="")
+                if($('.password_original').val() != $('.password_confirmed').val())
+                    return "两次输入密码不相同";
+            return true;
+        }
+    });
+    $.verify.addGroupRules({
+        timefromto: function(r) {
+            var f = r.field("from").val();
+            var t = r.field("to").val();
+            if(f!="")
+                if(!isValidTime(f))
+                    return {from:'无效时间'};
+            if(t!="")
+                if(!isValidTime(t))
+                    return {to:'无效时间'};
+            var tomorrow = r.field("tomorrow").is(":checked");
+            f = f.split(':');
+            t = t.split(':');
+            if(f[0]){
+                console.log(tomorrow);
+                if( (+f[0]*60+f[1])>(+t[0]*60+t[1]) && tomorrow != true){
+                    return {to:'起始时间必须早于终止时间'};
+                }
+            }
+            return true;
+        }
+    });
+    $("form").verify();
+    $('form').each(function()
+            {
+                $(this).attr('novalidate', 'novalidate');
+            }
+    );
+    $('input[required]').each(function(){
+        console.log($(this));
+        $(this).removeAttr('required');
+    });
+    $( ".datepicker" ).datepicker({
+        'dateFormat': 'yy-m-d',
+        'changeYear' : true
+    });
+    $('.timepicker').timepicker({
+        'showDuration': true,
+        'timeFormat': 'H:i',
+        'step' : 10
+    });
+});
+</script>
+<style>
+    .notifyjs-corner {
+        position: fixed;
+        margin: 5px;
+        z-index: 1050;
+    }
+    .notifyjs-corner .notifyjs-wrapper,
+    .notifyjs-corner .notifyjs-container {
+        position: relative;
+        display: block;
+        height: inherit;
+        width: inherit;
+        margin: 3px;
+    }
+    .notifyjs-wrapper {
+        z-index: 1;
+        position: absolute;
+        display: inline-block;
+        height: 0;
+        width: 0;
+    }
+    .notifyjs-container {
+        display: none;
+        z-index: 1;
+        position: absolute;
+        cursor: pointer;
+    }
+    .notifyjs-text {
+        position: relative;
+    }
+    .notifyjs-arrow {
+        position: absolute;
+        z-index: 2;
+        width: 0;
+        height: 0;
+    }
+</style>
+</head>
+<body>
+{% block header %}
+    <div class="header">
+        <img src="{{ otherinfo.strtopimg }}" />
+        <div class="menu">
+            <ul>
+                <li>
+                    <a href="{{ app.url }}" >首页</a>
+                </li>
+                <li>
+                    <a href="" >榜单查询</a>
+                </li>
+                <li>
+                    <a href="" >星闻汇总</a>
+                </li>
+                <li>
+                    <a href="" >媒投查询</a>
+                </li>
+                <li>
+                    <a href="" >广播节目</a>
+                </li>
+                <li>
+                    <a href="" >协作媒体</a>
+                </li>
+                <li>
+                    <a href="{{ path('_register_corp') }}" >唱片公司</a>
+                </li>
+                <li>
+                    <a href="{{ path('_register_fm') }}" >电台加盟</a>
+                </li>
+                <li>
+                    <a href="{{ path('_login') }}" >用户登录</a>
+                </li>
+                <li>
+                    <a href="" >XX世家</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}{% endblock %}
+{% block footer %}
+    <div class="footer">
+        {{ otherinfo.strfootinfo }}
+    </div>
+{% endblock %}
+{% block otherjavascripts %}{% endblock %}
+</body>
+</html>
