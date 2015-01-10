@@ -1,0 +1,166 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+{% block body %}
+    <div class="main-partition">
+    <div class="registration-form corp_step_two">
+        <div class="steps">
+            <ol>
+                <li><i>1</i><span class="tsl" data-phase-id="r_p_createAccount">登录帐户</span></li>
+                <li class="active"><i>2</i><span class="tsl" data-phase-id="r_p_fillUserInfo">公司信息</span></li>
+                <li><i>3</i><span class="tsl" data-phase-id="r_p_fillUserInfo">个人信息</span></li>
+                <li><i class="iconfont">4</i><span class="tsl" data-phase-id="r_p_regSuc">注册成功</span></li>
+            </ol>
+        </div>
+        {{ form_start(form) }}
+        <ul>
+            <li>
+                {{ form_label(form.corp.strLogo) }}
+                {{ form_widget(form.corp.strLogo) }}
+                <span class="form_errors">{{ form_errors(form.corp.strLogo) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.corp.strFullName) }}
+                {{ form_widget(form.corp.strFullName) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.corp.strFullName) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.corp.strShortName) }}
+                {{ form_widget(form.corp.strShortName) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.corp.strShortName) }}</span>
+            </li>
+            <li>
+                <label>唱片公司地址</label>
+                {{ form_widget(form.corp.intProvinceId) }}
+                {{ form_widget(form.corp.intCityId) }}
+                {{ form_widget(form.corp.strAddressInfo) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.corp.intProvinceId) }}</span>
+                <span class="form_errors">{{ form_errors(form.corp.intCityId) }}</span>
+                <span class="form_errors">{{ form_errors(form.corp.strAddressInfo) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.corp.strZipCode) }}
+                {{ form_widget(form.corp.strZipCode) }}
+                <span class="form_errors">{{ form_errors(form.corp.strZipCode) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.corp.strTel) }}
+                {{ form_widget(form.corp.strTel) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.corp.strTel) }}</span>
+            </li>
+            <li>
+                <label class="float-left">旗下歌手</label>
+                    <ul class="tags" data-prototype="{% if form.corp.arrStrArtistName.vars.prototype is defined %}
+                                    {{ form_widget(form.corp.arrStrArtistName.vars.prototype.name)|e }}
+                                    {% endif %}">
+                        {# iterate over each existing tag and render its only field: name #}
+                        {% for tag in form.corp.arrStrArtistName %}
+                            {% if loop.index == 1 %}
+                                <li>{{ form_widget(tag.name,  { 'attr': {'data-validate' : 'required'} }) }}</li>
+                            {% else %}
+                                <li>{{ form_widget(tag.name) }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <span class="required">(请至少填写一名歌手)</span>
+            </li>
+            <li>
+                {{ form_label(form.corp.strIntro) }}
+                {{ form_widget(form.corp.strIntro) }}
+                <span class="form_errors">{{ form_errors(form.corp.strIntro) }}</span>
+            </li>
+            <li>
+                <label></label>
+                {{ form_widget(form.corp.下一步) }}
+            </li>
+            <div style="clear:both;"></div>
+        </ul>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block otherjavascripts %}
+<script>
+    $(".citySelect").html('<option value="2">北京市</option>');
+    var city = {{ city|raw }};
+    city = city.provinces;
+    var optionhtml = "";
+    $(".provinceSelect").change(function(){
+        optionhtml = "";
+        for(var key in city){
+            if(city[key].id == $('.provinceSelect').val()){
+                for(var ikey in city[key].cities)
+                    for(var iikey in city[key].cities[ikey])
+                        optionhtml += "<option value=\""+iikey+"\">"+city[key].cities[ikey][iikey]+"</option>";
+            }
+        }
+        $(".citySelect").html(optionhtml);
+    });
+    /*
+    var $province = $('.provinceSelect');
+    $province.change(function() {
+        var $form = $(this).closest('form');
+        console.log($form.attr('action'));
+        console.log($form.attr('method'));
+        var data = {};
+        data[$province.attr('name')] = $province.val();
+        $.ajax({
+            url : $form.attr('action'),
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+                console.log($province.val());
+                console.log($(html).find('.citySelect').html());
+                $('.citySelect').replaceWith(
+                        $(html).find('.citySelect')
+                );
+            }
+        });
+    });*/
+    var $collectionHolder;
+
+    // setup an "add a tag" link
+    var $addTagLink = $('<a href="#" class="add_tag_link">添加歌手</a>');
+    var $newLinkLi = $('<li></li>').append($addTagLink);
+
+    jQuery(document).ready(function() {
+        //var $addTagLink = $('.add_tag_link');
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('ul.tags');
+
+        // add the "add a tag" anchor and li to the tags ul
+        $collectionHolder.append($newLinkLi);
+
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        $addTagLink.bind('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+    });
+    function addTagForm($collectionHolder, $newLinkLi) {
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.attr('data-prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormLi = $('<li></li>').append(newForm);
+        $newLinkLi.before($newFormLi);
+    }
+</script>
+{% endblock %}

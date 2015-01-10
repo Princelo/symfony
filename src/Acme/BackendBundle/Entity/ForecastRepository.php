@@ -18,12 +18,13 @@ class ForecastRepository extends EntityRepository
             ->createQuery(
                 "SELECT f.strContent content,
                         f.timeDateTime time,
-                        m.strShortName member_name
+                        m.strShortName member_name,
+                        f.boolIsUp is_up
                     FROM
                     AcmeBackendBundle:Forecast f
                     JOIN AcmeBackendBundle:Member m
                     WITH f.intMemberId = m.id
-                    ORDER BY f.timeDateTime DESC
+                    ORDER BY f.boolIsUp ASC, f.timeDateTime DESC
                     "
             )
             ->setMaxResults($intCount)

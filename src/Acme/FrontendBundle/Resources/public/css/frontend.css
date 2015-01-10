@@ -1,0 +1,113 @@
+body{ margin: 0 !important; padding:0 !important; background: #f5f5f5; font-family: "Microsoft Yahei";}
+li{list-style: none;}
+ul{margin:0; padding:0;}
+p{margin:0; padding:0;}
+img{margin:0; padding:0; border:none; border:0;}
+
+.header{width:1200px; margin:0 auto;}
+.menu{min-width:984px;height:60px;
+    padding:0 20px;border-bottom:1px solid #CC5A18;box-shadow:0 2px 2px rgba(0,0,0,0.2);
+    background:#fa8723;background:-moz-linear-gradient(top, #fa8723 0, #f57614 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #fa8723), color-stop(100%, #f57614));
+    background:-webkit-linear-gradient(top, #fa8723 0, #f57614 100%);
+    background:-o-linear-gradient(top, #fa8723 0, #f57614 100%);
+    background:-ms-linear-gradient(top, #fa8723 0, #f57614 100%);
+    background:linear-gradient(to bottom, #fa8723 0, #f57614 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fa8723', endColorstr='#f57614', GradientType=0)}
+.menu ul{width:1200px; margin:0 auto;}
+.menu li{float:left; padding: 0px 13px; width:auto; line-height: 50px;}
+.menu li a{float: left; display: block; width: 90px; height: 60px; font-size: 16px; line-height: 60px;
+    text-align: center; color: #FFF; text-shadow: 0 1px 1px rgba(0,0,0,0.5);}
+.menu li a:hover{float: left; display: block; width: 90px; height: 60px; font-size: 16px; line-height: 60px;
+    text-align: center; color: #FFF; text-shadow: 0 1px 1px rgba(0,0,0,0.5);}
+.menu li a:hover{background:#db6600;background:-moz-linear-gradient(top, #db6600 0, #f57614 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #db6600), color-stop(100%, #f57614));
+    background:-webkit-linear-gradient(top, #db6600 0, #f57614 100%);
+    background:-o-linear-gradient(top, #db6600 0, #f57614 100%);
+    background:-ms-linear-gradient(top, #db6600 0, #f57614 100%);
+    background:linear-gradient(to bottom, #db6600 0, #f57614 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#db6600', endColorstr='#f57614', GradientType=0)}
+.main-partition{width:1200px; margin:0 auto; padding-top:30px;}
+.main-partition .left{display:inline-block; width:865px; float:left;}
+.main-partition .right{display:inline-block; width:300px; float:left; padding-left:35px;}
+/*********section list **********/
+.section{ margin:0 auto; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;
+    width:1200px; margin-top:30px; padding:20px; min-height: 50px;}
+.section h4 span a{color:#f60; font-size:14px;}
+/***********section end ***************/
+
+.fm-list .fm-list-content{ overflow: hidden; border-bottom: 1px dashed #CCC; border-top: 1px dashed #ccc; }
+.fm-list .fm-list-content a{ float: left; margin: 10px 0 10px -1px; padding: 0 10px; border-left: 1px solid #EEE;
+    color: #999; }
+
+/*********footer**********/
+.footer { overflow: hidden; min-width: 984px; padding: 0 20px; border-top: 1px solid #e6e6e6; background-color: #FFF;
+    text-align: center; min-height: 50px; padding-top:30px; padding-bottom:30px; margin-top:30px;}
+/*********footer**end*********/
+
+
+
+/**********registration**************/
+.registration-form{ margin:0 auto; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;
+    width:1200px;}
+.steps { height: 46px; border-bottom: 2px solid #e6e6e6; position: relative; }
+.steps ol { width: 720px; margin: 0 auto; padding:0; }
+.steps ol li.active { color: #3e3e3e; border-bottom: 2px solid #ff4700; }
+.steps ol li { display: inline; float: left; width: 170px; padding-left: 70px; height: 46px; line-height: 46px;
+    font-size: 16px; font-weight: bold; color: #999;
+    font-family: "\5FAE\8F6F\96C5\9ED1","\534E\6587\7EC6\9ED1","\9ED1\4F53",arial; }
+.steps ol li.active i { background-image: url('../images/ico-circle1.png'); }
+.steps ol li i { display: inline-block; zoom: 1; margin-right: 5px; width: 24px; height: 24px; text-align: center;
+    font-style: normal; line-height: 24px; font-size: 14px; font-weight: bold; color: #FFF;
+    background: url('../images/ico-circle2.png') no-repeat 0 0;}
+.registration-form ul{width:800px; margin:0 auto; padding-top:40px;}
+.registration-form ul label{width:260px; text-align: right; padding-right:15px;}
+.registration-form ul li {float:left; width:800px; margin-bottom:12px;}
+.registration-form ul li:after{clear:both;}
+.registration-form ul:after {clear:both;}
+.registration-form input[type='text']{width: 230px;}
+.registration-form input[type='email']{width: 230px;}
+.registration-form input[type='password']{width: 230px;}
+.registration-form input[type='file']{width: 230px; display:inline;}
+.registration-form label.float-left{float:left;}
+.registration-form .busytime-block{float:left;}
+.registration-form ul ul{width:440px; display:inline;}
+.registration-form ul ul li{display:inline; width:60px;}
+.registration-form ul ul input[type='text']{width:50px;}
+.registration-form ul li input.timepicker{width:95px;}
+.registration-form .tip-large {font-size:16px; text-align: center; min-height: 75px; padding:50px; font-weight:bold;}
+.registration-form .tip-large p{padding-bottom:30px; font-size:24px;}
+.btn-large { min-width: 180px; }
+.btn { display: inline-block; zoom: 1; height: 36px; line-height: 36px; padding: 0 20px; color: #FFF; font-weight: bold;
+    font-size: 16px; text-align: center; background: #ff4001; border: none; border-radius: 3px; cursor: pointer; }
+span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
+
+/**************newest rank********************/
+.audio-list{width:865px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;}
+.audio-list li{min-height:26px; float:left; width:833px; text-align: -webkit-center; line-height: 26px;}
+.audio-list ul{padding:0 16px;}
+.audio-list div.title{background: #e15a22; color:#fff; font-weight: bold; height:30px; font-size: 14px; line-height: 30px;
+    padding:0 16px;}
+.audio-list li.color{background: #f5f5f5;}
+.audio-list li:hover{background:#f77e1b; color:#fff;}
+.audio-list span{float:left; text-align: center; width:64px;}
+.audio-list span.index{width:32px;}
+.audio-list span.title{width:180px;}
+.audio-list span.artist{width:75px;}
+.audio-list span.corp{width:175px;}
+.audio-list span.change{width:60px;}
+.audio-list span.score{width:50px;}
+.audio-list span.play{width:50px;}
+/**************newest rank********************/
+
+/************champion*************/
+.champion-list .title { height: 41px; margin: 0;
+    background: url('../images/tit_hot_room.png') no-repeat; line-height: 40px; padding-left:16px; font-size:16px; color:#fff;}
+.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;}
+.champion-list ul{padding: 15px 0;}
+.champion-list li{ float: left; margin-left: 35px; width: 230px; border-bottom: 1px solid #ebebeb; padding-bottom:3px;}
+.champion-list li:hover{background:rgb(224,224,224)}
+.champion-list .voter{color:#2764b3;}
+.champion-list .artist{background: #f60; color:#fff; font-weight: bold;}
+/************champion*************/
+

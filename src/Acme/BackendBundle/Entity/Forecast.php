@@ -3,6 +3,7 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Forecast
@@ -26,12 +27,18 @@ class Forecast
     protected $intMemberId;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="请填写內容")
      */
     protected $strContent;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $timeDateTime;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $boolIsUp;
 
 
     /**
@@ -114,5 +121,28 @@ class Forecast
     public function getTimeDateTime()
     {
         return $this->timeDateTime;
+    }
+
+    /**
+     * Set boolIsUp
+     *
+     * @param boolean $boolIsUp
+     * @return Forecast
+     */
+    public function setBoolIsUp($boolIsUp)
+    {
+        $this->boolIsUp = $boolIsUp;
+
+        return $this;
+    }
+
+    /**
+     * Get boolIsUp
+     *
+     * @return boolean 
+     */
+    public function getBoolIsUp()
+    {
+        return $this->boolIsUp;
     }
 }

@@ -9,16 +9,13 @@ class AdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'email');
-        $builder->add('password', 'repeated', array(
-            'first_name'  => 'password',
-            'second_name' => 'confirm',
-            'type'        => 'password',
+        $builder->add('strShortName', 'text', array(
+            'label' => '显示名称',
         ));
-        $builder->add('strFullName');
-        $builder->add('strShortName');
-        $builder->add('intType');
-        $builder->add('username');
+        $builder->add('strTel', 'text', array(
+            'label' => '联系电话',
+        ));
+        $builder->add('submit', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

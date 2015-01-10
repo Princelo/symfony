@@ -1,0 +1,115 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+{% block body %}
+    {{ form_start(form) }}
+<div class="main-partition">
+    <div class="registration-form fm_step_three">
+        <div class="steps">
+            <ol>
+                <li><i>1</i><span class="tsl" data-phase-id="r_p_createAccount">登录帐户</span></li>
+                <li><i>2</i><span class="tsl" data-phase-id="r_p_fillUserInfo">公司信息</span></li>
+                <li class="active"><i>3</i><span class="tsl" data-phase-id="r_p_fillUserInfo">个人信息</span></li>
+                <li><i>4</i><span class="tsl" data-phase-id="r_p_regSuc">注册成功</span></li>
+            </ol>
+        </div>
+        <ul>
+            <li>
+                <label>用户头像</label>
+                {{ form_widget(form.fm.strAvatar) }}
+                <span class="form_errors">{{ form_errors(form.fm.strAvatar) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strUserName) }}
+                {{ form_widget(form.fm.strUserName) }}
+                <span class="form_errors">{{ form_errors(form.fm.strUserName) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strUserNickName) }}
+                {{ form_widget(form.fm.strUserNickName) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.fm.strUserNickName) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.intUserGender) }}
+                {{ form_widget(form.fm.intUserGender) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.fm.intUserGender) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strSeniority) }}
+                {{ form_widget(form.fm.strSeniority) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.fm.strSeniority) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strUserCitizenId) }}
+                {{ form_widget(form.fm.strUserCitizenId) }}
+                <span class="form_errors">{{ form_errors(form.fm.strUserCitizenId) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strUserMobile) }}
+                {{ form_widget(form.fm.strUserMobile) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.fm.strUserMobile) }}</span>
+            </li>
+            <li>
+                <label class="float-left">免骚扰繁忙时段</label>
+                <div class="busytime-block">
+                    <div>
+                        从{{ form_widget(form.fm.intBusyWeekDayFrom1) }}
+                        到{{ form_widget(form.fm.intBusyWeekDayTo1) }}
+                        从{{ form_widget(form.fm.strBusyTimeFrom1) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeFrom1) }}</span>
+                        到{{ form_widget(form.fm.strBusyTimeTo1) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeTo1) }}</span>
+                        {{ form_widget(form.fm.boolBusyTimeTo1Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                    <div>
+                        从{{ form_widget(form.fm.intBusyWeekDayFrom2) }}
+                        到{{ form_widget(form.fm.intBusyWeekDayTo2) }}
+                        从{{ form_widget(form.fm.strBusyTimeFrom2) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeFrom2) }}</span>
+                        到{{ form_widget(form.fm.strBusyTimeTo2) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeTo2) }}</span>
+                        {{ form_widget(form.fm.boolBusyTimeTo2Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                    <div>
+                        从{{ form_widget(form.fm.intBusyWeekDayFrom3) }}
+                        到{{ form_widget(form.fm.intBusyWeekDayTo3) }}
+                        从{{ form_widget(form.fm.strBusyTimeFrom3) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeFrom3) }}</span>
+                        到{{ form_widget(form.fm.strBusyTimeTo3) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeTo3) }}</span>
+                        {{ form_widget(form.fm.boolBusyTimeTo3Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                    <div>
+                        从{{ form_widget(form.fm.intBusyWeekDayFrom4) }}
+                        到{{ form_widget(form.fm.intBusyWeekDayTo4) }}
+                        从{{ form_widget(form.fm.strBusyTimeFrom4) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeFrom4) }}</span>
+                        到{{ form_widget(form.fm.strBusyTimeTo4) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeTo4) }}</span>
+                        {{ form_widget(form.fm.boolBusyTimeTo4Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                    <div>
+                        从{{ form_widget(form.fm.intBusyWeekDayFrom5) }}
+                        到{{ form_widget(form.fm.intBusyWeekDayTo5) }}
+                        从{{ form_widget(form.fm.strBusyTimeFrom5) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeFrom5) }}</span>
+                        到{{ form_widget(form.fm.strBusyTimeTo5) }}<span class="form_errors">{{ form_errors(form.fm.strBusyTimeTo5) }}</span>
+                        {{ form_widget(form.fm.boolBusyTimeTo5Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                </div>
+            </li>
+            <li>
+                {{ form_label(form.fm.strUserTel) }}
+                {{ form_widget(form.fm.strUserTel) }}
+                <span class="form_errors">{{ form_errors(form.fm.strUserTel) }}</span>
+            </li>
+            <li>
+                {{ form_label(form.fm.strUserQQ) }}
+                {{ form_widget(form.fm.strUserQQ) }}
+                <span class="form_errors">{{ form_errors(form.fm.strUserQQ) }}</span>
+            </li>
+            <li>
+                <label></label>
+                {{ form_row(form._token) }}
+                {{ form_widget(form.fm.完成) }}
+            </li>
+            <div style="clear:both"></div>
+        </ul>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block otherjavascripts %}
+{% endblock %}

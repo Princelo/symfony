@@ -33,6 +33,7 @@ class CustomerController extends Controller implements InitializableControllerIn
         $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
             ->getIntLatestTermNo();
         $session = $request->getSession();
+        $session->set('last_term_no', $intLatestTermNo);
         $session->set('current_term_no', $intLatestTermNo + 1);
         $session->set('rank_week_day', $intRankWeekDay);
         $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
@@ -71,9 +72,9 @@ class CustomerController extends Controller implements InitializableControllerIn
             $ranklog->setIntTermNo($val);
             $objORM->persist($ranklog);
             $arrSongPRC = $objORM->getRepository('AcmeBackendBundle:Song')
-                ->getObjRankingByTermNo($arrShouldGen[$key], Constant::PRCZONE);
+                ->getArrRankingByTermNo($arrShouldGen[$key], Constant::PRCZONE);
             $arrSongHKTW = $objORM->getRepository('AcmeBackendBundle:Song')
-                ->getObjRankingByTermNo($arrShouldGen[$key], Constant::HKTWZONE);
+                ->getArrRankingByTermNo($arrShouldGen[$key], Constant::HKTWZONE);
             $arrSortedSongPRC = array();
             $arrSortedSongHKTW = array();
             foreach($arrSongPRC as $k => $v)
@@ -115,6 +116,10 @@ class CustomerController extends Controller implements InitializableControllerIn
                 $objRank->setBoolIsPrePlus($v['is_pre']);
                 $objRank->setIntFMScore($v['fm_score']);
                 $objRank->setIntScore($v['score']);
+                if($objSong->getIntTopRankPRC() > 0
+                    && $objSong->getIntTopRankPRC() < $v['top'])
+                    $objSong->setIntRankPRC($v['top']);
+                $objORM->persist($objSong);
                 $objORM->persist($objRank);
             }
             foreach($arrSortedSongHKTW as $k => $v)
@@ -130,6 +135,10 @@ class CustomerController extends Controller implements InitializableControllerIn
                 $objRank->setBoolIsPrePlus($v['is_pre']);
                 $objRank->setIntFMScore($v['fm_score']);
                 $objRank->setIntScore($v['score']);
+                if($objSong->getIntTopRankHKTW() > 0
+                    && $objSong->getIntTopRankHKTW() < $v['top'])
+                    $objSong->setIntRankHKTW($v['top']);
+                $objORM->persist($objSong);
                 $objORM->persist($objRank);
             }
             $objORM->flush();

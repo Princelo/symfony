@@ -1,3 +1,8 @@
+AddType audio/mpeg mp3
+AddType audio/ogg                      oga ogg
+AddType audio/mp4                      m4a
+AddType application/x-shockwave-flash swf
+AddType audio/x-wav .wav 
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks
     RewriteEngine On

@@ -1,0 +1,7 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    {% for m in message %}
+        {{ m }}
+    {% endfor %}
+    {{ form(form) }}
+{% endblock %}

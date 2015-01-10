@@ -16,7 +16,7 @@ use Doctrine\ORM\NoResultException;
  */
 class MemberRepository extends EntityRepository implements UserProviderInterface
 {
-    public function getObjMemberlist($intType, $intLimit, $strOrderBy, $strOrderType)
+    public function getArrMemberList($intType, $intLimit, $strOrderBy, $strOrderType)
     {
         return $this->getEntityManager()
             ->createQuery(
@@ -99,5 +99,24 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
             ")
             ->setParameter('email', $strEmail)
             ->getSingleScalarResult();
+    }
+
+    public function getArrFMList($intCount, $strOrderField, $strOrderType)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT m.strShortName fm_name,
+                    m.id    id
+                FROM
+                    AcmeBackendBundle:Member m
+                WHERE m.intType = " . Constant::FM . "
+                AND
+                    m.boolIsValid = TRUE
+                ORDER BY m.{$strOrderField} {$strOrderType}
+            "
+            )
+            ->setMaxResults($intCount)
+            ->getResult();
     }
 }

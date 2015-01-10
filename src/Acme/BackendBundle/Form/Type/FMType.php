@@ -190,9 +190,11 @@ class FMType extends AbstractType
             $builder->add('strUserQQ', 'text', array('label'=>'常用QQ'));
         }
         if($this->step!=2)
-            $builder->add('下一步', 'submit');
+            $builder->add('下一步', 'submit', array('label'=>false,
+                'attr' => array('class' => 'btn-large btn')));
         else
-            $builder->add('完成', 'submit');
+            $builder->add('完成', 'submit', array('label' => false,
+                'attr' => array('class' => 'btn-large btn')));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

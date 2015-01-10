@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
-    public function getObjCommentlist($id)
+    public function getArrCommentlist($id)
     {
         return $this->getEntityManager()
             ->createQuery(

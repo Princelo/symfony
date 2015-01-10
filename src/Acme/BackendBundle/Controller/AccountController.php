@@ -64,12 +64,14 @@ class AccountController extends CustomerController
         }
 
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
-
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
         return $this->render(
-            'AcmeBackendBundle:Account:register_corp.html.twig',
+            'AcmeFrontendBundle:Registration:register_corp.html.twig',
             array('form' => $form->createView(),
-                'otherinfo' =>  $objFrontendInfo)
+                'otherinfo' =>  $objFrontendInfo,
+                'fms' => $arrFM,)
         );
     }
 
@@ -131,13 +133,16 @@ class AccountController extends CustomerController
         }
 
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
 
         return $this->render(
-            'AcmeBackendBundle:Account:register_corp_1.html.twig',
+            'AcmeFrontendBundle:Registration:register_corp_1.html.twig',
             array('form' => $form->createView(),
                   'city' => $city,
-                  'otherinfo' => $objFrontendInfo
+                  'otherinfo' => $objFrontendInfo,
+                  'fms' =>  $arrFM,
                 )
         );
     }
@@ -162,7 +167,7 @@ class AccountController extends CustomerController
         $registration->setCorp($corp);
         $form = $this->createForm($type, $registration, array(
             //'action' => $this->generateUrl('corp_create_2'),
-            'validation_groups' => array('corp_registration_step_three'),
+            //'validation_groups' => array('corp_registration_step_three'),
         ));
         $objORM = $this->getDoctrine()->getManager();
 
@@ -200,15 +205,41 @@ class AccountController extends CustomerController
                 $session->set('temp_corp_step', 3);
 
 
-                return $this->redirect('finish');
+                return $this->redirect($this->generateUrl('_corp_finish'));
             }
         }
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
         return $this->render(
-            'AcmeBackendBundle:Account:register_corp_2.html.twig',
+            'AcmeFrontendBundle:Registration:register_corp_2.html.twig',
             array('form' => $form->createView(),
-                'otherinfo'=>$objFrontendInfo)
+                'otherinfo'=>$objFrontendInfo,
+                'fms' => $arrFM,)
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("register_corp_finish", name="_corp_finish")
+     */
+    public function corpReigsterFinish(Request $request)
+    {
+        $session = $request->getSession();
+        if($session->get('temp_corp_step') != 3)
+            return $this->redirect('my404');
+        $objORM = $this->getDoctrine()->getManager();
+        $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
+        return $this->render(
+            'AcmeFrontendBundle:Registration:register_corp_finish.html.twig',
+            array(
+                'otherinfo'=>$objFrontendInfo,
+                'fms' => $arrFM,)
         );
     }
 
@@ -236,7 +267,7 @@ class AccountController extends CustomerController
                 $fm = $registration->getFM();
                 $fm->setIntStatus(1);
                 if(!$this->boolCheckUniqueEmail($fm->getEmail()))
-                    return $this->redirect('duplicated_email');
+                    return $this->redirect($this->generateUrl('_duplicate_email'));
                 $objORM->persist($fm);
                 $objORM->flush();
                 $id = $fm->getId();
@@ -250,11 +281,15 @@ class AccountController extends CustomerController
 
         $objORM = $this->getDoctrine()->getManager();
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
         return $this->render(
-            'AcmeBackendBundle:Account:register_fm.html.twig',
+            'AcmeFrontendBundle:Registration:register_fm.html.twig',
             array('form' => $form->createView(),
-                'otherinfo' =>  $objFrontendInfo)
+                'otherinfo' =>  $objFrontendInfo,
+                'fms' => $arrFM,
+            )
         );
     }
 
@@ -302,13 +337,15 @@ class AccountController extends CustomerController
         }
 
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
-
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
         return $this->render(
-            'AcmeBackendBundle:Account:register_fm_1.html.twig',
+            'AcmeFrontendBundle:Registration:register_fm_1.html.twig',
             array('form' => $form->createView(),
                 'city' => $city,
-                'otherinfo' => $objFrontendInfo
+                'otherinfo' => $objFrontendInfo,
+                'fms' => $arrFM,
             )
         );
     }
@@ -365,15 +402,41 @@ class AccountController extends CustomerController
                 $session->set('temp_fm_step', 3);
 
 
-                return $this->redirect('finish');
+                return $this->redirect($this->generateUrl('_fm_finish'));
             }
         }
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
         return $this->render(
-            'AcmeBackendBundle:Account:register_fm_2.html.twig',
+            'AcmeFrontendBundle:Registration:register_fm_2.html.twig',
             array('form' => $form->createView(),
-                'otherinfo'=>$objFrontendInfo)
+                'otherinfo'=>$objFrontendInfo,
+                'fms' => $arrFM,)
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("register_fm_finish", name="_fm_finish")
+     */
+    public function fmReigsterFinish(Request $request)
+    {
+        $session = $request->getSession();
+        if($session->get('temp_fm_step') != 3)
+            return $this->redirect('my404');
+        $objORM = $this->getDoctrine()->getManager();
+        $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
+            ->getArrFrontendInfo();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(30, 'timeCreateTime', 'DESC');
+        return $this->render(
+            'AcmeFrontendBundle:Registration:register_fm_finish.html.twig',
+            array(
+                'otherinfo'=>$objFrontendInfo,
+                'fms' => $arrFM,)
         );
     }
 

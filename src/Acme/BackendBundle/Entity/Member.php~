@@ -152,6 +152,10 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $timeCreateTime;
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $timeUpdateTime;
+    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $strEMail;
@@ -2182,5 +2186,28 @@ class Member implements AdvancedUserInterface, \Serializable
     public function getSongs()
     {
         return $this->songs;
+    }
+
+    /**
+     * Set timeUpdateTime
+     *
+     * @param \DateTime $timeUpdateTime
+     * @return Member
+     */
+    public function setTimeUpdateTime($timeUpdateTime)
+    {
+        $this->timeUpdateTime = $timeUpdateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeUpdateTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeUpdateTime()
+    {
+        return $this->timeUpdateTime;
     }
 }

@@ -5,8 +5,10 @@ namespace Acme\BackendBundle\Controller;
 use Acme\BackendBundle\Entity\Constant;
 use Acme\BackendBundle\Entity\Menu;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
+use Acme\BackendBundle\Form\Type\CorpType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -112,6 +114,54 @@ class CorpController extends DefaultController
             'AcmeBackendBundle:Corp:song_add.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+            )
+        );
+    }
+
+    public function corpInfoEditAction($id = null)
+    {
+        if($id != null && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return new Response('非法操作 Invalid Action');
+        }
+        parent::init();
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        $type = new CorpType();
+        if($id == null)
+            $objMember = $this->getUser();
+        else
+            $objMember =
+                $objORM->getRepository('AcmeBackendBundle:Member')->find($id);
+        $type->setBoolIsUpdate(true);
+        $form = $this->createForm($type, $objMember, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                try {
+                    $objMember = $form->getData();
+                    $objORM->persist($objMember);
+                    $objORM->flush();
+
+                    $this->get('session')->getFlashBag()->add('message',"修改成功!");
+
+                } catch (Exception $e) {
+                    $this->get('session')->getFlashBag()->add('message',"修改不成功!");
+                }
+
+                return $this->redirect($this->generateUrl('_admin_info_edit'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Corp:info_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }

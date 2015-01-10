@@ -171,6 +171,16 @@ class Song
      */
     protected $comments;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intTopRankPRC;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intTopRankHKTW;
+
     public function __construct()
     {
         $this->ranks = new ArrayCollection();
@@ -986,5 +996,51 @@ class Song
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set intTopRankPRC
+     *
+     * @param integer $intTopRankPRC
+     * @return Song
+     */
+    public function setIntTopRankPRC($intTopRankPRC)
+    {
+        $this->intTopRankPRC = $intTopRankPRC;
+
+        return $this;
+    }
+
+    /**
+     * Get intTopRankPRC
+     *
+     * @return integer 
+     */
+    public function getIntTopRankPRC()
+    {
+        return $this->intTopRankPRC;
+    }
+
+    /**
+     * Set intTopRankHKTW
+     *
+     * @param integer $intTopRankHKTW
+     * @return Song
+     */
+    public function setIntTopRankHKTW($intTopRankHKTW)
+    {
+        $this->intTopRankHKTW = $intTopRankHKTW;
+
+        return $this;
+    }
+
+    /**
+     * Get intTopRankHKTW
+     *
+     * @return integer 
+     */
+    public function getIntTopRankHKTW()
+    {
+        return $this->intTopRankHKTW;
     }
 }

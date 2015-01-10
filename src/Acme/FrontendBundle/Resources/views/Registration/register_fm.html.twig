@@ -1,0 +1,37 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+{% block body %}
+    <div class="main-partition">
+    <div class="registration-form fm_step_one">
+        <div class="steps">
+            <ol>
+                <li class="active"><i>1</i><span class="tsl" data-phase-id="r_p_createAccount">登录帐户</span></li>
+                <li><i>2</i><span class="tsl" data-phase-id="r_p_fillUserInfo">公司信息</span></li>
+                <li><i>3</i><span class="tsl" data-phase-id="r_p_fillUserInfo">个人信息</span></li>
+                <li><i class="iconfont">4</i><span class="tsl" data-phase-id="r_p_regSuc">注册成功</span></li>
+            </ol>
+        </div>
+        {{ form_start(form) }}
+        <ul>
+            <li>
+                {{ form_label(form.fm.email) }}
+                {{ form_widget(form.fm.email) }}
+                <span class="required">必填</span>
+                <span class="form_errors">{{ form_errors(form.fm.email) }}</span>
+            </li>
+            {% for passwordField in form.fm.password %}
+                <li class="form-field">
+                    {{ form_label(passwordField) }}
+                    {{ form_widget(passwordField) }}
+                    <span class="required">必填</span>
+                    <span class="form_errors">{{ form_errors(passwordField) }}</span>
+                </li>
+            {% endfor %}
+            <li>
+                <label></label>
+                {{ form_widget(form.fm.下一步) }}
+            </li>
+            <div style="clear:both"></div>
+        </ul>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

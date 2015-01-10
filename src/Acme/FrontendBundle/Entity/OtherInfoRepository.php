@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class OtherInfoRepository extends EntityRepository
 {
-    public function getObjFrontendInfo()
+    public function getArrFrontendInfo()
     {
         return $this->getEntityManager()
             ->createQuery(

@@ -1,0 +1,18 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+{% block body %}
+    <div class="main-partition">
+    <div class="registration-form fm_step_finish">
+        <div class="steps">
+            <ol>
+                <li><i>1</i><span class="tsl" data-phase-id="r_p_createAccount">登录帐户</span></li>
+                <li><i>2</i><span class="tsl" data-phase-id="r_p_fillUserInfo">公司信息</span></li>
+                <li><i>3</i><span class="tsl" data-phase-id="r_p_fillUserInfo">个人信息</span></li>
+                <li class="active"><i>4</i><span class="tsl" data-phase-id="r_p_regSuc">注册成功</span></li>
+            </ol>
+        </div>
+        <div class="tip-large">
+            <p>恭喜！您的信息提交成功，请等待管理员审核。</p>
+            <a href="{{ app.url }}">回到首页</a>
+        </div>
+    </div>
+{% endblock %}

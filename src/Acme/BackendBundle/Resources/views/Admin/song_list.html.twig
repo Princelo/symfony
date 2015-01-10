@@ -18,14 +18,14 @@
 </form>
 <script src="http://kolber.github.io/audiojs/audiojs/audio.min.js"></script>
 <script>
-    var play = function(id)
+    var play = function(token, id)
     {
         $('audio').each(function(){
             $(this).remove();
             console.log('should remove');
         });
         $('.audiojs').remove();
-        var player = '<audio src="http://hdhsh.com/app_dev.php/unvadmin/download/song/'+id+'" preload="auto" />';
+        var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
         $('#songid' + id).append(player);
         audiojs.events.ready(function() {
             var as = audiojs.createAll();
@@ -103,8 +103,9 @@
                 {% endif %}
             </td>
             <td id="songid{{ item.id }}">
-                <a href="{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a><br>
-                <a href="javascript:;" onclick="play({{ item.id }})" >PLAY</a>
+                <a href="{{ app.url }}app_dev.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a><br>
+                <a href="javascript:;" onclick="play('{{ item.file | md5 }}{{ item.id }}', {{ item.id }})" >PLAY</a>
+                {{ item.file | md5 }}
             </td>
             <td>
                 <a href="javascript:;" onclick="openDialog({{ item.id }})" >我要点评({{ item.comment_count }})</a>

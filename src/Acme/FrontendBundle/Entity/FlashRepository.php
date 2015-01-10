@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class FlashRepository extends EntityRepository
 {
-    public function getObjFlashlist()
+    public function getArrFlashlist()
     {
         return $this->getEntityManager()
             ->createQuery(

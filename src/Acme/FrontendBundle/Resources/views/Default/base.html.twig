@@ -4,9 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!--<title>{% block title %}Welcome!{% endblock %}</title>-->
 <title>{{ otherinfo.strsitetitle }} - {{ otherinfo.strsitesubtitle }}</title>
-{# javascripts 'bundles/acmefrontend/js/*' #}
-{# endjavascripts #}
-<script src="{{ asset('bundles/acmefrontend/js/countdown.js') }}"></script>
+{% block javascripts %}
+    <script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.timepicker.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/verify.notify.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/countdown.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/slider.js') }}"></script>
+{% endblock %}
 {% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
 <link rel="stylesheet" href="{{ asset_url }}"/>
 {% endstylesheets %}
@@ -333,6 +338,26 @@
     </div>
 {% endblock %}
 {% block body %}{% endblock %}
+<div class="section fm-list">
+    <h4 class="title">
+        <strong>成员电台</strong>
+        <span>
+            <a href="{{ path('_fm_list') }}">/更多</a>
+        </span>
+    </h4>
+    <div class="fm-list-content">
+    {% for f in fms %}
+        <a href="{{ path('_fm', {'id': f.id }) }}">{{ f.fm_name }}</a>
+    {% endfor %}
+    </div>
+</div>
+<div class="section coop-list">
+    <h4 class="title">
+        <strong>合作伙伴</strong>
+    </h4>
+    <img src="{{ asset('bundles/acmefrontend/images/coop.png') }}" />
+</div>
+</div>
 {% block footer %}
     <div class="footer">
         {{ otherinfo.strfootinfo }}

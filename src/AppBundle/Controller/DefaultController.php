@@ -14,32 +14,32 @@ class DefaultController extends CustomerController
     public function indexAction()
     {
         $objORM = $this->getDoctrine()->getManager();
-        $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getObjFrontendInfo();
-        $objFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
-            ->getObjFlashlist();
-        $objRankInfoPRC = $objORM->getRepository('AcmeBackendBundle:Rank')
-            ->getObjNewestRanklist(Constant::PRCZONE, Constant::GLOBALS);
-        $objRankInfoHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
-            ->getObjNewestRanklist(Constant::HKTWZONE, Constant::GLOBALS);
-        $objChampionlogPRC = $objORM->getRepository('AcmeBackendBundle:Championlog')
-            ->getObjChampionlog(Constant::PRCZONE, 22);
-        $objChampionlogHKTW = $objORM->getRepository('AcmeBackendBundle:Championlog')
-            ->getObjChampionlog(Constant::HKTWZONE, 22);
-        $objStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getObjArticlelist(Constant::STARINTERVIEW, 4, 'timeCreateTime', 'DESC');
-        $objFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getObjMemberlist(Constant::FM, 20, 'timeCreateTime', 'DESC');
+        $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
+            ->getArrFrontendInfo();
+        $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->getArrFlashlist();
+        $arrRankInfoPRC = $objORM->getRepository('AcmeBackendBundle:Rank')
+            ->getArrNewestRanklist(Constant::PRCZONE, Constant::GLOBALS);
+        $arrRankInfoHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
+            ->getArrNewestRanklist(Constant::HKTWZONE, Constant::GLOBALS);
+        $arrChampionlogPRC = $objORM->getRepository('AcmeBackendBundle:Championlog')
+            ->getArrChampionlog(Constant::PRCZONE, 22);
+        $arrChampionlogHKTW = $objORM->getRepository('AcmeBackendBundle:Championlog')
+            ->getArrChampionlog(Constant::HKTWZONE, 22);
+        $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticlelist(Constant::STARINTERVIEW, 4, 'timeCreateTime', 'DESC');
+        $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrMemberlist(Constant::FM, 20, 'timeCreateTime', 'DESC');
         return $this->render('AcmeFrontendBundle:Default:index.html.twig',
                             array(
-                                'otherinfo' => $objFrontendInfo,
-                                'flash' => $objFlash,
-                                'rank_prc'  => $objRankInfoPRC,
-                                'rank_hktw'  => $objRankInfoHKTW,
-                                'champion_log_prc' => $objChampionlogPRC,
-                                'champion_log_hktw' => $objChampionlogHKTW,
-                                'star_interview' => $objStarInterviewList,
-                                'fm' => $objFMList,
+                                'otherinfo' => $arrFrontendInfo,
+                                'flash' => $arrFlash,
+                                'rank_prc'  => $arrRankInfoPRC,
+                                'rank_hktw'  => $arrRankInfoHKTW,
+                                'champion_log_prc' => $arrChampionlogPRC,
+                                'champion_log_hktw' => $arrChampionlogHKTW,
+                                'star_interview' => $arrStarInterviewList,
+                                'fms' => $arrFMList,
                             ));
     }
 }

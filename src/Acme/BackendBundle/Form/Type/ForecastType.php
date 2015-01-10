@@ -11,11 +11,20 @@ use Acme\BackendBundle\Entity\Choice;
 
 class ForecastType extends AbstractType
 {
+    private $boolUppable;
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('strContent', 'text', array('label'=>'公告内容'));
+        if($this->boolUppable)
+            $builder->add('boolIsUp', 'checkbox', array('label'=>'是否置顶'));
         $builder->add('提交', 'submit', array(
         ));
+    }
+
+    public function setBoolUppable($boolUppable)
+    {
+        $this->boolUppable = $boolUppable;
+        return $this;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

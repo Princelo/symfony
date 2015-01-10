@@ -75,7 +75,7 @@
     <div class="forecast">
         <ul>
         {% for f in forecasts %}
-            <li>
+            <li class="{% if f.is_up %}is-up{% endif %} }}">
                 <label class="member">
                     {{ f.member_name }}
                 </label>

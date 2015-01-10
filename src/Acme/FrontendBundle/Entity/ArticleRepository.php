@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getObjArticlelist($intCategory, $intLimit, $strOrderBy, $strOrderType)
+    public function getArrArticlelist($intCategory, $intLimit, $strOrderBy, $strOrderType)
     {
         return $this->getEntityManager()
             ->createQuery(

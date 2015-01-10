@@ -1,0 +1,72 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+{% block body %}
+    <div class="main-partition">
+    <div class="registration-form corp_step_three">
+    <div class="steps">
+        <ol>
+            <li><i>1</i><span class="tsl" data-phase-id="r_p_createAccount">登录帐户</span></li>
+            <li><i>2</i><span class="tsl" data-phase-id="r_p_fillUserInfo">公司信息</span></li>
+            <li class="active"><i>3</i><span class="tsl" data-phase-id="r_p_fillUserInfo">个人信息</span></li>
+            <li><i>4</i><span class="tsl" data-phase-id="r_p_regSuc">注册成功</span></li>
+        </ol>
+    </div>
+    {{ form_errors(form) }}
+    {{ form_start(form) }}
+    <ul>
+        <li>
+            {{ form_label(form.corp.strUserName) }}
+            {{ form_widget(form.corp.strUserName) }}
+            <span class="form_errors">{{ form_errors(form.corp.strUserName) }}</span>
+        </li>
+        <li>
+            {{ form_label(form.corp.strUserNickName) }}
+            {{ form_widget(form.corp.strUserNickName) }}
+            <span class="required">必填</span>
+            <span class="form_errors">{{ form_errors(form.corp.strUserNickName) }}</span>
+        </li>
+        <li>
+            {{ form_label(form.corp.intUserGender) }}
+            {{ form_widget(form.corp.intUserGender) }}
+            <span class="required">必填</span>
+            <span class="form_errors">{{ form_errors(form.corp.intUserGender) }}</span>
+        </li>
+        <li>
+            {{ form_label(form.corp.strUserCitizenId) }}
+            {{ form_widget(form.corp.strUserCitizenId) }}
+            <span class="form_errors">{{ form_errors(form.corp.strUserCitizenId) }}</span>
+        </li>
+        <li>
+            {{ form_label(form.corp.strUserMobile) }}
+            {{ form_widget(form.corp.strUserMobile) }}
+            <span class="required">必填</span>
+            <span class="form_errors">{{ form_errors(form.corp.strUserMobile) }}</span>
+        </li>
+        <li>
+            {{ form_label(form.corp.strUserTel) }}
+            {{ form_widget(form.corp.strUserTel) }}
+            <span class="form_errors">{{ form_errors(form.corp.strUserTel) }}</span>
+        </li>
+        <li>
+            {{ form_label(form.corp.strUserQQ) }}
+            {{ form_widget(form.corp.strUserQQ) }}
+            <span class="form_errors">{{ form_errors(form.corp.strUserQQ) }}</span>
+        </li>
+        <li>
+            <label>身份证正面照</label>
+            {{ form_widget(form.corp.strCardPhoto) }}
+            <span class="form_errors">{{ form_errors(form.corp.strCardPhoto) }}</span>
+        </li>
+        <li>
+            <label>本人上半身照</label>
+            {{ form_widget(form.corp.strBodyPhoto) }}
+            <span class="form_errors">{{ form_errors(form.corp.strBodyPhoto) }}</span>
+        </li>
+        <li>
+            <label></label>
+            {{ form_row(form._token) }}
+            {{ form_widget(form.corp.完成) }}
+        </li>
+        <div style="clear:both"></div>
+    </ul>
+    </div>
+{% endblock %}

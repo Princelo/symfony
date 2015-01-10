@@ -137,7 +137,7 @@ class DefaultController extends CustomerController
         }
 
         $objComments = $objORM->getRepository('AcmeBackendBundle:Comment')
-            ->getObjCommentlist($id);
+            ->getArrCommentList($id);
 
         return $this->render(
             'AcmeBackendBundle:Default:song_comment.html.twig',
@@ -157,11 +157,14 @@ class DefaultController extends CustomerController
         /*$objORM = $this->getDoctrine()->getManager();
         return new Response();*/
         $this->init();
+        $boolIsAdmin = false;
+        if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+            $boolIsAdmin = true;
         $request = $this->get('request');
         $objORM = $this->getDoctrine()->getManager();
         $type = new ForecastType();
         $objForecast = new Forecast();
-        $form = $this->createForm($type, $objForecast, array(
+        $form = $this->createForm($type->setBoolUppable($boolIsAdmin), $objForecast, array(
             //'validation_groups' => array('corp_song_add'),
         ));
 

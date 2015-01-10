@@ -23,6 +23,7 @@ class SongRepository extends EntityRepository
                         s.arrStrArtistName artists,
                         s.intRankZone zone,
                         s.strCorpName corp,
+                        s.strSongFile file,
                         (CASE WHEN(
                             s.boolIsRank = true
                             AND
@@ -114,7 +115,7 @@ class SongRepository extends EntityRepository
             );
     }
 
-    public function getObjRankingByTermNo($intTermNo, $intZone)
+    public function getArrRankingByTermNo($intTermNo, $intZone)
     {
         $intLastTermNo = $intTermNo - 1;
         return $this->getEntityManager()
@@ -131,8 +132,14 @@ class SongRepository extends EntityRepository
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone}
-                    ) AS count_rank
+                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.index < 21
+                    ) AS count_rank,
+                    (CASE WHEN s.intZone = " . Constant::PRCZONE . "
+                        s.intTopRankPRC
+                        ELSE
+                        s.intTopRankHKTW
+                        ) AS top
+
                 FROM
                     AcmeBackendBundle:Song s
                 WHERE
@@ -164,12 +171,17 @@ class SongRepository extends EntityRepository
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone}
+                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.index < 21
                     ) AS count_rank,
                     (
                         SELECT lr3.intScore FROM AcmeBackendBundle:Rank lr3 WHERE lr3.song = s.id AND lr3.intZone = {$intZone}
                             AND lr3.intTermNo = {$intLastTermNo}
-                    ) AS last_score
+                    ) AS last_score,
+                    (CASE WHEN s.intZone = " . Constant::PRCZONE . "
+                        s.intTopRankPRC
+                        ELSE
+                        s.intTopRankHKTW
+                        ) AS top
                 FROM
                     AcmeBackendBundle:Song s
                 WHERE

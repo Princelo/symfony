@@ -13,26 +13,30 @@ use Acme\BackendBundle\Entity\Constant;
  */
 class RankRepository extends EntityRepository
 {
-    public function getObjNewestRanklist($intZone, $intType)
+    public function getArrNewestRankList($intZone, $intCount, $intTermNo)
     {
-        if($intZone == Constant::PRCZONE)
-            $strResult = 'intPRCResult';
-        else if($intZone == Constant::HKTWZONE)
-            $strResult = 'intHKTWResult';
+        $strTop = $intZone==0?"intTopRankPRC":"intTopRankHKTW";
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT s.strTitle title,
                         s.arrStrArtistName artists,
                         s.id id,
-                        r.intTermNo term_no
+                        s.{$strTop} top,
+                        s.strCorpName corp,
+                        r.intIndex rank_index,
+                        r.intLastIndex last_rank_index,
+                        r.intCountOnList count_on_list,
+                        r.intScore score,
+                        r.boolIsPrePlus is_pre
                     FROM
                     AcmeBackendBundle:Rank r
                     JOIN r.song s
                     WHERE r.intZone = {$intZone}
-                    ORDER BY s.{$strResult} DESC
+                    AND r.intTermNo = {$intTermNo}
+                    ORDER BY r.intIndex ASC
                     "
             )
-            ->setMaxResults(20)
+            ->setMaxResults($intCount)
             ->getResult();
     }
 

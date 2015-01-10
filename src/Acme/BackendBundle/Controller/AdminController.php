@@ -3,6 +3,7 @@
 namespace Acme\BackendBundle\Controller;
 
 use Acme\BackendBundle\Entity\Constant;
+use Acme\BackendBundle\Form\Type\AdminType;
 use Acme\BackendBundle\Form\Type\ArticleType;
 use Acme\BackendBundle\Form\Type\SongModelType;
 use Acme\BackendBundle\Form\Model\SongModel;
@@ -10,6 +11,7 @@ use Acme\BackendBundle\Form\Type\AdminWizardType;
 use Acme\FrontendBundle\Entity\Article;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -74,12 +76,47 @@ class AdminController extends DefaultController
     }
 
     /**
+     * @param $request
      * @return Response
      * @Route("/admin/info_edit", name="_admin_info_edit")
      */
-    public function adminInfoEditAction()
+    public function adminInfoEditAction(Request $request)
     {
-        return new Response();
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $type = new AdminType();
+        $objMember = $this->getUser();
+        $form = $this->createForm($type, $objMember, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                try {
+                    $objMember = $form->getData();
+                    $objMember->setStrFullName($objMember->getStrShortName());
+                    $objORM->persist($objMember);
+                    $objORM->flush();
+
+                    $this->get('session')->getFlashBag()->add('message',"修改成功!");
+
+                } catch (Exception $e) {
+                    $this->get('session')->getFlashBag()->add('message',"修改不成功!");
+                }
+
+                return $this->redirect($this->generateUrl('_admin_info_edit'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:info_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
+            )
+        );
     }
 
     /**
@@ -177,7 +214,7 @@ class AdminController extends DefaultController
      */
     public function adminArticleEditAction()
     {
-         parent::init();
+        parent::init();
         $request = $this->get('request');
 
         $objORM = $this->getDoctrine()->getManager();
@@ -206,11 +243,14 @@ class AdminController extends DefaultController
     }
 
     /**
+     * @param Request $request
      * @return Response
      * @Route("/admin/fm_contact_list", name="_admin_fm_contact_list")
      */
-    public function adminFMContactListAction()
+    public function adminFMContactListAction(Request $request)
     {
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
         return new Response();
     }
 

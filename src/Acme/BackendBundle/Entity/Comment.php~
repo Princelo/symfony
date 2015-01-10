@@ -3,7 +3,7 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Comment
  *
@@ -30,6 +30,7 @@ class Comment
     protected $timeDateTime;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="请填写內容")
      */
     protected $strContent;
     /**

@@ -171,6 +171,16 @@ class Song
      */
     protected $comments;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intTopRankPRC;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intTopRankHKTW;
+
     public function __construct()
     {
         $this->ranks = new ArrayCollection();
