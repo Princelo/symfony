@@ -24,13 +24,13 @@ class DefaultController extends CustomerController
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
         $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
-            ->getArrFlashList();
+            ->findAll();
         $arrChampionlogPRC = $objORM->getRepository('AcmeBackendBundle:Championlog')
             ->getArrChampionlog(Constant::PRCZONE, 22);
         $arrChampionlogHKTW = $objORM->getRepository('AcmeBackendBundle:Championlog')
             ->getArrChampionlog(Constant::HKTWZONE, 22);
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(Constant::STARINTERVIEW, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
         $intLastTermNo = $session->get('last_term_no');
@@ -44,7 +44,7 @@ class DefaultController extends CustomerController
                 'flash' => $arrFlash,
                 'champion_log_prc' => $arrChampionlogPRC,
                 'champion_log_hktw' => $arrChampionlogHKTW,
-                'star_interview' => $arrStarInterviewList,
+                'articles' => $arrStarInterviewList,
                 'rank_songs_prc' => $arrLastRankSongPRC,
                 'rank_songs_hktw' => $arrLastRankSongHKTW,
                 'fms' => $arrFMList,

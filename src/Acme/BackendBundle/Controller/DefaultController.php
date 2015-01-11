@@ -262,5 +262,19 @@ class DefaultController extends CustomerController
             ->create('../web/uploads/gallery/'.$song->getStrSongFile(), 'application/octet-stream', $options);
     }
 
+    public function fileHandleUploadFileWithoutType($form, $strField, $strDir)
+    {
+        $fileOri = $form[$strField]->getData();
+        if($fileOri=="")
+            return "";
+        $extension = $fileOri->guessExtension();
+        if (!$extension) {
+            $extension = 'bin';
+        }
+        $file = date('YmdHis').rand(1000, 9999).'.'.$extension;
+        $fileOri->move($strDir, $file);
+        @unlink($fileOri);
+        return $file;
+    }
 
 }

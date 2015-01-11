@@ -1,0 +1,65 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+
+{% block body %}
+    <div class="main-partition">
+        <div class="left">
+            <div class="article-detail">
+                <h1>
+                    {{ article.strTitle }}
+                </h1>
+                <label>
+                    {{ article.timeCreateTime|date('Y-m-d') }}
+                </label>
+                {{ article.textContent|raw }}
+            </div>
+        </div>
+        <div class="right">
+            <div class="star_news">
+                <ul>
+                    {% for a in star_news %}
+                    <li>
+                    <span class="index">{{ loop.index }}</span>
+                    <a href="{{ path('article_detail', {"id": a.id}) }}">
+                        {{ a.title }}
+                    </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="hot_pic">
+                <ul>
+                    {% for a in hot_pics %}
+                        <li>
+                            <a href="{{ path('article_detail', {"id": a.id}) }}">
+                                <img src="uploads/article_thumb/{{ a.thumb }}" />
+                            </a>
+                            <a href="{{ path('article_detail', {"id": a.id}) }}">
+                                {{ a.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="hot_news">
+                <ul>
+                    {% for a in hot_news_b %}
+                        <li>
+                            <span class="index">{{ loop.index }}</span>
+                            <a href="{{ path('article_detail', {"id": a.id}) }}">
+                                {{ a.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    {% for a in hot_news_a %}
+                        <li>
+                            <span class="index">{{ loop.index }}</span>
+                            <a href="{{ path('article_detail', {"id": a.id}) }}">
+                                {{ a.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    <div style="clear:both"></div>
+{% endblock %}

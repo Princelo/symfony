@@ -69,15 +69,41 @@ class Menu {
                         },
                         {
                             "name": "幻灯片",
-                            "route": "_admin_flash_edit"
+                            "route": "_admin_flash_list"
                         },
                         {
                             "name": "广告位",
                             "route": "_admin_site_img_edit"
+                        }
+                    ]
+                },
+                {
+                    "name": "文章发布",
+                    "item": [
+                        {
+                            "name": "'.Constant::CATEGORY1.'",
+                            "route": "_admin_article_list",
+                            "param": "1"
                         },
                         {
-                            "name": "文章发布",
-                            "route": "_admin_article_edit"
+                            "name": "'.Constant::CATEGORY2.'",
+                            "route": "_admin_article_list",
+                            "param": "2"
+                        },
+                        {
+                            "name": "'.Constant::CATEGORY3.'",
+                            "route": "_admin_article_list",
+                            "param": "3"
+                        },
+                        {
+                            "name": "'.Constant::CATEGORY4.'",
+                            "route": "_admin_article_list",
+                            "param": "4"
+                        },
+                        {
+                            "name": "'.Constant::CATEGORY5.'",
+                            "route": "_admin_article_list",
+                            "param": "5"
                         }
                     ]
                 },

@@ -5,10 +5,13 @@ namespace Acme\BackendBundle\Controller;
 use Acme\BackendBundle\Entity\Constant;
 use Acme\BackendBundle\Form\Type\AdminType;
 use Acme\BackendBundle\Form\Type\ArticleType;
+use Acme\BackendBundle\Form\Type\FlashType;
+use Acme\BackendBundle\Form\Type\OtherInfoType;
 use Acme\BackendBundle\Form\Type\SongModelType;
 use Acme\BackendBundle\Form\Model\SongModel;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
 use Acme\FrontendBundle\Entity\Article;
+use Acme\FrontendBundle\Entity\Flash;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -164,21 +167,176 @@ class AdminController extends DefaultController
     }
 
     /**
+     * @param Request $request
      * @return Response
      * @Route("/admin/site_info_edit", name="_admin_site_info_edit")
      */
-    public function adminSiteInfoEditAction()
+    public function adminSiteInfoEditAction(Request $request)
     {
-        return new Response();
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $objOtherInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
+            ->find(1);
+        $type = new OtherInfoType();
+        $strOriTopImg = $objOtherInfo->getStrTopImg();
+        $strOriADImg1 = $objOtherInfo->getStrADImg1();
+        $strOriADImg2 = $objOtherInfo->getStrADImg2();
+        $form = $this->createForm($type, $objOtherInfo);
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                if($form->getData()->getStrTopImg() != null){
+                    $strTopImg = $this->fileHandleUploadFileWithoutType($form, 'strTopImg', 'uploads/site_info');
+                    $objOtherInfo->setStrTopImg($strTopImg);
+                }else{
+                    $objOtherInfo->setStrTopImg($strOriTopImg);
+                }
+                if($form->getData()->getStrADImg1() != null){
+                    $strADImg1 = $this->fileHandleUploadFileWithoutType($form, 'strADImg1', 'uploads/site_info');
+                    $objOtherInfo->setStrADImg1($strADImg1);
+                }else{
+                    $objOtherInfo->setStrADImg1($strOriADImg1);
+                }
+                if($form->getData()->getStrADImg2() != null){
+                    $strADImg2 = $this->fileHandleUploadFileWithoutType($form, 'strADImg2', 'uploads/site_info');
+                    $objOtherInfo->setStrADImg2($strADImg2);
+                }else{
+                    $objOtherInfo->setStrADImg2($strOriADImg2);
+                }
+                $objORM->persist($objOtherInfo);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_rank_setting'));
+            }
+        }
+        return $this->render(
+            'AcmeBackendBundle:Admin:otherinfo.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
     }
 
     /**
      * @return Response
-     * @Route("/admin/flash_edit", name="_admin_flash_edit")
+     * @Route("/admin/flash_list", name="_admin_flash_list")
      */
-    public function adminFlashEditAction()
+    public function adminFlashListAction()
     {
-        return new Response();
+        parent::init();
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findAll();
+
+        return $this->render('AcmeBackendBundle:Admin:flash_list.html.twig',
+            array(
+                'menu' => $this->menu,
+                'flashs' => $arrFlash,
+            ));
+    }
+
+    /**
+     * @return Response
+     * @Route("/admin/flash_create", name="_admin_flash_create")
+     */
+    public function adminFlashCreateAction()
+    {
+        parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objFlash = new Flash();
+        $type = new FlashType();
+        $form = $this->createForm($type, $objFlash, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $objFlash = $form->getData();
+                $strImg = $this->fileHandleUploadFileWithoutType($form, 'strImg', 'uploads/flash');
+                $objFlash->setStrImg($strImg);
+                $objORM->persist($objFlash);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_flash_list'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:flash_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/admin/flash_edit/{id}", name="_admin_flash_edit")
+     */
+    public function adminFlashEditAction($id)
+    {
+        parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->find($id);
+        $strOriImg = $objFlash->getStrImg();
+        $type = new FlashType();
+        $form = $this->createForm($type, $objFlash, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                if($form->getData()->getStrImg() != null){
+                    $strImg = $this->fileHandleUploadFileWithoutType($form, 'strImg', 'uploads/flash');
+                    $objFlash->setStrImg($strImg);
+                    $objORM->persist($objFlash);
+                }else{
+                    $objFlash->setStrImg($strOriImg);
+                }
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_flash_edit', array('id' => $id)));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:flash_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/admin/flash_delete/{id}", name="_admin_flash_delete")
+     */
+    public function adminFlashDeleteAction($id)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $query = $objORM->createQuery('DELETE
+                                         FROM AcmeFrontendBundle:Flash f
+                                         WHERE f.id = :id')
+            ->setParameters(array('id'=>$id))
+            ->execute();
+        $strAlertJs = "<script>alert(\"刪除成功\");</script>";
+        return $this->redirect($this->generateUrl('_admin_flash_list',
+            array(
+                'strAlertJs' => $strAlertJs
+            )));
     }
 
     /**
@@ -190,29 +348,56 @@ class AdminController extends DefaultController
         return new Response();
     }
 
-    /*
-     * @return Response
-     * @Route("/haha", name="admin_sonata_media_media_browser")
-     */
-    public function haha()
-    {
-        return new Response();
-    }
 
-    /*
+    /**
+     * @param $id
      * @return Response
-     * @Route("/hahaha", name="admin_sonata_media_media_upload")
+     * @Route("/admin/article_edit/{id}", name="_admin_article_edit")
      */
-    public function hahaha()
+    public function adminArticleEditAction($id)
     {
-        return new Response();
+        parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objArticle = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->find($id);
+        $strOriThumb = $objArticle->getStrThumb();
+        $type = new ArticleType();
+        $form = $this->createForm($type, $objArticle, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                if($form->getData()->getStrThumb() != null){
+                    $strThumb = $this->fileHandleUploadFileWithoutType($form, 'strThumb', 'uploads/article_thumb');
+                    $objArticle->setStrThumb($strThumb);
+                    $objORM->persist($objArticle);
+                }else{
+                    $objArticle->setStrThumb($strOriThumb);
+                }
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_article_edit', array('id' => $id)));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:article_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
     }
 
     /**
      * @return Response
-     * @Route("/admin/article_edit", name="_admin_article_edit")
+     * @Route("/admin/article_create", name="_admin_article_create")
      */
-    public function adminArticleEditAction()
+    public function adminArticleCreateAction()
     {
         parent::init();
         $request = $this->get('request');
@@ -228,9 +413,14 @@ class AdminController extends DefaultController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                $objArticle = $form->getData();
+                $objArticle->setTimeCreateTime(new \DateTime());
+                $strThumb = $this->fileHandleUploadFileWithoutType($form, 'strThumb', 'uploads/article_thumb');
+                $objArticle->setStrThumb($strThumb);
+                $objORM->persist($objArticle);
                 $objORM->flush();
 
-                return $this->redirect($this->generateUrl('_admin_article_edit'));
+                return $this->redirect($this->generateUrl('_admin_article_create'));
             }
         }
 
@@ -240,6 +430,63 @@ class AdminController extends DefaultController
                 'menu' => $this->menu,
             )
         );
+    }
+
+    /**
+     * @param $id
+     * @param $page
+     * @return Response
+     * @Route("/admin/article_delete/{id}/{page}", name="_admin_article_delete")
+     */
+    public function adminArticleDeleteAction($id, $page)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $where = null;
+        $query = $objORM->createQuery('DELETE
+                                         FROM AcmeBackendBundle:Article a
+                                         WHERE a.id = :id')
+            ->setParameters(array('id'=>$id))
+            ->execute();
+        $strAlertJs = "<script>alert(\"刪除成功\");</script>";
+        return $this->redirect($this->generateUrl('_admin_article_list',
+            array(
+                'page' => $page,
+                'strAlertJs' => $strAlertJs
+            )));
+    }
+
+    /**
+     * @param $category
+     * @param $page
+     * @return Response
+     * @Route("/admin/article_list/{category}/{page}", name="_admin_article_list")
+     */
+    public function adminArticleListAction($category, $page)
+    {
+        parent::init();
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        $strWhere = "";
+        if ($request->getMethod() == 'GET') {
+            $strWhere = $this->_getStrArticleSearchStr($request->query->get('search'),
+                $request->query->get('category')
+                );
+        }
+        $queryArticlelist = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getQueryArticleList($category, $strWhere);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $queryArticlelist,
+            $request->query->get('page', $page)/*page number*/,
+            20/*limit per page*/
+        );
+        return $this->render('AcmeBackendBundle:Admin:article_list.html.twig',
+            array('pagination' => $pagination,
+                'menu' => $this->menu,
+                'category' => $category,
+                'page' => $page,
+                ));
     }
 
     /**
@@ -276,7 +523,7 @@ class AdminController extends DefaultController
         $objORM = $this->getDoctrine()->getManager();
         $where = "";
         if ($request->getMethod() == 'GET') {
-            $where = $this->_getStrSearchStr($request->query->get('search'),
+            $where = $this->_getStrSongSearchStr($request->query->get('search'),
                                     $request->query->get('zone'),
                                     $request->query->get('status'));
         }
@@ -392,7 +639,7 @@ class AdminController extends DefaultController
      * @param null $intStatus
      * @return string
      */
-    public function _getStrSearchStr($strSearch = null, $intZone = null, $intStatus = null)
+    public function _getStrSongSearchStr($strSearch = null, $intZone = null, $intStatus = null)
     {
         $where = "";
         if($strSearch != "")
@@ -420,5 +667,15 @@ class AdminController extends DefaultController
         if($intStatus == Constant::NOT_RANK)
             $where .= " AND s.boolIsRank = false ";
         return $where;
+    }
+
+    public function _getStrArticleSearchStr($strSearch = null, $intCategory = null)
+    {
+        $strWhere = "";
+        if($strSearch != null)
+            $strWhere .= " AND a.strTitle LIKE '%{$strSearch}%'";
+        if($intCategory != null)
+            $strWhere .= " AND a.intCategory = {$intCategory}";
+        return $strWhere;
     }
 }

@@ -1,6 +1,7 @@
 {% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
 
 {% block body %}
+    <div class="main-partition">
     {% block flash %}
         <div class="flash">
             <div class="bann-content">
@@ -11,7 +12,7 @@
                             <div class="media-head" style="left: 0px;">
                                 <p class="product-image">
                                     <a href="{{ item.strlink }}" target="_blank" alt="">
-                                        <img width="985px" height="361px" border="0" src="{{ item.strimg }}" title="">
+                                        <img width="1200px" height="500px" border="0" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" title="">
                                     </a>
                                 </p>
                                 <div class="product-shop">
@@ -23,16 +24,14 @@
                     </div>
                     <div class="product-img-box banner-more">
                         <div class=" more-views">
-                            <div class="move-content nubmer-bar" style="width: 985px;">
+                            <div class="move-content nubmer-bar" style="width: 1200px;">
                                 <ul>
-                                    <? if(isset($flash) && $flash != ""){?>
-                                    <? for($i = 0; $i < count($flash); $i ++) { ?>
-                                    <li class="item<?=$i?>">
+                                    {% for item in flash %}
+                                    <li class="item{{ loop.index }}">
                                         <div class="ico-img">
                                         </div>
                                     </li>
-                                    <? } ?>
-                                    <? } ?>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -55,10 +54,9 @@
             </div>
         </div>
     {% endblock %}
-    <div class="main-partition">
         <div class="home-ad1">
             <a href="{{ otherinfo.strAdLink1 }}">
-                <img src="{{ otherinfo.strAdImg1 }}" />
+                <img src="{{ app.url }}/uploads/site_info/{{ otherinfo.strAdImg1 }}" />
             </a>
         </div>
         <div class="left">
@@ -185,8 +183,34 @@
         </div>
         <div class="home-ad2">
             <a href="{{ otherinfo.strAdLink2 }}">
-                <img src="{{ otherinfo.strAdImg2 }}" />
+                <img src="{{ app.url }}/uploads/site_info/{{ otherinfo.strAdImg2 }}" />
             </a>
+        </div>
+        <div class="article-list img">
+            <div class="nav-content">
+                <span class="tag current"><a href="{{ path('article_img_list', {"category": "5"}) }}">明星访谈</a></span>
+                <span class="tag"><a href="{{ path('article_list', {"category": "1"}) }}" >行业资讯</a></span>
+                <span class="tag"><a href="{{ path('article_list', {"category": "2"}) }}">娱乐新闻</a></span>
+                <span class="tag"><a href="{{ path('article_list', {"category": "3"}) }}">每日星闻榜</a></span>
+                <span class="tag"><a href="{{ path('article_img_list', {"category": "4"}) }}">热点图片</a></span>
+            </div>
+            <ul>
+                {% for a in articles %}
+                    <li>
+                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a><br>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                <div style="clear:both;"></div>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

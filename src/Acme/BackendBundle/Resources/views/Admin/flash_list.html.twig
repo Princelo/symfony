@@ -1,0 +1,21 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <table class="table table-striped">
+        <tr>
+        </tr>
+        {% for f in flashs %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ f.id }}</td>
+                <td>{{ f.strLink }}</td>
+                <td><img style="height:50px;" src="{{ app.url }}/uploads/flash/{{ f.strImg }}"/></td>
+                <td>
+                    <a href="{{ path('_admin_flash_edit', {'id': f.id} ) }}">编辑</a>
+                </td>
+                <td>
+                    <a href="{{ path('_admin_flash_delete', {'id': f.id}) }}">刪除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ path('_admin_flash_create') }}">发布新幻灯片</a>
+{% endblock %}

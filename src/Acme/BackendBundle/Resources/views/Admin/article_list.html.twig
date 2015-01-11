@@ -1,0 +1,47 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <form action="{{ path('_admin_article_list', {"category": category, "page": page}) }}" method="get">
+        <select name="">
+            <option value="1">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY1') }}</option>
+            <option value="2">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY2') }}</option>
+            <option value="3">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY3') }}</option>
+            <option value="4">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY4') }}</option>
+            <option value="5">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY5') }}</option>
+        </select>
+        <input name="search" type="text" placeholder="SEARCH" />
+        <input type="submit" />
+    </form>
+    {# total items count #}
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
+    <table class="table table-striped">
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+            <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+        </tr>
+
+        {# table body #}
+        {% for item in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>
+                    <a href="{{ path('_admin_article_edit', {'id': item.id} ) }}">编辑</a>
+                </td>
+                <td>
+                    <a href="{{ path('_admin_article_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+                </td>
+                <td>
+                    {{ item.time|date('Y-m-d H:i:s') }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <a href="{{ path('_admin_article_create') }}">发布新文章</a>
+{% endblock %}

@@ -9,13 +9,15 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Acme\BackendBundle\Entity\Choice;
 
-class BasicType extends AbstractType
+class FlashType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $choice = new Choice();
-        $builder->add('intWeekDay', 'choice', array('label'=>'放榜时间',
-            'choices' => $choice->getWeeklist()));
+        $builder->add('strImg', 'file', array('label'=>'图片',
+            'data_class' => null));
+        $builder->add('strLink', 'text', array('label'=>'LINK'));
+        $builder->add('boolIsNewTab', 'checkbox', array('label'=>'是否跳转新页'));
         $builder->add('提交', 'submit', array(
         ));
     }
@@ -23,7 +25,7 @@ class BasicType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\BackendBundle\Entity\Basic',
+            'data_class' => 'Acme\FrontendBundle\Entity\Flash',
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
         ));
@@ -31,7 +33,7 @@ class BasicType extends AbstractType
 
     public function getName()
     {
-        return 'basic';
+        return 'flash';
     }
 
 }

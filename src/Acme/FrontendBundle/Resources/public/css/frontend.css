@@ -3,6 +3,7 @@ li{list-style: none;}
 ul{margin:0; padding:0;}
 p{margin:0; padding:0;}
 img{margin:0; padding:0; border:none; border:0;}
+a{text-decoration: none;}
 
 .header{width:1200px; margin:0 auto;}
 .menu{min-width:984px;height:60px;
@@ -30,6 +31,8 @@ img{margin:0; padding:0; border:none; border:0;}
 .main-partition{width:1200px; margin:0 auto; padding-top:30px;}
 .main-partition .left{display:inline-block; width:865px; float:left;}
 .main-partition .right{display:inline-block; width:300px; float:left; padding-left:35px;}
+.home-ad1{ width:1200px; margin:0 auto; padding-bottom: 22px;}
+.home-ad2{ width:1200px; padding: 22px 0;}
 /*********section list **********/
 .section{ margin:0 auto; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;
     width:1200px; margin-top:30px; padding:20px; min-height: 50px;}
@@ -83,7 +86,7 @@ img{margin:0; padding:0; border:none; border:0;}
 span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 
 /**************newest rank********************/
-.audio-list{width:865px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;}
+.audio-list{width:865px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
 .audio-list li{min-height:26px; float:left; width:833px; text-align: -webkit-center; line-height: 26px;}
 .audio-list ul{padding:0 16px;}
 .audio-list div.title{background: #e15a22; color:#fff; font-weight: bold; height:30px; font-size: 14px; line-height: 30px;
@@ -103,7 +106,7 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 /************champion*************/
 .champion-list .title { height: 41px; margin: 0;
     background: url('../images/tit_hot_room.png') no-repeat; line-height: 40px; padding-left:16px; font-size:16px; color:#fff;}
-.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;}
+.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
 .champion-list ul{padding: 15px 0;}
 .champion-list li{ float: left; margin-left: 35px; width: 230px; border-bottom: 1px solid #ebebeb; padding-bottom:3px;}
 .champion-list li:hover{background:rgb(224,224,224)}
@@ -111,3 +114,20 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 .champion-list .artist{background: #f60; color:#fff; font-weight: bold;}
 /************champion*************/
 
+/***********article-list**********/
+.article-list.img .nav-content{ overflow: hidden; border-top: 2px solid #3A3935; border-bottom: 1px solid #EBEBEB;
+    background-color: #FFF; margin-bottom:25px;}
+.article-list .tag{float:left;}
+.article-list .tag a{ height: 42px; padding: 0 20px; line-height: 42px; font-size: 14px; }
+.article-list.img .nav-content .current{background-color: #3A3935; border-color: 1px solid #3A3935; }
+.article-list.img .nav-content .current a{ color: #FFF; cursor: default; outline: none; }
+.article-list.img li{ border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; margin-right:12px;
+    padding:8px; width:204px; height:270px; line-height:30px; margin-left:18px; margin-right:18px;}
+.article-list.img li img{width:185px; height:185px; margin-bottom:5px;}
+.article-list.img li span{color:#000;}
+/***********article-list**********/
+
+/**********article-detail***********/
+.article-detail { border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; width:865px;
+    padding:20px; min-height: 800px;}
+/**********article-detail***********/

@@ -8,6 +8,7 @@
 
 namespace Acme\BackendBundle\Entity;
 use Acme\BackendBundle\Entity\Constant;
+use Symfony\Component\DependencyInjection\Container;
 
 
 class Choice {
@@ -92,6 +93,16 @@ class Choice {
             Constant::POP   =>  '流行',
             Constant::FOLK  =>  '民歌',
             Constant::AMERICAN  =>  '美声',
+        );
+    }
+    public function getCategorylist()
+    {
+        return array(
+            1   =>  Constant::CATEGORY1,
+            2   =>  Constant::CATEGORY2,
+            3   =>  Constant::CATEGORY3,
+            4   =>  Constant::CATEGORY4,
+            5   =>  Constant::CATEGORY5,
         );
     }
 }

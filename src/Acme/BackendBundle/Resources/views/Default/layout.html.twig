@@ -79,7 +79,11 @@
             <span>{{ menu_block.name }}</span>
             <ul class="sub-menu">
                 {% for item in menu_block.item %}
+                    {% if item.param is defined %}
+                    <li><a href="{{ path(item.route, {category: item.param, page: 1}) }}" target="_self">{{ item.name }}</a> </li>
+                    {% else %}
                     <li><a href="{{ path(item.route) }}" target="_self">{{ item.name }}</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </li>

@@ -13,6 +13,7 @@ class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $choice = new Choice();
         /*$builder->add('textContent', 'ckeditor', array(
             'filebrowser_image_browse_url' => array(
                 'route'            => 'elfinder',
@@ -44,7 +45,19 @@ class ArticleType extends AbstractType
                 //'filebrowserBrowseRouteParameters' => array('slug' => 'my-slug'),
                 'filebrowserBrowseRouteAbsolute'   => true,
             )));*/
+        $builder->add('intCategory', 'choice', array(
+            'choices' => $choice->getCategorylist(),
+            'label' => "所属类別",
+        ));
+        $builder->add('strTitle', 'text', array(
+            'label' => "文章标题",
+        ));
+        $builder->add('strThumb', 'file', array(
+            'label' => '缩略图',
+            'data_class' => null,
+        ));
         $builder->add('textContent', 'ckeditor', array(
+            'label' => '文章內容',
             'config' => array(
                 'font_names' => 'Microsoft YaHei;SimSun;PMingLiU;Arial/Arial, Helvetica, sans-serif;Comic Sans MS/Comic Sans MS, cursive;Courier New/Courier New, Courier, monospace;Georgia/Georgia, serif;Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;Tahoma/Tahoma, Geneva, sans-serif;Times New Roman/Times New Roman, Times, serif;Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;Verdana/Verdana, Geneva, sans-serif',
             )

@@ -51,5 +51,10 @@ class Constant {
     const RANK_WAITING  =   2;
     const RANK_EXPIRE   =   3;
     const NOT_RANK  =   4;
+    const CATEGORY1 =   '行业资讯';
+    const CATEGORY2 =   '娱乐快报';
+    const CATEGORY3 =   '每日星闻榜';
+    const CATEGORY4 =   '热点图片';
+    const CATEGORY5 =   '明星访谈';
 
 } 

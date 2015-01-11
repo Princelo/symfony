@@ -997,4 +997,50 @@ class Song
     {
         return $this->comments;
     }
+
+    /**
+     * Set intTopRankPRC
+     *
+     * @param integer $intTopRankPRC
+     * @return Song
+     */
+    public function setIntTopRankPRC($intTopRankPRC)
+    {
+        $this->intTopRankPRC = $intTopRankPRC;
+
+        return $this;
+    }
+
+    /**
+     * Get intTopRankPRC
+     *
+     * @return integer 
+     */
+    public function getIntTopRankPRC()
+    {
+        return $this->intTopRankPRC;
+    }
+
+    /**
+     * Set intTopRankHKTW
+     *
+     * @param integer $intTopRankHKTW
+     * @return Song
+     */
+    public function setIntTopRankHKTW($intTopRankHKTW)
+    {
+        $this->intTopRankHKTW = $intTopRankHKTW;
+
+        return $this;
+    }
+
+    /**
+     * Get intTopRankHKTW
+     *
+     * @return integer 
+     */
+    public function getIntTopRankHKTW()
+    {
+        return $this->intTopRankHKTW;
+    }
 }

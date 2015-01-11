@@ -12,11 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getArrArticlelist($intCategory, $intLimit, $strOrderBy, $strOrderType)
+    public function getArrArticleList($intCategory, $intLimit, $strOrderBy, $strOrderType)
     {
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT a FROM AcmeFrontendBundle:Article a
+                "SELECT a.id id,
+                        a.strTitle title,
+                        a.intCategory category,
+                        a.strThumb thumb,
+                        a.timeCreateTime time
+                    FROM AcmeFrontendBundle:Article a
                     WHERE a.intCategory = {$intCategory}
                     ORDER BY a.{$strOrderBy} {$strOrderType}
                 "
@@ -24,4 +29,23 @@ class ArticleRepository extends EntityRepository
             ->setMaxResults($intLimit)
             ->getResult();
     }
+
+    public function getQueryArticleList($intCategory, $strWhere)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT a.id id,
+                       a.strTitle title,
+                       a.intCategory category,
+                       a.strThumb thumb,
+                       a.timeCreateTime time
+                 FROM AcmeFrontendBundle:Article a
+                WHERE a.intCategory = {$intCategory}
+                {$strWhere}
+                ORDER BY a.timeCreateTime DESC
+            "
+            );
+    }
+
 }
