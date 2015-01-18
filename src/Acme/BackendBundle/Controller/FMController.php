@@ -2,10 +2,13 @@
 
 namespace Acme\BackendBundle\Controller;
 
+use Acme\BackendBundle\Entity\Act;
 use Acme\BackendBundle\Entity\Championlog;
 use Acme\BackendBundle\Entity\Constant;
 use Acme\BackendBundle\Entity\Votelog;
+use Acme\BackendBundle\Form\Type\ActType;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
+use Acme\BackendBundle\Form\Type\EditFMType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,12 +58,53 @@ class FMController extends DefaultController
     }
 
     /**
+     * @param Request $request
      * @return Response
      * @Route("/fm/fm_info_edit", name="_fm_info_edit")
      */
-    public function fmInfoEditAction()
+    public function fmInfoEditAction(Request $request)
     {
-        return new Response();
+        parent::init();
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objFM = $this->getUser();
+        $strOriLogo = $objFM->getStrLogo();
+        $strOriAvatar = $objFM->getStrAvatar();
+        $type = new EditFMType();
+        $form = $this->createForm($type, $objFM, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                if($form->getData()->getStrLogo() != null){
+                    $strLogo = $this->fileHandleUploadFileWithoutType($form, 'strLogo', 'uploads/fmlogo');
+                    $objFM->setStrLogo($strLogo);
+                }else{
+                    $objFM->setStrLogo($strOriLogo);
+                }
+                if($form->getData()->getStrAvatar() != null){
+                    $strAvatar = $this->fileHandleUploadFileWithoutType($form, 'strLogo', 'uploads/fmavatar');
+                    $objFM->setStrLogo($strAvatar);
+                }else{
+                    $objFM->setStrLogo($strOriAvatar);
+                }
+                $objORM->persist($objFM);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_fm_info_edit'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:FM:info_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
+            )
+        );
     }
 
     /**
@@ -200,4 +244,41 @@ class FMController extends DefaultController
             return new Response();
         }
     }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/fm/act_add", name="_fm_act_add")
+     */
+    public function fmActAddAction(Request $request)
+    {
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $type = new ActType();
+        $form = $this->createForm($type, new Act(), array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $objAct = $form->getData();
+                $objAct->setTimeUploadDateTime(new \DateTime());
+                $current_member = $this->getUser();
+                $objAct->setMember($current_member);
+                $objORM->persist($objAct);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_fm_act_add'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:FM:act_add.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
+    }
+
 }

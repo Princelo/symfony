@@ -10,10 +10,20 @@
     <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
     <script src="{{ asset('bundles/acmefrontend/js/verify.notify.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/countdown.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/audio.min.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/bootstrap.min.js') }}"
+    <!--[if lt IE 9]>
+    <script src="{{ asset('bundles/acmefrontend/js/html5shiv.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/respond.min.js') }}"></script>
+    <![endif]-->
 {% endblock %}
-{% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
-<link rel="stylesheet" href="{{ asset_url }}"/>
-{% endstylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/fileupload.style.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery.dataTables.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery.fileupload.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery.timepicker.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery-ui.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmebackend/css/backend.css') }}"/>
 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 {% if (alertjs is defined) %}{{ alertjs|raw }}{% endif %}
 <script>
@@ -73,22 +83,93 @@
 </style>
 </head>
 <body>
-<ul>
-    {% for menu_block in menu %}
-        <li>
-            <span>{{ menu_block.name }}</span>
-            <ul class="sub-menu">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><span>XX榜</span>后台管理系统</a>
+        <ul class="user-menu">
+            <li class="dropdown pull-right">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> 我的帐户 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('_unvadmin_info_edit') }}"><span class="glyphicon glyphicon-user"></span> 我的资料</a></li>
+                    <li><a href="{{ path('_unvadmin_password_edit') }}"><span class="glyphicon glyphicon-cog"></span> 我的设置</a></li>
+                    <li><a href="{{ path('_logout') }}"><span class="glyphicon glyphicon-log-out"></span> 退出登陆</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div><!-- /.container-fluid -->
+</nav>
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar collapse in">
+    <form role="search">
+        <div class="form-group">
+            <!--<input type="text" class="form-control" placeholder="Search">-->
+        </div>
+    </form>
+    <ul class="nav menu">
+        <!--<li class="active"><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+        <li><a href="widgets.html"><span class="glyphicon glyphicon-th"></span> Widgets</a></li>
+        <li><a href="charts.html"><span class="glyphicon glyphicon-stats"></span> Charts</a></li>
+        <li><a href="tables.html"><span class="glyphicon glyphicon-list-alt"></span> Tables</a></li>
+        <li><a href="forms.html"><span class="glyphicon glyphicon-pencil"></span> Forms</a></li>
+        <li><a href="panels.html"><span class="glyphicon glyphicon-info-sign"></span> Alerts &amp; Panels</a></li>-->
+        {% for menu_block in menu %}
+        <li class="parent ">
+            <a href="#">
+                <span class="glyphicon glyphicon-list"></span> {{ menu_block.name }} <span data-toggle="collapse" href="#sub-item-{{ loop.index }}" class="icon pull-right">
+                    <em class="glyphicon glyphicon-s glyphicon-plus"></em></span>
+            </a>
+            <ul class="children collapse" id="sub-item-{{ loop.index }}">
                 {% for item in menu_block.item %}
-                    {% if item.param is defined %}
-                    <li><a href="{{ path(item.route, {category: item.param, page: 1}) }}" target="_self">{{ item.name }}</a> </li>
-                    {% else %}
-                    <li><a href="{{ path(item.route) }}" target="_self">{{ item.name }}</a></li>
-                    {% endif %}
+                {% if item.param is defined %}
+                    <li>
+                        <a href="{{ path(item.route, {category: item.param, page: 1}) }}" target="_self">
+                            <span class="glyphicon glyphicon-share-alt"></span> {{ item.name }}\
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path(item.route) }}" target="_self">
+                            <span class="glyphicon glyphicon-share-alt"></span> {{ item.name }}
+                        </a>
+                    </li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+        <li role="presentation" class="divider"></li>
+        <li><a href="{{ path("_login") }}"><span class="glyphicon glyphicon-user"></span> 登陆页页</a></li>
+    </ul>
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 {% block body %}{% endblock %}
+</div>
+<script>
+
+    $('#calendar').datepicker({
+    });
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
+
+</script>
 </body>
 </html>

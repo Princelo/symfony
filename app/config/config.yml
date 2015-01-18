@@ -4,7 +4,8 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: "%locale%" }
+    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "zh" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -132,6 +133,7 @@ fm_elfinder:
                         upload_max_size: 2M
 
 knp_time: ~      # Enable the helper for use in templates
+gregwar_captcha: ~
 
 #framework:
     # ...

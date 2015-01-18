@@ -131,3 +131,12 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 .article-detail { border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; width:865px;
     padding:20px; min-height: 800px;}
 /**********article-detail***********/
+
+/***************play-bar****************/
+#play-bar {width:734px; height:70px; position: fixed; display:block; bottom:0; margin:0 auto; background:#f60;
+    opacity: 0.7; left:50%; margin-left:-367px; border-radius:8px; z-index: 998; display: none;}
+#play-bar .audiojs .play-pause{padding:4px 0px;}
+#play-bar>* {position:absolute; left:50%; margin-left:-230px; top:50%; margin-top:-18px; z-index:999;}
+#play-bar > .close-btn {position:absolute; left:98%; top:-17px; background:url('../images/fancybox_sprite.png') no-repeat;
+    width:34px; height:34px; margin:0; cursor: pointer;}
+/***************play-bar****************/

@@ -2,6 +2,7 @@
 
 namespace Acme\BackendBundle\Entity;
 
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -117,6 +118,217 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
             "
             )
             ->setMaxResults($intCount)
+            ->getResult();
+    }
+
+    public  function getArrFMDetailsList($strWhere = " AND m.boolIsValid = TRUE ")
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                 SELECT
+                     m.id id,
+                     m.strShortName fm,
+                     m.intFMType fm_type,
+                     m.strFullName full_name,
+                     m.intProvinceId province_id,
+                     m.intCityId city_id,
+                     m.strAddressInfo address,
+                     m.strFMJoinAct join_act,
+                     m.strUserNickName host,
+                     m.floatFMValue fm_value,
+                     m.intFMValueType value_type,
+                     m.strFMCoverPopular cover_popular,
+                     m.strFMFactor factor,
+                     m.strSite site,
+                     m.strFMFoundTime found_time,
+                     m.strTel tel,
+                     m.strUserQQ qq,
+                     m.intLevel fm_level,
+                     m.strUserMobile mobile,
+                     m.email email,
+                     m.intCastWeekDay cast_day,
+                     m.strCastTimeFrom cast_time_from,
+                     m.strCastTimeTo cast_time_to,
+                     (SELECT COUNT(cc.id) FROM AcmeBackendBundle:Comment cc WHERE cc.member = m.id) AS comment_count,
+                     c.strContent content,
+                     mf.strShortName sender,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom1 <= ".date('w')."
+                        AND m.intBusyWeekDayTo1 >= ".date('w')."
+                        AND m.boolBusyTimeTo1Tomorrow != TRUE
+                     ) THEN m.strBusyTimeFrom1 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom1 <= ".date('w')."
+                            AND m.intBusyWeekDayTo1 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo1Tomorrow != TRUE
+                        ) THEN m.strBusyTimeFrom1 ELSE '' END)
+                     END) AS time_from_1,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom1 <= ".date('w')."
+                        AND m.intBusyWeekDayTo1 >= ".date('w')."
+                        AND m.boolBusyTimeTo1Tomorrow != TRUE
+                     ) THEN m.strBusyTimeTo1 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom1 <= ".date('w')."
+                            AND m.intBusyWeekDayTo1 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo1Tomorrow != TRUE
+                        ) THEN m.strBusyTimeTo1 ELSE '' END)
+                     END) AS time_to_1,
+                     m.boolBusyTimeTo1Tomorrow tomorrow1,
+                     (CASE WHEN m.intBusyWeekDayTo1 = ".date('w')." THEN TRUE ELSE FALSE END) AS border1,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom2 <= ".date('w')."
+                        AND m.intBusyWeekDayTo2 >= ".date('w')."
+                        AND m.boolBusyTimeTo2Tomorrow != TRUE
+                     ) THEN m.strBusyTimeFrom2 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom2 <= ".date('w')."
+                            AND m.intBusyWeekDayTo2 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo2Tomorrow != TRUE
+                        ) THEN m.strBusyTimeFrom2 ELSE '' END)
+                     END) AS time_from_2,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom2 <= ".date('w')."
+                        AND m.intBusyWeekDayTo2 >= ".date('w')."
+                        AND m.boolBusyTimeTo2Tomorrow != TRUE
+                     ) THEN m.strBusyTimeTo2 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom2 <= ".date('w')."
+                            AND m.intBusyWeekDayTo2 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo2Tomorrow != TRUE
+                        ) THEN m.strBusyTimeTo2 ELSE '' END)
+                     END) AS time_to_2,
+                     m.boolBusyTimeTo2Tomorrow tomorrow2,
+                     (CASE WHEN m.intBusyWeekDayTo2 = ".date('w')." THEN TRUE ELSE FALSE END) AS border2,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom3 <= ".date('w')."
+                        AND m.intBusyWeekDayTo3 >= ".date('w')."
+                        AND m.boolBusyTimeTo3Tomorrow != TRUE
+                     ) THEN m.strBusyTimeFrom3 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom3 <= ".date('w')."
+                            AND m.intBusyWeekDayTo3 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo3Tomorrow != TRUE
+                        ) THEN m.strBusyTimeFrom3 ELSE '' END)
+                     END) AS time_from_3,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom3 <= ".date('w')."
+                        AND m.intBusyWeekDayTo3 >= ".date('w')."
+                        AND m.boolBusyTimeTo3Tomorrow != TRUE
+                     ) THEN m.strBusyTimeTo3 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom3 <= ".date('w')."
+                            AND m.intBusyWeekDayTo3 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo3Tomorrow != TRUE
+                        ) THEN m.strBusyTimeTo3 ELSE '' END)
+                     END) AS time_to_3,
+                     m.boolBusyTimeTo3Tomorrow tomorrow3,
+                     (CASE WHEN m.intBusyWeekDayTo2 = ".date('w')." THEN TRUE ELSE FALSE END) AS border3,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom4 <= ".date('w')."
+                        AND m.intBusyWeekDayTo4 >= ".date('w')."
+                        AND m.boolBusyTimeTo4Tomorrow != TRUE
+                     ) THEN m.strBusyTimeFrom4 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom4 <= ".date('w')."
+                            AND m.intBusyWeekDayTo4 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo4Tomorrow != TRUE
+                        ) THEN m.strBusyTimeFrom4 ELSE '' END)
+                     END) AS time_from_4,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom4 <= ".date('w')."
+                        AND m.intBusyWeekDayTo4 >= ".date('w')."
+                        AND m.boolBusyTimeTo4Tomorrow != TRUE
+                     ) THEN m.strBusyTimeTo4 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom4 <= ".date('w')."
+                            AND m.intBusyWeekDayTo4 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo4Tomorrow != TRUE
+                        ) THEN m.strBusyTimeTo4 ELSE '' END)
+                     END) AS time_to_4,
+                     m.boolBusyTimeTo4Tomorrow tomorrow4,
+                     (CASE WHEN m.intBusyWeekDayTo4 = ".date('w')." THEN TRUE ELSE FALSE END) AS border4,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom5 <= ".date('w')."
+                        AND m.intBusyWeekDayTo5 >= ".date('w')."
+                        AND m.boolBusyTimeTo5Tomorrow != TRUE
+                     ) THEN m.strBusyTimeFrom5 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom5 <= ".date('w')."
+                            AND m.intBusyWeekDayTo5 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo5Tomorrow != TRUE
+                        ) THEN m.strBusyTimeFrom5 ELSE '' END)
+                     END) AS time_from_5,
+                     (CASE WHEN(
+                        m.intBusyWeekDayFrom5 <= ".date('w')."
+                        AND m.intBusyWeekDayTo5 >= ".date('w')."
+                        AND m.boolBusyTimeTo5Tomorrow != TRUE
+                     ) THEN m.strBusyTimeTo5 ELSE
+                        (CASE WHEN(
+                            m.intBusyWeekDayFrom5 <= ".date('w')."
+                            AND m.intBusyWeekDayTo5 + 1 >= ".date('w')."
+                            AND m.boolBusyTimeTo5Tomorrow != TRUE
+                        ) THEN m.strBusyTimeTo5 ELSE '' END)
+                     END) AS time_to_5,
+                     m.boolBusyTimeTo5Tomorrow tomorrow5,
+                     (CASE WHEN m.intBusyWeekDayTo5 = ".date('w')." THEN TRUE ELSE FALSE END) AS border5
+                 FROM
+                    AcmeBackendBundle:Member m
+                    LEFT JOIN AcmeBackendBundle:Comment c
+                    WITH m.intLastCommentId = c.id
+                    LEFT JOIN AcmeBackendBundle:Member mf
+                    WITH mf.id = c.intMemberId
+                    WHERE
+                    m.intType = ".Constant::FM."
+                    {$strWhere}
+                 GROUP BY m.strShortName, m.intFMType, m.strFullName, m.intProvinceId, m.intCityId, m.strFMJoinAct,
+                    m.floatFMValue, m.intFMValueType, m.strFMCoverPopular, m.strFMFactor, m.strSite, m.strFMFoundTime,
+                    m.strTel, m.strUserQQ, m.id, m.intLevel, m.strUserNickName, m.strUserMobile, c.strContent, mf.strShortName,
+                    m.email, m.strAddressInfo, m.intFMType, m.floatFMValue, m.intCastWeekDay, m.strCastTimeFrom, m.strCastTimeTo,
+                    m.intBusyWeekDayFrom1, m.intBusyWeekDayTo1, m.boolBusyTimeTo1Tomorrow, m.strBusyTimeFrom1, m.strBusyTimeTo1,
+                    m.intBusyWeekDayFrom2, m.intBusyWeekDayTo2, m.boolBusyTimeTo2Tomorrow, m.strBusyTimeFrom2, m.strBusyTimeTo2,
+                    m.intBusyWeekDayFrom3, m.intBusyWeekDayTo3, m.boolBusyTimeTo3Tomorrow, m.strBusyTimeFrom3, m.strBusyTimeTo3,
+                    m.intBusyWeekDayFrom4, m.intBusyWeekDayTo4, m.boolBusyTimeTo4Tomorrow, m.strBusyTimeFrom4, m.strBusyTimeTo4,
+                    m.intBusyWeekDayFrom5, m.intBusyWeekDayTo5, m.boolBusyTimeTo5Tomorrow, m.strBusyTimeFrom5, m.strBusyTimeTo5
+            "
+            )
+            ->getResult();
+    }
+
+    public function getArrCorpDetailsList($strWhere = " AND m.boolIsValid = TRUE ")
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+              SELECT
+                m.id id,
+                m.strShortName fm,
+                m.arrStrArtistName artists,
+                m.strUserNickName user_name,
+                m.strTel tel,
+                m.strUserMobile mobile,
+                m.strUserQQ qq,
+                m.email email,
+                m.strZipCode zip_code,
+                m.intProvinceId province_id,
+                m.intCityId city_id,
+                m.strAddressInfo address,
+                m.strIntro intro,
+                (SELECT COUNT(cc.id) FROM AcmeBackendBundle:Comment cc WHERE cc.member = m.id) AS comment_count,
+                c.strContent content,
+                mf.strShortName sender
+
+               FROM
+                AcmeBackendBundle:Member m
+                LEFT JOIN AcmeBackendBundle:Comment c
+                WITH c.id = m.intLastCommentId
+                LEFT JOIN AcmeBackendBundle:Member mf
+                WITH mf.id = c.intMemberId
+                WHERE m.intType = ".Constant::CORP."
+                {$strWhere}
+            "
+            )
             ->getResult();
     }
 }

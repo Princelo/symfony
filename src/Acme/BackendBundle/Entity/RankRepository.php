@@ -27,7 +27,8 @@ class RankRepository extends EntityRepository
                         r.intLastIndex last_rank_index,
                         r.intCountOnList count_on_list,
                         r.intScore score,
-                        r.boolIsPrePlus is_pre
+                        r.boolIsPrePlus is_pre,
+                        s.strSongFile file
                     FROM
                     AcmeBackendBundle:Rank r
                     JOIN r.song s

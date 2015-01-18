@@ -21,6 +21,11 @@ class DefaultController extends CustomerController
         $session = $request->getSession();
         $session->set('is_visitor', true);
         $objORM = $this->getDoctrine()->getManager();
+        /*$test = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMDetailsList();
+        echo '<pre>';
+        print_r($test);
+        echo '</pre>';exit;*/
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
         $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
@@ -38,6 +43,7 @@ class DefaultController extends CustomerController
             ->getArrNewestRankList(Constant::PRCZONE, 20, $intLastTermNo);
         $arrLastRankSongHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
             ->getArrNewestRankList(Constant::HKTWZONE, 20, $intLastTermNo);
+        $intNextRankTime = $session->get('next_rank_time');
         return $this->render('AcmeFrontendBundle:Default:index.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -49,6 +55,7 @@ class DefaultController extends CustomerController
                 'rank_songs_hktw' => $arrLastRankSongHKTW,
                 'fms' => $arrFMList,
                 'current_term_no' => $intLastTermNo,
+                'next_rank_time' => $intNextRankTime,
             ));
     }
 

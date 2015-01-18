@@ -21,33 +21,39 @@ class Act
      */
     private $id;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $intType;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="acts")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
      */
-    protected $intMemberId;
+    protected $member;
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $strTitle;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strIntro;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strOtherLink;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strActFile;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $intUploadDateTime;
+    protected $timeUploadDateTime;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intFileType;//1 for link, 2 for file
 
 
     /**
@@ -176,49 +182,74 @@ class Act
         return $this->strActFile;
     }
 
+
+
     /**
-     * Set intUploadDateTime
+     * Set timeUploadDateTime
      *
-     * @param integer $intUploadDateTime
+     * @param \DateTime $timeUploadDateTime
      * @return Act
      */
-    public function setIntUploadDateTime($intUploadDateTime)
+    public function setTimeUploadDateTime($timeUploadDateTime)
     {
-        $this->intUploadDateTime = $intUploadDateTime;
+        $this->timeUploadDateTime = $timeUploadDateTime;
 
         return $this;
     }
 
     /**
-     * Get intUploadDateTime
+     * Get timeUploadDateTime
      *
-     * @return integer 
+     * @return \DateTime 
      */
-    public function getIntUploadDateTime()
+    public function getTimeUploadDateTime()
     {
-        return $this->intUploadDateTime;
+        return $this->timeUploadDateTime;
     }
 
     /**
-     * Set intMemberId
+     * Set intFileType
      *
-     * @param integer $intMemberId
+     * @param integer $intFileType
      * @return Act
      */
-    public function setIntMemberId($intMemberId)
+    public function setIntFileType($intFileType)
     {
-        $this->intMemberId = $intMemberId;
+        $this->intFileType = $intFileType;
 
         return $this;
     }
 
     /**
-     * Get intMemberId
+     * Get intFileType
      *
      * @return integer 
      */
-    public function getIntMemberId()
+    public function getIntFileType()
     {
-        return $this->intMemberId;
+        return $this->intFileType;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \Acme\BackendBundle\Entity\Member $member
+     * @return Act
+     */
+    public function setMember(\Acme\BackendBundle\Entity\Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \Acme\BackendBundle\Entity\Member 
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 }

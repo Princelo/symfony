@@ -3,8 +3,11 @@
 namespace Acme\BackendBundle\Controller;
 
 use Acme\BackendBundle\Entity\Constant;
+use Acme\BackendBundle\Form\Type\ActType;
 use Acme\BackendBundle\Form\Type\AdminType;
 use Acme\BackendBundle\Form\Type\ArticleType;
+use Acme\BackendBundle\Form\Type\EditCorpType;
+use Acme\BackendBundle\Form\Type\EditFMType;
 use Acme\BackendBundle\Form\Type\FlashType;
 use Acme\BackendBundle\Form\Type\OtherInfoType;
 use Acme\BackendBundle\Form\Type\SongModelType;
@@ -498,7 +501,13 @@ class AdminController extends DefaultController
     {
         parent::init();
         $objORM = $this->getDoctrine()->getManager();
-        return new Response();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMDetailsList("");
+        return $this->render('AcmeBackendBundle:Admin:fm_contact_list.html.twig',
+            array(
+                'menu' => $this->menu,
+                'fms' => $arrFM,
+                ));
     }
 
     /**
@@ -507,7 +516,123 @@ class AdminController extends DefaultController
      */
     public function adminCorpContactListAction()
     {
-        return new Response();
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrCorp = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrCorpDetailsList("");
+        return $this->render('AcmeBackendBundle:Admin:corp_contact_list.html.twig',
+            array(
+                'menu' => $this->menu,
+                'corps' => $arrCorp,
+            ));
+    }
+
+    /**
+     * @param $id
+     * @return RedirectResponse|Response
+     * @Route("/admin/fm_edit/{id}", name="_admin_fm_edit")
+     */
+    public function adminEditFMAction($id)
+    {
+        parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->find($id);
+        if($objFM->getIntType() != Constant::FM)
+        {
+            return new Response('非法操作');
+        }
+        $strOriLogo = $objFM->getStrLogo();
+        $strOriAvatar = $objFM->getStrAvatar();
+        $type = new EditFMType();
+        $type->setBoolIsAdmin(true);
+        $form = $this->createForm($type, $objFM, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                if($form->getData()->getStrLogo() != null){
+                    $strLogo = $this->fileHandleUploadFileWithoutType($form, 'strLogo', 'uploads/fmlogo');
+                    $objFM->setStrLogo($strLogo);
+                }else{
+                    $objFM->setStrLogo($strOriLogo);
+                }
+                if($form->getData()->getStrAvatar() != null){
+                    $strAvatar = $this->fileHandleUploadFileWithoutType($form, 'strAvatar', 'uploads/fmavatar');
+                    $objFM->setStrAvatar($strAvatar);
+                }else{
+                    $objFM->setStrAvatar($strOriAvatar);
+                }
+                $objORM->persist($objFM);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_fm_edit', array("id"=>$id)));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:fm_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
+
+    }
+
+
+    /**
+     * @param $id
+     * @return RedirectResponse|Response
+     * @Route("/admin/corp_edit/{id}", name="_admin_corp_edit")
+     */
+    public function adminEditCorpAction($id)
+    {
+        parent::init();
+        $request = $this->get('request');
+
+        $objORM = $this->getDoctrine()->getManager();
+        $objCorp = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->find($id);
+        if($objCorp->getIntType() != Constant::CORP)
+        {
+            return new Response('非法操作');
+        }
+        $strOriLogo = $objCorp->getStrLogo();
+        $type = new EditCorpType();
+        $type->setBoolIsAdmin(true);
+        $form = $this->createForm($type, $objCorp, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                if($form->getData()->getStrLogo() != null){
+                    $strLogo = $this->fileHandleUploadFileWithoutType($form, 'strLogo', 'uploads/corplogo');
+                    $objCorp->setStrLogo($strLogo);
+                }else{
+                    $objCorp->setStrLogo($strOriLogo);
+                }
+                $objORM->persist($objCorp);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_corp_edit', array("id"=>$id)));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:corp_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
+
     }
 
     /**
@@ -616,21 +741,99 @@ class AdminController extends DefaultController
 
 
     /**
+     * @param Request $request
+     * @param int $page
+     * @param null $strAlertJs
      * @return Response
      * @Route("/admin/act_list", name="_admin_act_list")
      */
-    public function adminActListAction()
+    public function adminActListAction(Request $request, $page = 1, $strAlertJs = null)
     {
-        return new Response();
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $strWhere = "";
+        if ($request->getMethod() == 'GET') {
+            $strWhere = $this->_getStrActSearchStr($request->query->get('search'),
+                $request->query->get('type'));
+        }
+        $queryActlist = $objORM->getRepository('AcmeBackendBundle:Act')
+            ->getQueryActlist($strWhere);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $queryActlist,
+            $request->query->get('page', $page)/*page number*/,
+            30/*limit per page*/
+        );
+        return $this->render('AcmeBackendBundle:Admin:act_list.html.twig',
+            array('pagination' => $pagination,
+                'menu' => $this->menu,
+                'alertjs'=>$strAlertJs));
     }
 
     /**
+     * @param $id
+     * @param $page
      * @return Response
-     * @Route("/admin/act_add", name="_admin_act_add")
+     * @Route("/admin/act_delete/{id}/{page}", name="_admin_act_delete")
      */
-    public function adminActAddAction()
+    public function adminActDeleteAction($id, $page)
     {
-        return new Response();
+        $objORM = $this->getDoctrine()->getManager();
+        $where = null;
+        $query = $objORM->createQuery('DELETE
+                                         FROM AcmeBackendBundle:Act a
+                                         WHERE a.id = :id')
+            ->setParameters(array('id'=>$id))
+            ->execute();
+        $strAlertJs = "<script>alert(\"刪除成功\");</script>";
+        return $this->redirect($this->generateUrl('_admin_act_list',
+            array(
+                'page' => $page,
+                'strAlertJs' => $strAlertJs
+            )));
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/admin/act_edit/{id}", name="_admin_act_edit")
+     */
+    public function adminActEditAction($id)
+    {
+        parent::init();
+        $request = $this->get('request');
+
+        if (is_null($id)) {
+            $postData = $request->get('form');
+            $id = $postData['id'];
+        }
+
+        $objORM = $this->getDoctrine()->getManager();
+        $type = new ActType();
+        $type->setBoolIsEdit(true);
+        $objAct =
+            $objORM->getRepository('AcmeBackendBundle:Act')->find($id);
+        $form = $this->createForm($type, $objAct, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_act_list'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:act_edit.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+            )
+        );
     }
 
     /**
@@ -676,6 +879,16 @@ class AdminController extends DefaultController
             $strWhere .= " AND a.strTitle LIKE '%{$strSearch}%'";
         if($intCategory != null)
             $strWhere .= " AND a.intCategory = {$intCategory}";
+        return $strWhere;
+    }
+
+    public function _getStrActSearchStr($strSearch = null, $intType = null)
+    {
+        $strWhere = "";
+        if($strSearch != null)
+            $strWhere .= " AND a.strTitle LIKE '%{$strSearch}%'";
+        if($intType != null)
+            $strWhere .= " AND a.intType = {$intType}";
         return $strWhere;
     }
 }

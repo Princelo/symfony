@@ -1,5 +1,13 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">首页</li>
+        <li class="active">资料修改</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">资料修改</h1>
+    </div>
     {% for m in message %}
         {{ m }}
     {% endfor %}

@@ -56,5 +56,12 @@ class Constant {
     const CATEGORY3 =   '每日星闻榜';
     const CATEGORY4 =   '热点图片';
     const CATEGORY5 =   '明星访谈';
+    const ACTTYPE1 = "中联榜全国版";
+    const ACTTYPE2 = "版头片花";
+    const ACTTYPE3 = "艺人ID";
+    const ACTTYPE4 = "采访素材";
+    const ACTTYPE5 = "揭榜素材";
+    const ACTTYPE6 = "DJ贺词";
+    const ACTTYPE99 = "其他";
 
 } 

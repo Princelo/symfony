@@ -160,7 +160,7 @@ class Menu {
                         },
                         {
                             "name": "新增节目",
-                            "route": "_admin_act_add"
+                            "route": "_fm_act_add"
                         }
                     ]
                 }
@@ -250,6 +250,10 @@ class Menu {
                         {
                             "name": "节目查询",
                             "route": "_unvadmin_act_list"
+                        },
+                        {
+                            "name": "新赠节目",
+                            "route": "_fm_act_add"
                         }
                     ]
                 }

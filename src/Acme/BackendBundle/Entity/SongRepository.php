@@ -132,12 +132,14 @@ class SongRepository extends EntityRepository
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.index < 21
+                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
                     ) AS count_rank,
-                    (CASE WHEN s.intZone = " . Constant::PRCZONE . "
+                    (CASE WHEN s.intRankZone = " . Constant::PRCZONE . "
+                        THEN
                         s.intTopRankPRC
                         ELSE
                         s.intTopRankHKTW
+                        END
                         ) AS top
 
                 FROM
@@ -171,16 +173,18 @@ class SongRepository extends EntityRepository
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.index < 21
+                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
                     ) AS count_rank,
                     (
                         SELECT lr3.intScore FROM AcmeBackendBundle:Rank lr3 WHERE lr3.song = s.id AND lr3.intZone = {$intZone}
                             AND lr3.intTermNo = {$intLastTermNo}
                     ) AS last_score,
-                    (CASE WHEN s.intZone = " . Constant::PRCZONE . "
+                    (CASE WHEN s.intRankZone = " . Constant::PRCZONE . "
+                        THEN
                         s.intTopRankPRC
                         ELSE
                         s.intTopRankHKTW
+                        END
                         ) AS top
                 FROM
                     AcmeBackendBundle:Song s

@@ -12,4 +12,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class ActRepository extends EntityRepository
 {
+    public function getQueryActList($strWhere = null)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT a.id id,
+                       a.intType type,
+                       a.strTitle title,
+                       a.strIntro intro,
+                       a.strActFile file,
+                       a.timeUploadDateTime upload_time,
+                       a.strOtherLink other_link,
+                       m.strShortName uploader
+                FROM
+                    AcmeBackendBundle:Act a
+                    JOIN a.member m
+                WHERE 1 = 1
+                    {$strWhere}
+            "
+            );
+    }
 }

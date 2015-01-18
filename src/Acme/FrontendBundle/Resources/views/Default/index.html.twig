@@ -2,6 +2,9 @@
 
 {% block body %}
     <div class="main-partition">
+    <div id="play-bar">
+        <span class="close-btn" onclick="stop()"></span>
+    </div>
     {% block flash %}
         <div class="flash">
             <div class="bann-content">
@@ -61,6 +64,11 @@
         </div>
         <div class="left">
             <div class="audio-list prc">
+                <div class="rank-countdown prc">
+                    內地榜&nbsp;&nbsp;&nbsp;&nbsp;距离第<label class="term_no">{{ current_term_no }}</label>期开榜还有&nbsp;
+                    <label class="countdown" id="rank-countdown-prc"></label>
+                    <a href="">查看往期榜单</a>
+                </div>
                 <div class="title">
                     <span class="index">名次</span>
                     <span class="title">歌曲名称</span>
@@ -98,6 +106,11 @@
                 </ul>
             </div>
             <div class="audio-list hktw">
+                <div class="rank-countdown hk">
+                    港台榜&nbsp;&nbsp;&nbsp;&nbsp;距离第<label class="term_no">{{ current_term_no }}</label>期开榜还有&nbsp;
+                    <label class="countdown" id="rank-countdown-hk"></label>
+                    <a href="">查看往期榜单</a>
+                </div>
                 <div class="title">
                     <span class="index">名次</span>
                     <span class="title">歌曲名称</span>
@@ -127,7 +140,7 @@
                             <span class="change">{{ s.rank_index - s.last_rank_index }}*</span>
                             <span class="score">{{ s.score }}*</span>
                     <span class="play">
-                        <a href="javascript:;">*</a>
+                        <a href="javascript:;" onclick="play('{{ s.file | md5 }}{{ s.id }}', {{ s.id }})" >*</a>
                     </span>
                         </li>
                     {% endfor %}
@@ -213,4 +226,43 @@
             </ul>
         </div>
     </div>
+    <script>
+        var clock1 = document.getElementById('rank-countdown-prc')
+                , targetDate = {{ next_rank_time }}*1000;
+
+        clock1.innerHTML = countdown(targetDate).toString();
+        setInterval(function(){
+            clock1.innerHTML = countdown(targetDate).toString();
+        }, 1000);
+        var clock2 = document.getElementById('rank-countdown-hk')
+                , targetDate = {{ next_rank_time }}*1000;
+
+        clock2.innerHTML = countdown(targetDate).toString();
+        setInterval(function(){
+            clock2.innerHTML = countdown(targetDate).toString();
+        }, 1000);
+        var play = function(token, id)
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            $('#play-bar').show();
+            $('#play-bar').append(player);
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
+        }
+        var stop = function()
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            $('#play-bar').hide();
+        }
+    </script>
 {% endblock %}

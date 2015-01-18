@@ -39,6 +39,12 @@ class Comment
      */
     protected $song;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="comments")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
+     */
+    protected $member;
+
 
     /**
      * Get id
@@ -233,5 +239,28 @@ class Comment
     public function getTimeDateTime()
     {
         return $this->timeDateTime;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \Acme\BackendBundle\Entity\Member $member
+     * @return Comment
+     */
+    public function setMember(\Acme\BackendBundle\Entity\Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \Acme\BackendBundle\Entity\Member 
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 }

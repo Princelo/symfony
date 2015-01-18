@@ -6,6 +6,7 @@ use Acme\BackendBundle\Entity\Constant;
 use Acme\BackendBundle\Entity\Menu;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
 use Acme\BackendBundle\Form\Type\CorpType;
+use Acme\BackendBundle\Form\Type\EditCorpType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -118,23 +119,20 @@ class CorpController extends DefaultController
         );
     }
 
-    public function corpInfoEditAction($id = null)
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/corp/info_edit/", name="_corp_info_edit")
+     */
+    public function corpInfoEditAction(Request $request)
     {
-        if($id != null && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
-        {
-            return new Response('非法操作 Invalid Action');
-        }
         parent::init();
-        $request = $this->getRequest();
+
         $objORM = $this->getDoctrine()->getManager();
-        $type = new CorpType();
-        if($id == null)
-            $objMember = $this->getUser();
-        else
-            $objMember =
-                $objORM->getRepository('AcmeBackendBundle:Member')->find($id);
-        $type->setBoolIsUpdate(true);
-        $form = $this->createForm($type, $objMember, array(
+        $objCorp = $this->getUser();
+        $strOriLogo = $objCorp->getStrLogo();
+        $type = new EditCorpType();
+        $form = $this->createForm($type, $objCorp, array(
             //'validation_groups' => array('corp_song_add'),
         ));
 
@@ -142,18 +140,16 @@ class CorpController extends DefaultController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                try {
-                    $objMember = $form->getData();
-                    $objORM->persist($objMember);
-                    $objORM->flush();
-
-                    $this->get('session')->getFlashBag()->add('message',"修改成功!");
-
-                } catch (Exception $e) {
-                    $this->get('session')->getFlashBag()->add('message',"修改不成功!");
+                if($form->getData()->getStrLogo() != null){
+                    $strLogo = $this->fileHandleUploadFileWithoutType($form, 'strLogo', 'uploads/corplogo');
+                    $objCorp->setStrLogo($strLogo);
+                }else{
+                    $objCorp->setStrLogo($strOriLogo);
                 }
+                $objORM->persist($objCorp);
+                $objORM->flush();
 
-                return $this->redirect($this->generateUrl('_admin_info_edit'));
+                return $this->redirect($this->generateUrl('_corp_info_edit'));
             }
         }
 

@@ -1,0 +1,62 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                唱片公司
+            </th>
+            <th>
+                艺人
+            </th>
+            <th>
+                企宣
+            </th>
+            <th>
+                公司电话
+            </th>
+            <th>
+                企宣手机
+            </th>
+            <th>
+                企宣QQ
+            </th>
+            <th>
+                备注
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in corps %}
+        <tr>
+            <td>c.corp</td>
+            <td>
+                {% for a in c.artists %}
+                    {{ a.name }}
+                {% endfor %}
+            </td>
+            <td>{{ c.user_name }}</td>
+            <td>{{ c.tel }}</td>
+            <td>{{ c.qq }}</td>
+            <td>
+                <label class="sender">{{ c.sender }}:</label>{{ c.content }}
+                <a href="{{ path('_unvadmin_member_comment', {"id": c.id}) }}" >备</a>
+            </td>
+            <td>
+                <a href="{{ path('_admin_corp_edit', {"id": c.id}) }}">检视</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <ul>
+                    <li>email:{{ c.email }}</li>
+                    <li>公司邮编:{{ c.zip_code }}</li>
+                    <li>{{ c.province_id }}{{ c.city_id }}{{ c.address }}</li>
+                    <li>{{ c.intro }}</li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

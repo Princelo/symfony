@@ -105,4 +105,16 @@ class Choice {
             5   =>  Constant::CATEGORY5,
         );
     }
+    public function getActTypelist()
+    {
+        return array(
+            1   =>  Constant::ACTTYPE1,
+            2   =>  Constant::ACTTYPE2,
+            3   =>  Constant::ACTTYPE3,
+            4   =>  Constant::ACTTYPE4,
+            5   =>  Constant::ACTTYPE5,
+            6   =>  Constant::ACTTYPE6,
+            99   =>  Constant::ACTTYPE99,
+        );
+    }
 }

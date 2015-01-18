@@ -163,6 +163,10 @@ class Member implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $strPassword;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intLastCommentId;
     //FM only
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -344,7 +348,15 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $songs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Act", mappedBy="member")
+     */
+    protected $acts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="member")
+     */
+    protected $comments;
 
 
     public function __construct(){
@@ -2209,5 +2221,94 @@ class Member implements AdvancedUserInterface, \Serializable
     public function getTimeUpdateTime()
     {
         return $this->timeUpdateTime;
+    }
+
+    /**
+     * Add acts
+     *
+     * @param \Acme\BackendBundle\Entity\Act $acts
+     * @return Member
+     */
+    public function addAct(\Acme\BackendBundle\Entity\Act $acts)
+    {
+        $this->acts[] = $acts;
+
+        return $this;
+    }
+
+    /**
+     * Remove acts
+     *
+     * @param \Acme\BackendBundle\Entity\Act $acts
+     */
+    public function removeAct(\Acme\BackendBundle\Entity\Act $acts)
+    {
+        $this->acts->removeElement($acts);
+    }
+
+    /**
+     * Get acts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActs()
+    {
+        return $this->acts;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Acme\BackendBundle\Entity\Comment $comments
+     * @return Member
+     */
+    public function addComment(\Acme\BackendBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Acme\BackendBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Acme\BackendBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set intLastCommentId
+     *
+     * @param integer $intLastCommentId
+     * @return Member
+     */
+    public function setIntLastCommentId($intLastCommentId)
+    {
+        $this->intLastCommentId = $intLastCommentId;
+
+        return $this;
+    }
+
+    /**
+     * Get intLastCommentId
+     *
+     * @return integer 
+     */
+    public function getIntLastCommentId()
+    {
+        return $this->intLastCommentId;
     }
 }

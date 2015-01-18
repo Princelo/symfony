@@ -1,0 +1,74 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <table class="table table-striped">
+        <tr>
+            <th></th>
+            <th>id</th>
+            <th>fm</th>
+            <th>type</th>
+            <th>level</th>
+            <th>join_act</th>
+            <th>host</th>
+            <th>mobile</th>
+            <th>comment</th>
+        </tr>
+        {% for f in fms %}
+        <tr>
+            <td>
+                expand
+            </td>
+            <td>
+                {{ f.id }}
+            </td>
+            <td>
+                {{ f.fm }}
+            </td>
+            <td>
+                {{ f.fm_type }}
+            </td>
+            <td>
+                {{ f.fm_level }}
+            </td>
+            <td>
+                {{ f.join_act }}
+            </td>
+            <td>
+                {{ f.host }}
+            </td>
+            <td>
+                {{ f.mobile }}
+            </td>
+            <td>
+                {{ f.sender }}
+                {{  f.content }}
+                <a href="{{ path('_unvadmin_member_comment', {"id": f.id}) }}">{{  f.comment_count }}</a>
+            </td>
+            <td><a href="{{ path('_admin_fm_edit', {"id": f.id}) }}">检视</a></td>
+        </tr>
+        <tr>
+            <td colspan="10">
+                <ul>
+                    <li>
+                        <span>{{ f.email }}</span>
+                        <span>{{ f.full_name }}</span>
+                        <span>{{ f.province_id }}{{ f.city_id }}{{ f.address }}</span>
+                        <span></span>
+                    </li>
+                    <li>
+                        <span>{{ f.tel }}</span>
+                        <span>{{ f.fm_type }}{{ f.fm_value }}</span>
+                        <span>{{ f.factor }}</span>
+                        <span>{{ f.site }}</span>
+                    </li>
+                    <li>
+                        <span>{{ f.found_time }}</span>
+                        <span>{{ f.cover_popular }}</span>
+                        <span>{{ f.cast_day }}{{ f.cast_time_from }}{{ f.cast_time_to }}</span>
+                        <span>{{ f.qq }}</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

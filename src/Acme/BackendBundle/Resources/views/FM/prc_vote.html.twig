@@ -1,5 +1,13 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">我榜查看</li>
+        <li class="active">內地榜投票</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">內地榜投票</h1>
+    </div>
     <script src="{{ asset('bundles/acmefrontend/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/jquery.table_sort.js') }}"></script>
     <script>
@@ -21,7 +29,7 @@
             });*/
         });
     </script>
-    <form action="{{ path('_fm_prc_vote') }}" method="get">
+    <!--<form action="{{ path('_fm_prc_vote') }}" method="get">
         <select name="zone">
             <option value>全部</option>
             <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::PRCZONE') }}">內地榜</option>
@@ -36,7 +44,7 @@
         </select>
         <input name="search" type="text" placeholder="SEARCH" />
         <input type="submit" />
-    </form>
+    </form>-->
     <form action="{{ path('_fm_votelog_persist') }}" method="post">
     </form>
     <div id="pre-vote-list">

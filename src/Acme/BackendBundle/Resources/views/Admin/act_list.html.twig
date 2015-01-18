@@ -1,0 +1,106 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <form action="{{ path('_admin_song_list') }}" method="get">
+        <select name="zone">
+            <option value>全部</option>
+            <option value="1">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE1') }}</option>
+            <option value="2">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE2') }}</option>
+            <option value="3">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE3') }}</option>
+            <option value="4">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE4') }}</option>
+            <option value="5">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE5') }}</option>
+            <option value="6">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE6') }}</option>
+            <option value="99">{{ constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE99') }}</option>
+        </select>
+        <input name="search" type="text" placeholder="SEARCH" />
+        <input type="submit" />
+    </form>
+    <script src="http://kolber.github.io/audiojs/audiojs/audio.min.js"></script>
+    <script>
+        var play = function(token, id)
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            $('#songid' + id).append(player);
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
+        }
+        var openDialog = function(id)
+        {
+            $('#dialog'+id).dialog('open');
+        }
+        /*$(document).ready(function(){
+         audiojs.events.ready(function() {
+         var as = audiojs.createAll();
+         });
+         })*/
+        $(document).ready(function(){
+            $(".dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                open: function(ev, ui){
+                }
+            });
+        });
+    </script>
+    {# total items count #}
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
+    <table class="table table-striped">
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+            <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+        </tr>
+
+        {# table body #}
+        {% for item in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>
+                    {{ item.type==1?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE1'):'' }}
+                    {{ item.type==2?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE2'):'' }}
+                    {{ item.type==3?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE3'):'' }}
+                    {{ item.type==4?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE4'):'' }}
+                    {{ item.type==5?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE5'):'' }}
+                    {{ item.type==6?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE6'):'' }}
+                    {{ item.type==99?constant('Acme\\BackendBundle\\Entity\\Constant::ACTTYPE99'):'' }}
+                </td>
+                <td>{{ item.title }}</td>
+                <td>
+                    {{ item.intro }}
+                </td>
+                <td>
+                    {{ item.uploader }}
+                </td>
+                <td>
+                    {{ item.upload_time|date('Y-m-d') }}
+                </td>
+                <td id="songid{{ item.id }}">
+                    {% if item.file is defined and item.file != "" %}
+                    <a href="{{ app.url }}app_dev.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a><br>
+                    <a href="javascript:;" onclick="play('{{ item.file | md5 }}{{ item.id }}', {{ item.id }})" >PLAY</a>
+                    {% endif %}
+                    {%  if item.other_link is defined and item.other_link != "" %}
+                        <a href="{{ item.other_link }}">外部链接</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('_admin_act_edit', {'id': item.id} ) }}">编辑</a>
+                </td>
+                <td>
+                    <a href="{{ path('_admin_act_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
