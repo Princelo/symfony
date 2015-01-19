@@ -58,4 +58,26 @@ class City {
         return $cities;
     }
 
+    public function getStrProvinceName($id)
+    {
+        $arrCity = $this->getArrCity()->provinces;
+        foreach($arrCity as $k => $v)
+        {
+            if($arrCity[$k]->id == $id)
+                return $arrCity[$k]->name;
+        }
+        return '未知省份';
+    }
+
+    public function getStrCityName($id)
+    {
+        $arrCity = $this->getArrCity();
+        foreach($arrCity->provinces as $k => $v)
+            foreach($arrCity->provinces[$k]->cities as $ik => $iv)
+                foreach($arrCity->provinces[$k]->cities[$ik] as $iik => $iiv)
+                    if($iik == $id)
+                        return $iiv;
+        return '未知城市';
+    }
+
 }

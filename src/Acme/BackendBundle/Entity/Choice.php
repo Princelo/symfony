@@ -25,12 +25,12 @@ class Choice {
     public function getLevellist()
     {
         return array(
-            0   =>  'A',
-            1   =>  'B',
-            2   =>  'C',
-            3   =>  'A1',
-            4   =>  'C+',
-            5   =>  'A+'
+            0   =>  Constant::FMLEVEL0,
+            1   =>  Constant::FMLEVEL1,
+            2   =>  Constant::FMLEVEL2,
+            3   =>  Constant::FMLEVEL3,
+            4   =>  Constant::FMLEVEL4,
+            5   =>  Constant::FMLEVEL5
         );
     }
     public function getWeeklist()

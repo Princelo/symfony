@@ -63,5 +63,19 @@ class Constant {
     const ACTTYPE5 = "揭榜素材";
     const ACTTYPE6 = "DJ贺词";
     const ACTTYPE99 = "其他";
-
-} 
+    const WEEK0 = '周日';
+    const WEEK1 = '周一';
+    const WEEK2 = '周二';
+    const WEEK3 = '周三';
+    const WEEK4 = '周四';
+    const WEEK5 = '周五';
+    const WEEK6 = '周六';
+    const FMVALUETYPE0 = 'FM';
+    const FMVALUETYPE1 = 'AM';
+    const FMLEVEL0 = 'A';
+    const FMLEVEL1 = 'B';
+    const FMLEVEL2 = 'C';
+    const FMLEVEL3 = 'A1';
+    const FMLEVEL4 = 'C+';
+    const FMLEVEL5 = 'A+';
+}

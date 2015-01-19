@@ -41,10 +41,14 @@ class ActType extends AbstractType
         if(!$this->boolIsEdit)
             $builder->add('请上传文件或添加链接...', 'submit', array(
                 'attr'=>array(
-                    'disabled'=>'disabled'
+                    'disabled'=>'disabled',
+                    'class' => 'btn btn-default'
                 )));
         else
             $builder->add('提交', 'submit', array(
+                'attr' => array(
+                    'class' => 'btn btn-primary'
+                )
             ));
     }
 

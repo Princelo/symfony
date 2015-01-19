@@ -29,6 +29,16 @@ use Acme\CoreBundle\Controller\CustomerController;
  */
 class AccountController extends CustomerController
 {
+
+    /*
+     * @return RedirectResponse
+     * @Route("unvadmin", name="_unvadmin_redirect")
+     */
+    public function redirectBackendAction()
+    {
+        return $this->redirect($this->generateUrl('_unvadmin_index'));
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("register_corp", name="_register_corp")

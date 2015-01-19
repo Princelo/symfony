@@ -27,6 +27,7 @@ class DefaultController extends CustomerController
         //$this->objMember = $this->getUser();
         //$this->intType = $this->objMember->getIntType();
     }
+
     public function init()
     {
         $this->objMember = $this->getUser();
@@ -87,21 +88,49 @@ class DefaultController extends CustomerController
     }
 
     /**
+     * @param null $intTermNo
      * @return Response
      * @Route("/prc_rank", name="_unvadmin_prc_rank")
      */
-    public function prcRankAction()
+    public function prcRankAction($intTermNo = null)
     {
-        return new Response();
+        $this->init();
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        if($intTermNo == null)
+            $intTermNo = $request->getSession()->get('last_term_no');
+        $arrLastRankSongPRC = $objORM->getRepository('AcmeBackendBundle:Rank')
+            ->getArrNewestRankList(Constant::PRCZONE, 999, $intTermNo);
+        return $this->render(
+            'AcmeBackendBundle:Default:prc_rank.html.twig',
+            array(
+                'menu' => $this->menu,
+                'list' => $arrLastRankSongPRC,
+            )
+        );
     }
 
     /**
+     * @param null $intTermNo
      * @return Response
      * @Route("/hktw_rank", name="_unvadmin_hktw_rank")
      */
-    public function hktwRankAction()
+    public function hktwRankAction($intTermNo = null)
     {
-        return new Response();
+        $this->init();
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        if($intTermNo == null)
+            $intTermNo = $request->getSession()->get('last_term_no');
+        $arrLastRankSongHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
+            ->getArrNewestRankList(Constant::HKTWZONE, 999, $intTermNo);
+        return $this->render(
+            'AcmeBackendBundle:Default:hktw_rank.html.twig',
+            array(
+                'menu' => $this->menu,
+                'list' => $arrLastRankSongHKTW,
+            )
+        );
     }
 
     /**
@@ -242,11 +271,19 @@ class DefaultController extends CustomerController
 
     /**
      * @return Response
-     * @Route("fm_contact_list", name="_unvadmin_fm_contact_list")
+     * @Route("/fm_contact_list", name="_unvadmin_fm_contact_list")
      */
     public function fmContactListAction()
     {
-        return new Response();
+        $this->init();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrFM = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMDetailsList();
+        return $this->render('AcmeBackendBundle:Default:fm_contact_list.html.twig',
+            array(
+                'menu' => $this->menu,
+                'fms' => $arrFM,
+            ));
     }
 
     /**
@@ -255,25 +292,76 @@ class DefaultController extends CustomerController
      */
     public function corpContactListAction()
     {
-        return new Response();
+        $this->init();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrCorp = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrCorpDetailsList();
+        return $this->render('AcmeBackendBundle:Default:corp_contact_list.html.twig',
+            array(
+                'menu' => $this->menu,
+                'corps' => $arrCorp,
+            ));
     }
 
     /**
+     * @param Request $request
      * @return Response
-     * @Route("song_list", name="_unvadmin_song_list")
+     * @Route("/song_list", name="_unvadmin_song_list")
      */
-    public function songListAction()
+    public function songListAction(Request $request, $page = 1, $strAlertJs = null)
     {
-        return new Response();
+        $this->init();
+        $objORM = $this->getDoctrine()->getManager();
+        $where = "";
+        if ($request->getMethod() == 'GET') {
+            $where = $this->_getStrSongSearchStr($request->query->get('search'),
+                $request->query->get('zone'),
+                $request->query->get('status'));
+        }
+        $querySonglist = $objORM->getRepository('AcmeBackendBundle:Song')
+            ->getQuerySonglist($where);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $querySonglist,
+            $request->query->get('page', $page)/*page number*/,
+            50/*limit per page*/
+        );
+        return $this->render('AcmeBackendBundle:Default:song_list.html.twig',
+            array('pagination' => $pagination,
+                'menu' => $this->menu,
+                'alertjs'=>$strAlertJs));
     }
 
     /**
+     * @param Request $request
+     * @param int $page
+     * @param null $strAlertJs
      * @return Response
-     * @Route("act_list", name="_unvadmin_act_list")
+     * @Route("/act_list", name="_unvadmin_act_list")
      */
-    public function actListAction()
+    public function actListAction(Request $request, $page = 1, $strAlertJs = null)
     {
-        return new Response();
+        $this->init();
+        $objORM = $this->getDoctrine()->getManager();
+        $strWhere = "";
+        if ($request->getMethod() == 'GET') {
+            $strWhere = $this->_getStrActSearchStr($request->query->get('search'),
+                $request->query->get('type'));
+        }
+        $queryActlist = $objORM->getRepository('AcmeBackendBundle:Act')
+            ->getQueryActlist($strWhere);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $queryActlist,
+            $request->query->get('page', $page)/*page number*/,
+            30/*limit per page*/
+        );
+        return $this->render('AcmeBackendBundle:Default:act_list.html.twig',
+            array('pagination' => $pagination,
+                'menu' => $this->menu,
+                'alertjs'=>$strAlertJs));
     }
 
     /**

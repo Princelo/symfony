@@ -303,7 +303,8 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
             "
               SELECT
                 m.id id,
-                m.strShortName fm,
+                m.strShortName corp,
+                m.strFullName full_name,
                 m.arrStrArtistName artists,
                 m.strUserNickName user_name,
                 m.strTel tel,

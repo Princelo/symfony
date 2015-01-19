@@ -145,7 +145,7 @@
         </li>
         {% endfor %}
         <li role="presentation" class="divider"></li>
-        <li><a href="{{ path("_login") }}"><span class="glyphicon glyphicon-user"></span> 登陆页页</a></li>
+        <li><a href="{{ path("_login") }}"><span class="glyphicon glyphicon-user"></span> 登陆页面</a></li>
     </ul>
 </div>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -161,13 +161,23 @@
             $(this).find('em:first').toggleClass("glyphicon-minus");
         });
         $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+        /***add by Princelo***/
+        $(document).on("click","tr td > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+            $('.col-expand').attr('colspan', '9');
+            $('td').each(function(){
+                if($(this).html() == '-')
+                    $(this).hide();
+            })
+        });
+        $("span.icon").find('em:first').addClass("glyphicon-plus");
     }(window.jQuery);
 
     $(window).on('resize', function () {
-        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+        /*if ($(window).width() > 768)*/ $('#sidebar-collapse').collapse('show')
     })
     $(window).on('resize', function () {
-        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+        //if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     })
 
 </script>

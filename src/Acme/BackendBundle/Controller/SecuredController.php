@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * @Route("/unvadmin")
  */
@@ -31,6 +31,14 @@ class SecuredController extends Controller
         ));
     }
 
+    /**
+     * @return RedirectResponse
+     * @Route("/", name="_unvadmin_redirect")
+     */
+    public function redirectBackendAction()
+    {
+        return $this->redirect($this->generateUrl('_unvadmin_index'));
+    }
     /**
      * @Route("/login_check", name="_security_check")
      */
