@@ -81,11 +81,11 @@
                 必填
             </div>
             <div class="form-control">
-                {{ form_widget(form.intProvinceId) }}
-                {{ form_widget(form.intCityId) }}
-                {{ form_widget(form.strAddressInfo) }}
+                {{ form_widget(form.intProvinceId, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.intCityId, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.strAddressInfo, {'attr': {'class': 'form-control'}}) }}
             </div>
-            <span class="form_errors">{{ form_errors(form.intProvinceId) }} {{ form_errors(form.floatFMValue) }} {{ form_errors(form.strAddressInfo) }}</span>
+            <span class="form_errors">{{ form_errors(form.intProvinceId) }} {{ form_errors(form.intCityId) }} {{ form_errors(form.strAddressInfo) }}</span>
         </div>
         <div class="form-group">
             {{ form_label(form.strFMFactor) }}

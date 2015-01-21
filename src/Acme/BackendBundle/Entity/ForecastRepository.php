@@ -24,7 +24,7 @@ class ForecastRepository extends EntityRepository
                     AcmeBackendBundle:Forecast f
                     JOIN AcmeBackendBundle:Member m
                     WITH f.intMemberId = m.id
-                    ORDER BY f.boolIsUp ASC, f.timeDateTime DESC
+                    ORDER BY f.boolIsUp DESC, f.timeDateTime DESC
                     "
             )
             ->setMaxResults($intCount)

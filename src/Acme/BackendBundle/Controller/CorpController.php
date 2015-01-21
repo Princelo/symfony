@@ -41,20 +41,39 @@ use Acme\BackendBundle\Entity\Song;
 class CorpController extends DefaultController
 {
     /**
+     * @param Request $request
      * @return Response
      * @Route("/corp", name="_corp_index")
      */
-    public function corpIndexAction()
+    public function corpIndexAction(Request $request)
     {
         parent::init();
+        $session = $request->getSession();
+        $objORM = $this->getDoctrine()->getManager();
         $arrMemberInfo = array(
             'short_name'    =>  $this->objMember->getStrShortName(),
             'ip'            =>  $this->get('request')->getClientIp(),
             'login_time'    =>  $this->objMember->getTimeLastLoginTime()->format('Y-m-d H:i:s'),
         );
+        $intRankWeekDay = $request->getSession()->get('rank_week_day');
+        $intNextRankTime = $session->get('next_rank_time');
+        $arrObjChampionLogPRC =
+            $objORM->getRepository('AcmeBackendBundle:Championlog')
+                ->getArrChampionLog(Constant::PRCZONE, 20);
+        $arrObjChampionLogHKTW =
+            $objORM->getRepository('AcmeBackendBundle:Championlog')
+                ->getArrChampionLog(Constant::HKTWZONE, 20);
+        $arrForecast = $objORM->getRepository('AcmeBackendBundle:Forecast')
+            ->getArrForecastlist(100);
         return $this->render('AcmeBackendBundle:Corp:index.html.twig',
             array('m' => $arrMemberInfo,
-                'menu' => $this->menu));
+                'menu' => $this->menu,
+                'rank_week_day' => $intRankWeekDay,
+                'next_rank_time' => $intNextRankTime,
+                'championlogs_prc' => $arrObjChampionLogPRC,
+                'championlogs_hktw' => $arrObjChampionLogHKTW,
+                'forecasts' => $arrForecast,
+            ));
     }
 
     /**

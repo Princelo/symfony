@@ -97,10 +97,14 @@ class SongType extends AbstractType
         if(!$this->boolIsEdit)
             $builder->add('请上传歌曲...', 'submit', array(
                 'attr'=>array(
-                    'disabled'=>'disabled'
+                    'disabled'=>'disabled',
+                    'class' => 'btn btn-default btn-normal'
                 )));
         else
             $builder->add('提交', 'submit', array(
+                'attr' => array(
+                    'class' => 'btn btn-primary'
+                )
                 ));
     }
 

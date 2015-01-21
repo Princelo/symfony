@@ -1,74 +1,160 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
-    <table class="table table-striped">
-        <tr>
-            <th></th>
-            <th>id</th>
-            <th>fm</th>
-            <th>type</th>
-            <th>level</th>
-            <th>join_act</th>
-            <th>host</th>
-            <th>mobile</th>
-            <th>comment</th>
-        </tr>
-        {% for f in fms %}
-        <tr>
-            <td>
-                expand
-            </td>
-            <td>
-                {{ f.id }}
-            </td>
-            <td>
-                {{ f.fm }}
-            </td>
-            <td>
-                {{ f.fm_type }}
-            </td>
-            <td>
-                {{ f.fm_level }}
-            </td>
-            <td>
-                {{ f.join_act }}
-            </td>
-            <td>
-                {{ f.host }}
-            </td>
-            <td>
-                {{ f.mobile }}
-            </td>
-            <td>
-                {{ f.sender }}
-                {{  f.content }}
-                <a href="{{ path('_unvadmin_member_comment', {"id": f.id}) }}">{{  f.comment_count }}</a>
-            </td>
-            <td><a href="{{ path('_admin_fm_edit', {"id": f.id}) }}">检视</a></td>
-        </tr>
-        <tr>
-            <td colspan="10">
-                <ul>
-                    <li>
-                        <span>{{ f.email }}</span>
-                        <span>{{ f.full_name }}</span>
-                        <span>{{ f.province_id }}{{ f.city_id }}{{ f.address }}</span>
-                        <span></span>
-                    </li>
-                    <li>
-                        <span>{{ f.tel }}</span>
-                        <span>{{ f.fm_type }}{{ f.fm_value }}</span>
-                        <span>{{ f.factor }}</span>
-                        <span>{{ f.site }}</span>
-                    </li>
-                    <li>
-                        <span>{{ f.found_time }}</span>
-                        <span>{{ f.cover_popular }}</span>
-                        <span>{{ f.cast_day }}{{ f.cast_time_from }}{{ f.cast_time_to }}</span>
-                        <span>{{ f.qq }}</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.dataTables.js') }}"></script>
+    <script src="http://medialoot.com/preview/lumino/js/bootstrap-table.js"></script>
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">加盟电台</li>
+        <li class="active">电台联络表</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">电台联络表</h1>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">电台联络表</div>
+            <div class="panel-body" id="pre-vote-list">
+                <!--<table class="table table-striped" id="dataTable">-->
+                <table data-toggle="table"
+                       data-show-refresh="true"
+                       data-show-toggle="true"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-select-item-name="toolbar1"
+                       data-pagination="true"
+                       data-sort-name="name"
+                       data-sort-order="desc"
+                       class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>电台名称</th>
+                        <th>电台类型</th>
+                        <th>电台等级</th>
+                        <th>加盟节目</th>
+                        <th>主持人</th>
+                        <th>主持人电话</th>
+                        <th>评论</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for f in fms %}
+                        <tr>
+                            <td>
+                                <a href="#">
+                        <span data-toggle="collapse" href="#expand-{{ loop.index }}" class="icon pull-right">
+                    <em class="glyphicon glyphicon-s glyphicon-plus"></em></span>
+                                </a>
+                            </td>
+                            <td>
+                                {{ f.id }}
+                            </td>
+                            <td>
+                                {{ f.fm }}
+                            </td>
+                            <td>
+                                {% if f.fm_type == 0 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMVALUETYPE0' %}
+                                {% else %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMVALUETYPE1' %}
+                                {% endif %}
+                                {{ constant(type) }}
+                            </td>
+                            <td>
+                                {% if f.fm_level == 0 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMLEVEL0' %}
+                                {% elseif f.fm_level == 1 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMLEVEL1' %}
+                                {% elseif f.fm_level == 2 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMLEVEL2' %}
+                                {% elseif f.fm_level == 3 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMLEVEL3' %}
+                                {% elseif f.fm_level == 4 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMLEVEL4' %}
+                                {% elseif f.fm_level == 5 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMLEVEL5' %}
+                                {% endif %}
+                                {{ constant(type) }}
+                            </td>
+                            <td>
+                                {{ f.join_act }}
+                            </td>
+                            <td>
+                                {{ f.host }}
+                            </td>
+                            <td>
+                                {{ f.mobile }}
+                            </td>
+                            <td>
+                                {{ f.sender }}
+                                {{  f.content }}
+                                <a href="javascript:;" onclick="openDialog({{ f.id }})" >{{  f.comment_count }}</a>
+                                <div class="dialog" id="dialog{{ f.id }}">
+                                    <iframe id="" src="{{ path('_unvadmin_member_comment', {'id': f.id}) }}"></iframe>
+                                </div>
+                            </td>
+                            <td><a href="{{ path('_admin_fm_edit', {"id": f.id}) }}">检视</a></td>
+                            <td><a href="{{ path('_admin_fm_delete', {"id": f.id}) }}">刪除</a></td>
+                        </tr>
+                        <tr class="children collapse" id="expand-{{ loop.index }}">
+                            <td colspan="12" id="col-expand-{{ loop.index }}" class="col-expand">
+                                <ul class="childrenbak collapsebak details-ul" id="bakexpand-{{ loop.index }}">
+                                    <li>
+                                        <span class="col-md-3"><label>Email: </label>{{ f.email }}</span>
+                                        <span class="col-md-3"><label>电台全称: </label>{{ f.full_name }}</span>
+                                        <span class="col-md-3"><label>电台地址: </label>{{ f.province_id|province }}{{ f.city_id|city }}{{ f.address }}</span>
+                                        <span class="col-md-3"></span>
+                                    </li>
+                                    <li>
+                                        <span class="col-md-3"><label>联系电话: </label>{{ f.tel }}</span>
+                            <span class="col-md-3"><label>电台频道: </label>
+                                {% if f.fm_type == 0 %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMVALUETYPE0' %}
+                                {% else %}
+                                    {% set type='Acme\\BackendBundle\\Entity\\Constant::FMVALUETYPE1' %}
+                                {% endif %}
+                                {{ constant(type) }}
+                                {{ f.fm_value }}</span>
+                                        <span class="col-md-3"><label>电台功率: </label>{{ f.factor }}</span>
+                                        <span class="col-md-3"><label>官方网站: </label>{{ f.site }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="col-md-3"><label>成立时间: </label>{{ f.found_time }}</span>
+                                        <span class="col-md-3"><label>覆盖人口: </label>{{ f.cover_popular }}</span>
+                                        <span class="col-md-3"><label>XX榜播放时间: </label>{{ f.cast_day|week }}&nbsp;&nbsp;{{ f.cast_time_from }}&nbsp;-&nbsp;{{ f.cast_time_to }}</span>
+                                        <span class="col-md-3"><label>主持人QQ: </label>{{ f.qq }}</span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var openDialog = function(id)
+        {
+            $('#dialog'+id).dialog('open');
+        }
+        /*$(document).ready(function(){
+         audiojs.events.ready(function() {
+         var as = audiojs.createAll();
+         });
+         })*/
+        $(document).ready(function(){
+            $(".dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                width: 800,
+                open: function(ev, ui){
+                }
+            });
+        });
+    </script>
 {% endblock %}

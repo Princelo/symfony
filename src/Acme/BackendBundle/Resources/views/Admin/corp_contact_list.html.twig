@@ -1,62 +1,143 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                唱片公司
-            </th>
-            <th>
-                艺人
-            </th>
-            <th>
-                企宣
-            </th>
-            <th>
-                公司电话
-            </th>
-            <th>
-                企宣手机
-            </th>
-            <th>
-                企宣QQ
-            </th>
-            <th>
-                备注
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for c in corps %}
-        <tr>
-            <td>c.corp</td>
-            <td>
-                {% for a in c.artists %}
-                    {{ a.name }}
-                {% endfor %}
-            </td>
-            <td>{{ c.user_name }}</td>
-            <td>{{ c.tel }}</td>
-            <td>{{ c.qq }}</td>
-            <td>
-                <label class="sender">{{ c.sender }}:</label>{{ c.content }}
-                <a href="{{ path('_unvadmin_member_comment', {"id": c.id}) }}" >备</a>
-            </td>
-            <td>
-                <a href="{{ path('_admin_corp_edit', {"id": c.id}) }}">检视</a>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="8">
-                <ul>
-                    <li>email:{{ c.email }}</li>
-                    <li>公司邮编:{{ c.zip_code }}</li>
-                    <li>{{ c.province_id }}{{ c.city_id }}{{ c.address }}</li>
-                    <li>{{ c.intro }}</li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.dataTables.js') }}"></script>
+    <script src="http://medialoot.com/preview/lumino/js/bootstrap-table.js"></script>
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">唱片公司</li>
+        <li class="active">唱片公司表</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">唱片公司表</h1>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">唱片公司表</div>
+            <div class="panel-body" id="pre-vote-list">
+                <!--<table class="table table-striped" id="dataTable">-->
+                <table data-toggle="table"
+                       data-show-refresh="true"
+                       data-show-toggle="true"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-select-item-name="toolbar1"
+                       data-pagination="true"
+                       data-sort-name="name"
+                       data-sort-order="desc"
+                       class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            唱片公司
+                        </th>
+                        <th>
+                            艺人
+                        </th>
+                        <th>
+                            企宣
+                        </th>
+                        <th>
+                            公司电话
+                        </th>
+                        <th>
+                            企宣手机
+                        </th>
+                        <th>
+                            企宣QQ
+                        </th>
+                        <th>
+                            备注
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for c in corps %}
+                        <tr>
+                            <td>
+                                <a href="#">
+                        <span data-toggle="collapse" href="#expand-{{ loop.index }}" class="icon pull-right">
+                    <em class="glyphicon glyphicon-s glyphicon-plus"></em></span>
+                                </a>
+                            </td>
+                            <td>
+                                {{ c.corp }}
+                            </td>
+                            <td>
+                                {% for a in c.artists %}
+                                    {{ a.name }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ c.user_name }}
+                            </td>
+                            <td>
+                                {{ c.tel }}
+                            </td>
+                            <td>
+                                {{ c.mobile }}
+                            </td>
+                            <td>
+                                {{ c.qq }}
+                            </td>
+                            <td>
+                                {{ c.sender }}
+                                {{  c.content }}
+                                <a href="javascript:;" onclick="openDialog({{ c.id }})" >备注({{  c.comment_count }})</a>
+                                <div class="dialog" id="dialog{{ c.id }}">
+                                    <iframe id="" src="{{ path('_unvadmin_member_comment', {'id': c.id}) }}"></iframe>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ path('_admin_corp_edit', {"id": c.id}) }}">检视</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('_admin_corp_delete', {"id": c.id}) }}">刪除</a>
+                            </td>
+                        </tr>
+                        <tr class="children collapse" id="expand-{{ loop.index }}">
+                            <td colspan="12" id="col-expand-{{ loop.index }}" class="col-expand">
+                                <ul class="childrenbak collapsebak details-ul" id="bakexpand-{{ loop.index }}">
+                                    <li>
+                                        <span class="col-md-6"><label>Email: </label>{{ c.email }}</span>
+                                        <span class="col-md-6"><label>电台全称: </label>{{ c.full_name }}</span>
+                                        <span class="col-md-6"><label>电台地址: </label>{{ c.province_id|province }}{{ c.city_id|city }}{{ c.address }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="col-md-6"><label>公司邮编: </label>{{ c.zip_code }}</span>
+                                        <span class="col-md-6"><label>公司简介: </label>{{ c.intro }}</span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var openDialog = function(id)
+        {
+            $('#dialog'+id).dialog('open');
+        }
+        /*$(document).ready(function(){
+         audiojs.events.ready(function() {
+         var as = audiojs.createAll();
+         });
+         })*/
+        $(document).ready(function(){
+            $(".dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                width: 800,
+                open: function(ev, ui){
+                }
+            });
+        });
+    </script>
 {% endblock %}
+

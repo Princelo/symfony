@@ -88,7 +88,7 @@ class EditCorpType extends AbstractType
                 'allow_add'    => true,
                 'label' => false,
             ));
-        $builder->add('strIntro',  'text', array('label'=>'公司简介'));
+        $builder->add('strIntro',  'textarea', array('label'=>'公司简介'));
         $builder->add('strUserName', 'text', array('label'=>'真实姓名'));
         $builder->add('strUserNickName', 'text', array('label'=>'艺名',
             'attr'=>array('data-validate'=>'required')));
@@ -99,6 +99,7 @@ class EditCorpType extends AbstractType
             'attr'=>array('data-validate'=>'required')));
         $builder->add('strUserTel', 'text', array('label'=>'固定电话'));
         $builder->add('strUserQQ', 'text', array('label'=>'常用QQ'));
+        if($this->boolIsAdmin)
             $builder->add('boolIsValid', 'choice', array('label'=>'审核',
                 'choices' => array(
                     0 => '未通过',

@@ -15,7 +15,7 @@ class AdminType extends AbstractType
         $builder->add('strTel', 'text', array(
             'label' => '联系电话',
         ));
-        $builder->add('submit', 'submit');
+        $builder->add('完成', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

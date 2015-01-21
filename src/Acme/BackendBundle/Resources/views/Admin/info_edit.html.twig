@@ -3,5 +3,52 @@
     {% for m in message %}
         {{ m }}
     {% endfor %}
-    {{ form(form) }}
+<ol class="breadcrumb">
+    <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+    <li class="">首页</li>
+    <li class="active">资料修改</li>
+</ol>
+<div class="col-lg-12">
+    <h1 class="page-header">资料修改</h1>
+</div>
+<style>
+    .form-control{height:100%; min-height: 34px;}
+    .form-control.color{margin-top:3px; margin-bottom:3px; border:1px solid #30a5ff;}
+    .myalert.mybg-warning{background: #ffb53e;max-height: 30px !important; margin:0 !important;
+        color:#fff;line-height:30px !important; cursor: normal; padding:0px 12px;}
+</style>
+{% for m in message %}
+    {{ m }}
+{% endfor %}
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">资料修改</div>
+        <div class="panel-body" id="pre-vote-list">
+            <div class="main-partition">
+                <div class="registration-form fm_step_two">
+                    {{ form_start(form) }}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.strShortName) }}
+                            {{ form_widget(form.strShortName,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'} } ) }}
+                            <span class="form_errors">{{ form_errors(form.strShortName) }}</span>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.strTel) }}
+                            {{ form_widget(form.strTel,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'} } ) }}
+                            <span class="form_errors">{{ form_errors(form.strTel) }}</span>
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.完成, {'attr': {'class': 'btn btn-primary pull-right'} }) }}
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

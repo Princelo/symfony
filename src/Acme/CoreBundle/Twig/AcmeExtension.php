@@ -3,6 +3,7 @@
 namespace Acme\CoreBundle\Twig;
 
 use Acme\BackendBundle\Entity\City;
+use Acme\BackendBundle\Entity\Constant;
 
 class AcmeExtension extends \Twig_Extension
 {
@@ -13,6 +14,7 @@ class AcmeExtension extends \Twig_Extension
             new \Twig_SimpleFilter('province', array($this, 'provinceFilter')),
             new \Twig_SimpleFilter('city', array($this, 'cityFilter')),
             new \Twig_SimpleFilter('week', array($this, 'weekFilter')),
+            new \Twig_SimpleFilter('article', array($this, 'articleFilter')),
         );
     }
 
@@ -60,6 +62,31 @@ class AcmeExtension extends \Twig_Extension
                 break;
             case '6':
                 $string = '周六';
+                break;
+        }
+        return $string;
+    }
+
+    public function articleFilter($string)
+    {
+        switch($string)
+        {
+            case '1':
+                $string = Constant::CATEGORY1;
+                break;
+            case '2':
+                $string = Constant::CATEGORY2;
+                break;
+            case '3':
+                $string = Constant::CATEGORY3;
+                break;
+            case '4':
+                $string = Constant::CATEGORY4;
+                break;
+            case '5':
+                $string = Constant::CATEGORY5;
+                break;
+            default:
                 break;
         }
         return $string;

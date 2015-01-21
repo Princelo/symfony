@@ -71,6 +71,7 @@ class AdminController extends DefaultController
                 ->getArrChampionLog(Constant::HKTWZONE, 20);
         $arrForecast = $objORM->getRepository('AcmeBackendBundle:Forecast')
             ->getArrForecastlist(100);
+
         return $this->render('AcmeBackendBundle:Admin:index.html.twig',
             array('m'=>$arrMemberInfo,
                 'menu'=>$this->menu,
@@ -78,6 +79,7 @@ class AdminController extends DefaultController
                 'championlogs_prc' => $arrObjChampionLogPRC,
                 'championlogs_hktw' => $arrObjChampionLogHKTW,
                 'forecasts' => $arrForecast,
+                'rank_week_day' => $intRankWeekDay,
                 ));
     }
 
@@ -131,7 +133,7 @@ class AdminController extends DefaultController
      */
     public function adminAdminEditAction()
     {
-        return new Response();
+        return new Response('未完成');
     }
 
     /**
@@ -165,6 +167,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:rank_setting.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }
@@ -217,6 +220,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:otherinfo.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }
@@ -237,6 +241,7 @@ class AdminController extends DefaultController
             array(
                 'menu' => $this->menu,
                 'flashs' => $arrFlash,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             ));
     }
 
@@ -274,6 +279,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:flash_edit.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }
@@ -318,6 +324,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:flash_edit.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }
@@ -338,6 +345,7 @@ class AdminController extends DefaultController
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_flash_list',
             array(
+                'message' => $this->get('session')->getFlashBag()->get('message'),
                 'strAlertJs' => $strAlertJs
             )));
     }
@@ -392,6 +400,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:article_edit.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }
@@ -428,9 +437,10 @@ class AdminController extends DefaultController
         }
 
         return $this->render(
-            'AcmeBackendBundle:Admin:article_edit.html.twig',
+            'AcmeBackendBundle:Admin:article_create.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }
@@ -584,6 +594,27 @@ class AdminController extends DefaultController
 
     }
 
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/admin/fm_delete/{id}", name="_admin_fm_delete")
+     */
+    public function adminFMDeleteAction($id)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $where = null;
+        $query = $objORM->createQuery('DELETE
+                                         FROM AcmeBackendBundle:Member s
+                                         WHERE s.id = :id')
+            ->setParameters(array('id'=>$id))
+            ->execute();
+        $strAlertJs = "<script>alert(\"刪除成功\");</script>";
+        return $this->redirect($this->generateUrl('_admin_fm_contact_list',
+            array(
+                'strAlertJs' => $strAlertJs
+            )));
+    }
+
 
     /**
      * @param $id
@@ -633,6 +664,27 @@ class AdminController extends DefaultController
             )
         );
 
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/admin/corp_delete/{id}", name="_admin_corp_delete")
+     */
+    public function adminCorpDeleteAction($id)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $where = null;
+        $query = $objORM->createQuery('DELETE
+                                         FROM AcmeBackendBundle:Member s
+                                         WHERE s.id = :id')
+            ->setParameters(array('id'=>$id))
+            ->execute();
+        $strAlertJs = "<script>alert(\"刪除成功\");</script>";
+        return $this->redirect($this->generateUrl('_admin_corp_contact_list',
+            array(
+                'strAlertJs' => $strAlertJs
+            )));
     }
 
     /**
@@ -877,8 +929,8 @@ class AdminController extends DefaultController
         $strWhere = "";
         if($strSearch != null)
             $strWhere .= " AND a.strTitle LIKE '%{$strSearch}%'";
-        if($intCategory != null)
-            $strWhere .= " AND a.intCategory = {$intCategory}";
+        //if($intCategory != null)
+        //    $strWhere .= " AND a.intCategory = {$intCategory}";
         return $strWhere;
     }
 

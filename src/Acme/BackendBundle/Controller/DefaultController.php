@@ -97,38 +97,51 @@ class DefaultController extends CustomerController
         $this->init();
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
+        $intTermNo = null;
+        $intTermNo = $request->query->get('term_no');
         if($intTermNo == null)
             $intTermNo = $request->getSession()->get('last_term_no');
         $arrLastRankSongPRC = $objORM->getRepository('AcmeBackendBundle:Rank')
             ->getArrNewestRankList(Constant::PRCZONE, 999, $intTermNo);
+        $intCurrentTermNo = $request->getSession()->get('current_term_no');
+        $intLastTermNo = $request->getSession()->get('last_term_no');
         return $this->render(
             'AcmeBackendBundle:Default:prc_rank.html.twig',
             array(
                 'menu' => $this->menu,
                 'list' => $arrLastRankSongPRC,
+                'current_term_no' => $intCurrentTermNo,
+                'term_no' => $intTermNo,
+                'last_term_no' => $intLastTermNo,
             )
         );
     }
 
     /**
-     * @param null $intTermNo
      * @return Response
      * @Route("/hktw_rank", name="_unvadmin_hktw_rank")
      */
-    public function hktwRankAction($intTermNo = null)
+    public function hktwRankAction()
     {
         $this->init();
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
+        $intTermNo = null;
+        $intTermNo = $request->query->get('term_no');
         if($intTermNo == null)
-            $intTermNo = $request->getSession()->get('last_term_no');
+            $intTermNo = $request->getSession()->get('current_term_no');
         $arrLastRankSongHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
             ->getArrNewestRankList(Constant::HKTWZONE, 999, $intTermNo);
+        $intCurrentTermNo = $request->getSession()->get('current_term_no');
+        $intLastTermNo = $request->getSession()->get('last_term_no');
         return $this->render(
             'AcmeBackendBundle:Default:hktw_rank.html.twig',
             array(
                 'menu' => $this->menu,
                 'list' => $arrLastRankSongHKTW,
+                'current_term_no' => $intCurrentTermNo,
+                'term_no' => $intTermNo,
+                'last_term_no' => $intLastTermNo,
             )
         );
     }

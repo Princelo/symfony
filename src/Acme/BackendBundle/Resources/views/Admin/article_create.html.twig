@@ -1,0 +1,53 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">文章发布</li>
+        <li class="active">发布新文章</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">发布新文章</h1>
+    </div>
+    <style>
+        .form-control{height:100%; min-height: 34px;}
+        .form-control.color{margin-top:3px; margin-bottom:3px; border:1px solid #30a5ff;}
+        .myalert.mybg-warning{background: #ffb53e;max-height: 30px !important; margin:0 !important;
+            color:#fff;line-height:30px !important; cursor: normal; padding:0px 12px;}
+    </style>
+    {% for m in message %}
+        {{ m }}
+    {% endfor %}
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">发布新文章</div>
+            <div class="panel-body" id="">
+                {{ form_start(form) }}
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_label(form.intCategory) }}
+                        {{ form_widget(form.intCategory, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.strTitle) }}
+                        {{ form_widget(form.strTitle, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.strThumb) }}
+                        {{ form_widget(form.strThumb, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ form_label(form.textContent) }}
+                        {{ form_widget(form.textContent, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.提交, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

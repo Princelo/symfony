@@ -1,5 +1,13 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
+<ol class="breadcrumb">
+    <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+    <li class="">歌曲查询</li>
+    <li class="active">新增歌曲</li>
+</ol>
+<div class="col-lg-12">
+    <h1 class="page-header">新增歌曲</h1>
+</div>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
 <script src="{{ asset('bundles/acmefrontend/js/load-image.all.min.js') }}"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
@@ -20,93 +28,164 @@
 <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-video.js') }}"></script>
 <!-- The File Upload validation plugin -->
 <script src="{{ asset('bundles/acmefrontend/js/jquery.fileupload-validate.js') }}"></script>
+    <style>
+        li.col-md-2{list-style: none; }
+    </style>
+<div class="col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading">新增歌曲</div>
+<div class="panel-body" id="">
 <div class="backend-form song-add-form">
     {{ form_start(form) }}
     <table class="table table-striped">
         <tr>
             <td>{{ form_label(form.song.strTitle) }}<span class="red">*</span></td>
-            <td>{{ form_widget(form.song.strTitle) }}<span class="form_errors">{{ form_errors(form.song.strTitle) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                    {{ form_widget(form.song.strTitle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <span class="form_errors">{{ form_errors(form.song.strTitle) }}</span>
+            </td>
         </tr>
         <tr>
             <td><label>歌手</label><span class="red">*</span></td>
             <td>
                 <ul class="tags" data-prototype="{% if form.song.arrStrArtistName.vars.prototype is defined %}
-                                    {{ form_widget(form.song.arrStrArtistName.vars.prototype.name)|e }}
+                                    {{ form_widget(form.song.arrStrArtistName.vars.prototype.name, {'attr': {'class': 'form-control'} } )|e }}
                                     {% endif %}">
                     {# iterate over each existing tag and render its only field: name #}
                     {% for tag in form.song.arrStrArtistName %}
                         {% if loop.index == 1 %}
-                            <li>{{ form_widget(tag.name,  { 'attr': {'data-validate' : 'required'} }) }}</li>
+                            <li class="col-md-2">{{ form_widget(tag.name,  { 'attr': {'data-validate' : 'required', 'class': 'form-control'} }) }}</li>
                         {% else %}
-                            <li>{{ form_widget(tag.name) }}</li>
+                            <li class="col-md-2">{{ form_widget(tag.name, {'attr': {'class': 'form-control'} } ) }}</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
-                <span class="tip">(请至少填写一名歌手)</span>
             </td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strSpecial) }}</td>
-            <td>{{ form_widget(form.song.strSpecial) }}<span class="form_errors">{{ form_errors(form.song.strSpecial) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strSpecial, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <span class="form_errors">{{ form_errors(form.song.strSpecial) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strLyricist) }}</td>
-            <td>{{ form_widget(form.song.strLyricist) }}<span class="form_errors">{{ form_errors(form.song.strLyricist) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strLyricist, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strLyricist) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strComposer) }}</td>
-            <td>{{ form_widget(form.song.strComposer) }}<span class="form_errors">{{ form_errors(form.song.strComposer) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strComposer, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strComposer) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strCorpName) }}<span class="red">*</span></td>
-            <td>{{ form_widget(form.song.strCorpName) }}<span class="form_errors">{{ form_errors(form.song.strCorpName) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strCorpName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strCorpName) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.boolIsRank) }}</td>
-            <td>{{ form_widget(form.song.boolIsRank) }}<span class="form_errors">{{ form_errors(form.song.boolIsRank) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.boolIsRank, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.boolIsRank) }}</span></td>
         </tr>
         <tr>
             <td><label>打榜时间</label></td>
-            <td>从{{ form_widget(form.song.timeRankTimeFrom) }}到{{ form_widget(form.song.timeRankTimeTo) }}
+            <td>
+                <div class="col-md-3">
+                从{{ form_widget(form.song.timeRankTimeFrom, {'attr': {'class': 'form-control datepicker'}}) }}
+                到{{ form_widget(form.song.timeRankTimeTo, {'attr': {'class': 'form-control datepicker'}}) }}
+                    </div>
                 <span class="form_errors">{{ form_errors(form.song.timeRankTimeFrom) }}</span>
                 <span class="form_errors">{{ form_errors(form.song.timeRankTimeTo) }}</span>
             </td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.intRankZone) }}<span class="red">*</span></td>
-            <td>{{ form_widget(form.song.intRankZone) }}<span class="form_errors">{{ form_errors(form.song.intRankZone) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.intRankZone, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.intRankZone) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.boolIsPremiere) }}</td>
-            <td>{{ form_widget(form.song.boolIsPremiere) }}<span class="form_errors">{{ form_errors(form.song.boolIsPremiere) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.boolIsPremiere, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.boolIsPremiere) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.boolIsMain) }}</td>
-            <td>{{ form_widget(form.song.boolIsMain) }}<span class="form_errors">{{ form_errors(form.song.boolIsMain) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.boolIsMain, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.boolIsMain) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.intCategory) }}<span class="red">*</span></td>
-            <td>{{ form_widget(form.song.intCategory) }}<span class="form_errors">{{ form_errors(form.song.intCategory) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.intCategory, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.intCategory) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.intStyle) }}<span class="red">*</span></td>
-            <td>{{ form_widget(form.song.intStyle) }}<span class="form_errors">{{ form_errors(form.song.intStyle) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.intStyle, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.intStyle) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strPromotionFile) }}</td>
-            <td>{{ form_widget(form.song.strPromotionFile) }}<span class="form_errors">{{ form_errors(form.song.strPromotionFile) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strPromotionFile, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strPromotionFile) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strCoverFile) }}</td>
-            <td>{{ form_widget(form.song.strCoverFile) }}<span class="form_errors">{{ form_errors(form.song.strCoverFile) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strCoverFile, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strCoverFile) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strLyricFile) }}</td>
-            <td>{{ form_widget(form.song.strLyricFile) }}<span class="form_errors">{{ form_errors(form.song.strLyricFile) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strLyricFile, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strLyricFile) }}</span></td>
         </tr>
         <tr>
             <td>{{ form_label(form.song.strAuthFile) }}<span class="red">*</span></td>
-            <td>{{ form_widget(form.song.strAuthFile) }}<span class="form_errors">{{ form_errors(form.song.strAuthFile) }}</span></td>
+            <td>
+                <div class="col-md-3">
+                {{ form_widget(form.song.strAuthFile, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                <span class="form_errors">{{ form_errors(form.song.strAuthFile) }}</span></td>
         </tr>
         <tr>
             <td><label>上传歌曲</label><span class="red">*</span></td>
@@ -127,9 +206,12 @@
         <tr>
             <td><label>添加试听外部链接</label></td>
             <td>
-                试听地址1: {{ form_widget(form.song.strOtherLink1) }}<span class="form_errors">{{ form_errors(form.song.strOtherLink1) }}</span><br />
-                试听地址1: {{ form_widget(form.song.strOtherLink2) }}<span class="form_errors">{{ form_errors(form.song.strOtherLink2) }}</span><br />
-                试听地址1: {{ form_widget(form.song.strOtherLink3) }}<span class="form_errors">{{ form_errors(form.song.strOtherLink3) }}</span><br />
+                试听地址1: {{ form_widget(form.song.strOtherLink1, {'attr': {'class': 'form-control'}}) }}
+                <span class="form_errors">{{ form_errors(form.song.strOtherLink1) }}</span><br />
+                试听地址1: {{ form_widget(form.song.strOtherLink2, {'attr': {'class': 'form-control'}}) }}
+                <span class="form_errors">{{ form_errors(form.song.strOtherLink2) }}</span><br />
+                试听地址1: {{ form_widget(form.song.strOtherLink3, {'attr': {'class': 'form-control'}}) }}
+                <span class="form_errors">{{ form_errors(form.song.strOtherLink3) }}</span><br />
             </td>
         </tr>
     </table>
@@ -243,8 +325,8 @@
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">添加歌手</a>');
-    var $newLinkLi = $('<li></li>').append($addTagLink);
+    var $addTagLink = $('<a href="#" class="add_tag_link btn btn-primary">添加歌手</a>');
+    var $newLinkLi = $('<li class="col-md-2"></li>').append($addTagLink);
 
     jQuery(document).ready(function() {
         //var $addTagLink = $('.add_tag_link');
@@ -281,8 +363,12 @@
         $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
+        var $newFormLi = $('<li class="col-md-2"></li>').append(newForm);
         $newLinkLi.before($newFormLi);
     }
 </script>
+</div>
+</div>
+</div>
+
 {% endblock %}

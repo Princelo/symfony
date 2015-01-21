@@ -1,6 +1,12 @@
 {{ form(form) }}
+<script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
 <script>
     console.log(window.parent);
+    $('form').each(function()
+            {
+                $(this).attr('novalidate', 'novalidate');
+            }
+    );
 </script>
 {% if close == true %}
     <script>

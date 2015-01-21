@@ -1,28 +1,61 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
-    <form action="{{ path('_admin_article_list', {"category": category, "page": page}) }}" method="get">
-        <select name="">
-            <option value="1">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY1') }}</option>
-            <option value="2">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY2') }}</option>
-            <option value="3">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY3') }}</option>
-            <option value="4">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY4') }}</option>
-            <option value="5">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY5') }}</option>
-        </select>
-        <input name="search" type="text" placeholder="SEARCH" />
-        <input type="submit" />
-    </form>
-    {# total items count #}
-    <div class="count">
-        {{ pagination.getTotalItemCount }}
+    <script src="http://medialoot.com/preview/lumino/js/bootstrap-table.js"></script>
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">文章发布</li>
+        <li class="active">{{ category|article }}</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">{{ category|article }}</h1>
     </div>
-    <table class="table table-striped">
+<div class="col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading">{{ category|article }}</div>
+<div class="col-lg-12 panel panel-group">
+    <div class="form-group col-md-12">
+    <form action="{{ path('_admin_article_list', {"category": category, "page": page}) }}" method="get">
+        <div class="col-md-3" style="display: none;">
+            <select name="category" class="form-control">
+                <option value="1">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY1') }}</option>
+                <option value="2">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY2') }}</option>
+                <option value="3">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY3') }}</option>
+                <option value="4">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY4') }}</option>
+                <option value="5">{{ constant('Acme\\BackendBundle\\Entity\\Constant::CATEGORY5') }}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input name="search" type="text" placeholder="SEARCH" class="form-control"/>
+        </div>
+        <div class="col-md-3">
+        <input type="submit" value="搜索" class="btn btn-primary"/>
+        </div>
+    </form>
+        </div>
+    {# total items count #}
+    <div class="panel-body" id="">
+        <div class="form-group col-md-12">
+    <table data-toggle="table"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-select-item-name="toolbar1"
+           data-sort-name="name"
+           data-sort-order="desc"
+           class="table table-hover">
+        <thead>
         <tr>
             {# sorting of properties based on query components #}
-            <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-            <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>EDIT</th>
+            <th>DELETE</th>
+            <th>CREATE TIME</th>
         </tr>
+        </thead>
 
         {# table body #}
+        <tbody>
         {% for item in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
                 <td>{{ item.id }}</td>
@@ -38,10 +71,18 @@
                 </td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
+            </div>
     {# display navigation #}
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
-    <a href="{{ path('_admin_article_create') }}">发布新文章</a>
+    <div class="form-group col-md-3" style="display: none;">
+        <a href="{{ path('_admin_article_create') }}" class="btn btn-primary">发布新文章</a>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
 {% endblock %}

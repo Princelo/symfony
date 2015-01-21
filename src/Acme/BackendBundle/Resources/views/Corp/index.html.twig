@@ -1,9 +1,138 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
-<div class="welcome-info">
-    您好！ <span>{{ m.short_name }}</span> 。您的IP是： <span>{{ m.ip }}</span> , 登录时间是 <span>{{ m.login_time }}</span>
-</div>
-<div class="backend-memo">
-    距xx榜本期投票截止还有： sys.lastRankTime ，我家 foreach
-</div>
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="active">XX榜后台管理系统首页</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">后台首页</h1>
+    </div>
+    <script>
+        var openDialog = function()
+        {
+            $('#dialog').dialog('open');
+        }
+        function closeIframe()
+        {
+            $('#dialog').dialog('close');
+            return false;
+        }
+        $(document).ready(function(){
+            $(".dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                open: function(ev, ui){
+                    console.log(ev);
+                }
+            });
+        });
+    </script>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">帐户信息</div>
+            <div class="panel-body" id="pre-vote-list">
+                <div class="welcome-info">
+                    您好！ <span>{{ m.short_name }}</span> 。您的IP是： <span>{{ m.ip }}</span> , 登录时间是 <span>{{ m.login_time }}</span>
+                </div>
+                <div class="backend-memo">
+                    距xx榜本期投票截止还有： <span id="countdown-holder"></span>。
+                    <!--请在每周{% if rank_week_day == 0 %}日{% else %} {{ rank_week_day }}{% endif %} 前完成投票。-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <h3 class="page-header">冠军进行时</h3>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">内地榜</div>
+            <div class="panel-body" id="">
+                <div class="backend-championlog prc">
+                    <ul>
+                        {% for c in championlogs_prc %}
+                            <li>
+                                <label class="voter">{{ c.voter }}</label>将冠军投给了
+                                <label class="artist">
+                                    {% for a in c.artists %}
+                                        {{ a.name }}
+                                    {% endfor %}
+                                </label>
+                                <label class="song">
+                                    {{ c.title }}
+                                </label>
+                                <label class="time">
+                                    {{ time_diff(c.time) }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-heading">港台榜</div>
+            <div class="panel-body" id="">
+                <div class="backend-championlog hktw">
+                    <ul>
+                        {% for c in championlogs_hktw %}
+                            <li>
+                                <label class="voter">{{ c.voter }}</label>将冠军投给了
+                                <label class="artist">
+                                    {% for a in c.artists %}
+                                        {{ a.name }}
+                                    {% endfor %}
+                                </label>
+                                <label class="song">
+                                    {{ c.title }}
+                                </label>
+                                <label class="time">
+                                    {{ time_diff(c.time) }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span>公告板
+                <a href="javascript:;" onclick="openDialog()" class="btn btn-primary btn-md pull-right">发布公告</a>
+            </div>
+            <div class="panel-body chat" id="">
+                <div class="dialog" id="dialog">
+                    Your Iframe Below
+                    <iframe id="" src="{{ path('_unvadmin_forecast') }}"></iframe>
+                </div>
+                <div class="forecast">
+                    <ul>
+                        {% for f in forecasts %}
+                            <li class="{% if f.is_up %}is-up{% endif %} }} left clearfix">
+                                <label class="member">
+                                    {{ f.member_name }}
+                                </label>
+                                :
+                                <label>
+                                    {{ f.content }}
+                                </label>
+                                <label class="time">
+                                    {{ time_diff(f.time) }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var clock = document.getElementById("countdown-holder")
+                , targetDate = {{ next_rank_time }}*1000;
+
+        clock.innerHTML = countdown(targetDate).toString();
+        setInterval(function(){
+            clock.innerHTML = countdown(targetDate).toString();
+        }, 1000);
+    </script>
 {% endblock %}
