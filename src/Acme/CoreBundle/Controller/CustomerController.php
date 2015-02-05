@@ -44,6 +44,7 @@ class CustomerController extends Controller implements InitializableControllerIn
         //generate rank
         if($floatShouldRank > $intCountRanked){
             $this->generateRank($floatShouldRank - $intCountRanked, $intLatestTermNo);
+            $this->initialize($request);
         }
 
     }

@@ -17,19 +17,19 @@ class DefaultController extends CustomerController
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
         $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
-            ->getArrFlashlist();
+            ->getArrFlashList();
         $arrRankInfoPRC = $objORM->getRepository('AcmeBackendBundle:Rank')
-            ->getArrNewestRanklist(Constant::PRCZONE, Constant::GLOBALS);
+            ->getArrNewestRankList(Constant::PRCZONE, Constant::GLOBALS);
         $arrRankInfoHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
-            ->getArrNewestRanklist(Constant::HKTWZONE, Constant::GLOBALS);
+            ->getArrNewestRankList(Constant::HKTWZONE, Constant::GLOBALS);
         $arrChampionlogPRC = $objORM->getRepository('AcmeBackendBundle:Championlog')
             ->getArrChampionlog(Constant::PRCZONE, 22);
         $arrChampionlogHKTW = $objORM->getRepository('AcmeBackendBundle:Championlog')
             ->getArrChampionlog(Constant::HKTWZONE, 22);
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticlelist(Constant::STARINTERVIEW, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(5, 'timeCreateTime', 'DESC');
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrMemberlist(Constant::FM, 20, 'timeCreateTime', 'DESC');
+            ->getArrMemberList(Constant::FM, 20, 'timeCreateTime', 'DESC');
         return $this->render('AcmeFrontendBundle:Default:index.html.twig',
                             array(
                                 'otherinfo' => $arrFrontendInfo,
@@ -38,7 +38,7 @@ class DefaultController extends CustomerController
                                 'rank_hktw'  => $arrRankInfoHKTW,
                                 'champion_log_prc' => $arrChampionlogPRC,
                                 'champion_log_hktw' => $arrChampionlogHKTW,
-                                'star_interview' => $arrStarInterviewList,
+                                'articles' => $arrStarInterviewList,
                                 'fms' => $arrFMList,
                             ));
     }
