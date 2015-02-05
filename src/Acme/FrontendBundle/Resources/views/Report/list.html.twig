@@ -1,0 +1,72 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+
+{% block body %}
+    <div class="main-partition">
+    <div id="play-bar">
+        <span class="close-btn" onclick="stop()"></span>
+    </div>
+        <div class="report-list">
+            <div class="search">
+            </div>
+            <div class="title">
+                <span class="index">详细查询</span>
+                <span class="title">榜期</span>
+                <span class="artist">总榜成绩</span>
+                <span class="corp">歌曲名称</span>
+                <span class="last-index">歌手名</span>
+                <span class="count-rank">唱片公司</span>
+                <span class="top-rank">首播</span>
+                <span class="change">总得分</span>
+                <span class="score">媒体总数</span>
+                <span class="score">媒投冠军数</span>
+                <span class="play">试听</span>
+            </div>
+            <ul>
+                {% for r in list %}
+                    <li  {% if loop.index is odd %}class="color"{% endif %}>
+                        <span class="details">详细</span>
+                        <span class="term-no">{{ r.term_no }}</span>
+                        <span class="index">{{ r.rank_index }}</span>
+                        <span class="title">{{ r.title }}</span>
+                        <span class="artist">
+                            {% for a in r.artists %}
+                                {{ a.name }}
+                            {% endfor %}
+                        </span>
+                        <span class="is-pre">{{ r.is_pre }}</span>
+                        <span class="score">{{ r.score }}</span>
+                        <span class="first-count">{{ r.champion_count }}</span>
+                        <span class="play">
+                            <a href="javascript:;">*</a>
+                        </span>
+                    </li>
+                {% endfor %}
+                <div style="clear:both"></div>
+            </ul>
+        </div>
+    <script>
+        var play = function(token, id)
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            $('#play-bar').show();
+            $('#play-bar').append(player);
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
+        }
+        var stop = function()
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            $('#play-bar').hide();
+        }
+    </script>
+{% endblock %}

@@ -30,6 +30,10 @@ _article:
     resource: "@AcmeFrontendBundle/Controller/ArticleController.php"
     type:     annotation
 
+_report:
+    resource: "@AcmeFrontendBundle/Controller/ReportController.php"
+    type:     annotation
+
 random:
      path:     /random/{limit}
      defaults: { _controller: AcmeDemoBundle:Random:index }

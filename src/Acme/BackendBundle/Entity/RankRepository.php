@@ -28,12 +28,18 @@ class RankRepository extends EntityRepository
                         r.intCountOnList count_on_list,
                         r.intScore score,
                         r.boolIsPrePlus is_pre,
-                        s.strSongFile file
+                        s.strSongFile file,
+                        {$intTermNo} term_no,
+                        COUNT(l.id) champion_count
                     FROM
                     AcmeBackendBundle:Rank r
                     JOIN r.song s
+                    JOIN AcmeBackendBundle:RankLog l
+                    WITH r.intTermNo = l.intTermNo
                     WHERE r.intZone = {$intZone}
                     AND r.intTermNo = {$intTermNo}
+                    GROUP BY title, artists, id, top, corp, file, rank_index, last_rank_index, count_on_list, score
+                             , is_pre
                     ORDER BY r.intIndex ASC
                     "
             )
