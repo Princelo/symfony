@@ -318,6 +318,8 @@ class DefaultController extends CustomerController
 
     /**
      * @param Request $request
+     * @param int $page
+     * @param null $strAlertJs
      * @return Response
      * @Route("/song_list", name="_unvadmin_song_list")
      */

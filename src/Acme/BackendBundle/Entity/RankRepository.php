@@ -13,7 +13,7 @@ use Acme\BackendBundle\Entity\Constant;
  */
 class RankRepository extends EntityRepository
 {
-    public function getArrNewestRankList($intZone, $intCount, $intTermNo)
+    public function getArrNewestRankList($intZone, $intCount, $intTermNo, $strWhere = '')
     {
         $strTop = $intZone==0?"intTopRankPRC":"intTopRankHKTW";
         return $this->getEntityManager()
@@ -23,21 +23,31 @@ class RankRepository extends EntityRepository
                         s.id id,
                         s.{$strTop} top,
                         s.strCorpName corp,
+                        {$intZone} zone,
                         r.intIndex rank_index,
                         r.intLastIndex last_rank_index,
                         r.intCountOnList count_on_list,
-                        r.intScore score,
+                        COALESCE(r.intScore, 0) score,
                         r.boolIsPrePlus is_pre,
                         s.strSongFile file,
                         {$intTermNo} term_no,
-                        COUNT(l.id) champion_count
+                        COUNT(rl.id) champion_count,
+                        COUNT(vl.id) fm_count
                     FROM
                     AcmeBackendBundle:Rank r
                     JOIN r.song s
-                    JOIN AcmeBackendBundle:RankLog l
-                    WITH r.intTermNo = l.intTermNo
+                    LEFT JOIN AcmeBackendBundle:Rank rl
+                    WITH r.intTermNo = rl.intTermNo
+                         AND rl.song = s
+                         AND rl.intZone = r.intZone
+                         AND rl.intIndex = 1
+                    LEFT JOIN AcmeBackendBundle:Votelog vl
+                    WITH vl.intTermNo = r.intTermNo
+                        AND vl.intSongId = s.id
+                        AND vl.intZone = r.intZone
                     WHERE r.intZone = {$intZone}
                     AND r.intTermNo = {$intTermNo}
+                    {$strWhere}
                     GROUP BY title, artists, id, top, corp, file, rank_index, last_rank_index, count_on_list, score
                              , is_pre
                     ORDER BY r.intIndex ASC

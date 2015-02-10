@@ -142,3 +142,63 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 #play-bar > .close-btn {position:absolute; left:98%; top:-17px; background:url('../images/fancybox_sprite.png') no-repeat;
     width:34px; height:34px; margin:0; cursor: pointer;}
 /***************play-bar****************/
+
+/***************report-list*************/
+.report-list{width:1200px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
+.report-list li{min-height:26px; float:left; width:1168px; text-align: -webkit-center; line-height: 26px;}
+.report-list ul{padding:0 16px;}
+.report-list div.title{background: #e15a22; color:#fff; font-weight: bold; height:30px; font-size: 14px; line-height: 30px;
+    padding:0 16px;}
+.report-list li.color{background: #f5f5f5;}
+.report-list li:hover{background:#f77e1b; color:#fff;}
+.report-list span{float:left; text-align: center; width:64px;}
+.report-list span.details{width:80px;}
+.report-list span.term-no{width:80px;}
+.report-list span.index{width:80px;}
+.report-list span.title{width:175px;}
+.report-list span.artist{width:175px;}
+.report-list span.corp{width:175px;}
+.report-list span.is-pre{width:80px;}
+.report-list span.fm-count{width:80px;}
+.report-list span.champion-count{width:80px;}
+.reprt-list span.score{width:100px;}
+.report-list span.play{width:100px;}
+
+.search form {
+    position: relative;
+    height: 30px;
+    border: 1px solid #DB6816;
+    border-radius: 3px;
+    background-color: #FFF;
+    margin-bottom: 3px;
+}
+.search form .text {width:360px; float:left; height:30px;}
+.search form .select {width:300px; float:left; height:30px;}
+.search form .select select{margin-top:5px;}
+.search form span{line-height: 30px;}
+.search .keyword {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30%;
+    height: 28px;
+    border: none;
+    border-radius: 3px;
+    text-indent: 30px;
+    line-height: 28px \9;
+}
+.search .submit {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    margin-top: -1px;
+    background: url('http://img.xiami.net/static/img/common/header_icon.png?v=20140504113709') no-repeat 0 -48px;
+    _background-image: url('http://img.xiami.net/static/img/common/header_icon.gif?v=20140504113709');
+    text-indent: 100%;
+}
+/***************report-list*************/

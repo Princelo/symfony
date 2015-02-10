@@ -28,5 +28,47 @@ class VotelogRepository extends EntityRepository
             ->getResult();
     }
 
+    public  function getArrVoteDetails($intTermNo, $intZone, $intSongId)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT
+                       s.strTitle     title,
+                       s.arrStrArtistName artists,
+                       s.strCorpName    corp,
+                       f.strShortName as fm,
+                       v.intIndex     as rank_index,
+                       COUNT(vd.id)   as week_count,
+                       lv.intIndex as last_index,
+                       min(fv.intIndex)     as top_index,
+                       (11-v.intIndex)*4    as score
+                FROM
+                    AcmeBackendBundle:Votelog v
+                    LEFT JOIN AcmeBackendBundle:Votelog vd
+                        WITH vd.intSongId = {$intSongId}
+                        AND vd.intZone = {$intZone}
+                    LEFT JOIN AcmeBackendBundle:Votelog lv
+                        WITH lv.intSongId = {$intSongId}
+                        AND lv.intZone = {$intZone}
+                        AND lv.intTermNo + 1 =  {$intTermNo}
+                    JOIN AcmeBackendBundle:Member f
+                        WITH v.intMemberId = f.id
+                    LEFT JOIN AcmeBackendBundle:Votelog fv
+                        WITH fv.intSongId = {$intSongId}
+                        AND fv.intZone = {$intZone}
+                        AND fv.intMemberId = f.id
+                    JOIN AcmeBackendBundle:Song s
+                        WITH s.id = v.intSongId
+                    WHERE
+                        v.intSongId = {$intSongId}
+                        AND v.intTermNo = {$intTermNo}
+                        AND v.intZone = {$intZone}
+                    GROUP BY f.strShortName, v.intIndex, lv.intIndex, s.strTitle, s.arrStrArtistName, s.strCorpName
+            "
+            )
+            ->getResult();
+    }
+
 
 }
