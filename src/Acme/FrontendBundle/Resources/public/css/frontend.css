@@ -130,8 +130,9 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 /***********article-list**********/
 
 /**********article-detail***********/
-.article-detail { border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; width:865px;
-    padding:20px; min-height: 800px;}
+.article-detail { border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; width:700px;
+    padding:20px; min-height: 800px; position:relative;}
+.jiathis-block{position:absolute; bottom:15px; left:15px;}
 /**********article-detail***********/
 
 /***************play-bar****************/
@@ -202,3 +203,21 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
     text-indent: 100%;
 }
 /***************report-list*************/
+
+/************article**********/
+.article-block{width:700px; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
+.left.article{width:700px;}
+.right.article{width:500px;}
+.right .article-block {width: 465px;}
+.right .pic-block {width: 465px; min-height: 360px;}
+.right .pic-block li{float:left; margin-left:14px; margin-right:14px; margin-bottom:8px;}
+.right img{width:185px; height:185px;}
+.category-title {margin: 10px 0; font-size:24px; color:#555;}
+.category-title a{color:#555;}
+.left .article-block li{border-bottom: 1px dashed #ccc; height:30px; line-height: 30px;}
+.left .article-block li span{float:right;}
+.right .article-block li span{float:right;}
+.right .article-block li{border-bottom: 1px solid #ebebeb; height:30px; line-height: 26px;}
+.right .article-block li:hover{background:#ebebeb;}
+.right .article-block.star_news{min-height:332px;}
+.right .article-block.hot_news{min-height:332px;}

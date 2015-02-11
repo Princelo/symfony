@@ -1,0 +1,90 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+
+{% block body %}
+    <div class="main-partition">
+    <div class="left article">
+        <div class="article-block hot_news">
+            <div class="category-title"><a href="">行业资讯</a></div>
+            <ul>
+                {% for a in hot_news_b %}
+                    <li>
+                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span>{{ time_diff(a.time) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="category-title"><a href="">娱乐快报</a></div>
+            <ul>
+                {% for a in hot_news_a %}
+                    <li>
+                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span>{{ time_diff(a.time) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="right article">
+        <div class="article-block star_news">
+            <div class="category-title"><a href="">每日星闻榜</a></div>
+            <ul>
+                {% for a in star_news %}
+                    <li>
+                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span>{{ time_diff(a.time) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="article-list img pic-block hot_pic">
+            <div class="nav-content">
+                <span class="tag current"><a href="{{ path('article_img_list', {"category": "4"}) }}">热点图片</a></span>
+            </div>
+            <ul>
+                {% for a in hot_pics %}
+                    <li>
+                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a><br>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                {% endfor %}
+                <div style="clear:both"></div>
+            </ul>
+        </div>
+        <div class="article-list img pic-block start_interview">
+            <div class="nav-content">
+                <span class="tag current"><a href="{{ path('article_img_list', {"category": "4"}) }}">明星访谈</a></span>
+            </div>
+            <ul>
+                {% for a in star_interviews %}
+                    <li>
+                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a><br>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+{% endblock %}

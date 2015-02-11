@@ -38,7 +38,7 @@ class ReportController extends CustomerController
                     'fms' => $arrFMList,
                     'list' => $arrLastRankSong,
                     'current_term_no' => $intLastTermNo,
-                    'search_term_no' => $intTermNo,
+                    'search_term_no' => $request->query->get('term-no'),
                 ));
         }
         //if($strZone == 'prc')
@@ -72,7 +72,7 @@ class ReportController extends CustomerController
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
-        $arrVoteDetails = $objORM->getRepository('AcmeBackendBundle:VoteLog')
+        $arrVoteDetails = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVoteDetails($intTermNo, $intZone, $intSongId);
 
         return $this->render('AcmeFrontendBundle:Report:details.html.twig',

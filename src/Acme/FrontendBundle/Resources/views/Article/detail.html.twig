@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="main-partition">
-        <div class="left">
+        <div class="left article">
             <div class="article-detail">
                 <h1>
                     {{ article.strTitle }}
@@ -27,49 +27,59 @@
                 <!-- JiaThis Button END -->
             </div>
         </div>
-        <div class="right">
-            <div class="star_news">
+        <div class="right article">
+            <div class="article-block star_news">
+                <div class="category-title"><a href="">每日星闻榜</a></div>
                 <ul>
                     {% for a in star_news %}
                     <li>
-                    <span class="index">{{ loop.index }}</span>
                     <a href="{{ path('article_detail', {"id": a.id}) }}">
                         {{ a.title }}
                     </a>
+                        <span>{{ time_diff(a.time) }}</span>
                     </li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="hot_pic">
+            <div class="article-list img pic-block hot_pic">
+                <div class="nav-content">
+                    <span class="tag current"><a href="{{ path('article_img_list', {"category": "4"}) }}">热点图片</a></span>
+                </div>
                 <ul>
                     {% for a in hot_pics %}
                         <li>
                             <a href="{{ path('article_detail', {"id": a.id}) }}">
-                                <img src="uploads/article_thumb/{{ a.thumb }}" />
+                                <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
                             </a>
-                            <a href="{{ path('article_detail', {"id": a.id}) }}">
+                            <br>
+                            <a class="title" href="{{ path('article_detail', {"id": a.id}) }}">
                                 {{ a.title }}
-                            </a>
+                            </a><br>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
                         </li>
                     {% endfor %}
+                    <div style="clear:both"></div>
                 </ul>
             </div>
-            <div class="hot_news">
+            <div class="article-block hot_news">
+                <div class="category-title"><a href="">热点新闻</a></div>
                 <ul>
                     {% for a in hot_news_b %}
                         <li>
-                            <span class="index">{{ loop.index }}</span>
                             <a href="{{ path('article_detail', {"id": a.id}) }}">
                                 {{ a.title }}
                             </a>
+                            <span>{{ time_diff(a.time) }}</span>
                         </li>
                     {% endfor %}
                     {% for a in hot_news_a %}
                         <li>
-                            <span class="index">{{ loop.index }}</span>
                             <a href="{{ path('article_detail', {"id": a.id}) }}">
                                 {{ a.title }}
                             </a>
+                            <span>{{ time_diff(a.time) }}</span>
                         </li>
                     {% endfor %}
                 </ul>
