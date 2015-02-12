@@ -83,6 +83,37 @@ class ReportController extends CustomerController
             ));
     }
 
+    /**
+     * @return Response
+     * @Route("/report/details", name="_report_search")
+     */
+    public function reportDetailsSearchAction()
+    {
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+        $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
+            ->getArrFrontendInfo();
+        $arrVoteDetails = null;
+        if($request->query->get('title') != null && $request->query->get('term-no') != null
+            && $request->query->get('zone')) {
+            $intTermNo = $request->query->get('term-no');
+            $intSongInfo = $request->query->get('title');
+            $intZone = $request->query->get('zone');
+            $arrVoteDetails = $objORM->getRepository('AcmeBackendBundle:Votelog')
+                ->getArrVoteDetailsSearch($intTermNo, $intZone, $intSongInfo);
+        }
+
+        return $this->render('AcmeFrontendBundle:Report:details_search.html.twig',
+            array(
+                'otherinfo' => $arrFrontendInfo,
+                'fms' => $arrFMList,
+                'list' => $arrVoteDetails,
+                'current_term_no' => $request->getSession()->get('last_term_no'),
+            ));
+    }
+
     private function _getStrSearchStr($search)
     {
         if($search != null)

@@ -4,20 +4,9 @@
     <div class="main-partition">
     <div class="left article">
         <div class="article-block hot_news">
-            <div class="category-title"><a href="">行业资讯</a></div>
+            <div class="category-title"><a href="">{{ list_title }}</a></div>
             <ul>
-                {% for a in hot_news_b %}
-                    <li>
-                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            {{ a.title }}
-                        </a>
-                        <span>{{ time_diff(a.time) }}</span>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="category-title"><a href="">娱乐快报</a></div>
-            <ul>
-                {% for a in hot_news_a %}
+                {% for a in pagination %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
                             {{ a.title }}
@@ -27,9 +16,12 @@
                 {% endfor %}
             </ul>
         </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     <div class="right article">
-        <div class="article-block star_news">
+        <div class="article-block star_news" style="display: none;">
             <div class="category-title"><a href="">每日星闻榜</a></div>
             <ul>
                 {% for a in star_news %}

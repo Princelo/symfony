@@ -92,23 +92,5 @@ class DefaultController extends CustomerController
             ->create('../web/uploads/gallery/'.$song->getStrSongFile(), $strMimeType, $options);
     }
 
-    /**
-     * @param $id
-     * @return Response
-     * @Route("/fm/{id}", name="_fm")
-     */
-    public function fmAction($id)
-    {
-        return new Response();
-    }
-
-    /**
-     * @return Response
-     * @Route("fm", name="_fm_list")
-     */
-    public function fmListAction()
-    {
-        return new Response();
-    }
 
 }

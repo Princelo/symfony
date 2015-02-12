@@ -30,7 +30,7 @@ class ArticleRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getQueryArticleList($intCategory, $strWhere)
+    public function getQueryArticleList($intCategory, $strWhere = "")
     {
         return $this->getEntityManager()
             ->createQuery(

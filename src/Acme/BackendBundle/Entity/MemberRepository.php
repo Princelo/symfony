@@ -121,6 +121,24 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
             ->getResult();
     }
 
+    public function getArrFMFullName($strOrderField, $strOrderType)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "
+                    SELECT m.strFullName fm_name,
+                        m.id    id
+                    FROM
+                        AcmeBackendBundle:Member m
+                    WHERE m.intType = " . Constant::FM . "
+                AND
+                    m.boolIsValid = TRUE
+                ORDER BY m.{$strOrderField} {$strOrderType}
+            "
+            )
+            ->getResult();
+    }
+
     public  function getArrFMDetailsList($strWhere = " AND m.boolIsValid = TRUE ")
     {
         return $this->getEntityManager()

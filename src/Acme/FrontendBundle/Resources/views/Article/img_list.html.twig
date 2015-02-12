@@ -1,0 +1,27 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+
+{% block body %}
+    <div class="main-partition">
+    <div class="article-list img pic-block ">
+        <div class="nav-content">
+            <span class="tag current"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">明星访谈</a></span>
+        </div>
+        <ul>
+            {% for a in pagination %}
+                <li style="margin-bottom:22px;">
+                    <a href="{{ path('_article_detail', {"id": a.id}) }}">
+                        <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                    </a>
+                    <br>
+                    <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
+                        {{ a.title }}
+                    </a><br>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="clear:both"></div>
+{% endblock %}

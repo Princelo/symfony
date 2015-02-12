@@ -221,3 +221,10 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 .right .article-block li:hover{background:#ebebeb;}
 .right .article-block.star_news{min-height:332px;}
 .right .article-block.hot_news{min-height:332px;}
+/************article**********/
+
+
+/************menu fm list***************/
+.fm-menu-title{margin: 10px 0; font-size:24px; color:#555;}
+.fm-menu-list
+{width:100%; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}

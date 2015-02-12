@@ -32,7 +32,8 @@ class RankRepository extends EntityRepository
                         s.strSongFile file,
                         {$intTermNo} term_no,
                         COUNT(rl.id) champion_count,
-                        COUNT(vl.id) fm_count
+                        COUNT(vl.id) fm_count,
+                        MIN(rv.intIndex) top_index
                     FROM
                     AcmeBackendBundle:Rank r
                     JOIN r.song s
@@ -41,6 +42,8 @@ class RankRepository extends EntityRepository
                          AND rl.song = s
                          AND rl.intZone = r.intZone
                          AND rl.intIndex = 1
+                    LEFT JOIN AcmeBackendBundle:Rank rv
+                        WITH rv.song = s
                     LEFT JOIN AcmeBackendBundle:Votelog vl
                     WITH vl.intTermNo = r.intTermNo
                         AND vl.intSongId = s.id

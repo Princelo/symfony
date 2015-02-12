@@ -34,6 +34,10 @@ _report:
     resource: "@AcmeFrontendBundle/Controller/ReportController.php"
     type:     annotation
 
+_fm_frontend:
+    resource: "@AcmeFrontendBundle/Controller/FMController.php"
+    type:     annotation
+
 random:
      path:     /random/{limit}
      defaults: { _controller: AcmeDemoBundle:Random:index }

@@ -201,20 +201,20 @@
         </div>
         <div class="article-list img">
             <div class="nav-content">
-                <span class="tag current"><a href="{{ path('article_img_list', {"category": "5"}) }}">明星访谈</a></span>
-                <span class="tag"><a href="{{ path('article_list', {"category": "1"}) }}" >行业资讯</a></span>
-                <span class="tag"><a href="{{ path('article_list', {"category": "2"}) }}">娱乐新闻</a></span>
-                <span class="tag"><a href="{{ path('article_list', {"category": "3"}) }}">每日星闻榜</a></span>
-                <span class="tag"><a href="{{ path('article_img_list', {"category": "4"}) }}">热点图片</a></span>
+                <span class="tag current"><a href="{{ path('_article_img_list', {"category_id": "5"}) }}">明星访谈</a></span>
+                <span class="tag"><a href="{{ path('_article_list', {"category_id": "1"}) }}" >行业资讯</a></span>
+                <span class="tag"><a href="{{ path('_article_list', {"category_id": "2"}) }}">娱乐新闻</a></span>
+                <span class="tag"><a href="{{ path('_article_list', {"category_id": "3"}) }}">每日星闻榜</a></span>
+                <span class="tag"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">热点图片</a></span>
             </div>
             <ul>
                 {% for a in articles %}
                     <li>
-                        <a href="{{ path('article_detail', {"id": a.id}) }}">
+                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
                             <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
-                        <a class="title" href="{{ path('article_detail', {"id": a.id}) }}">
+                        <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
                             {{ a.title }}
                         </a><br>
                         <span class="time">

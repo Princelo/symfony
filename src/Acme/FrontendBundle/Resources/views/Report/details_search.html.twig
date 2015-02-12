@@ -5,6 +5,29 @@
     <div id="play-bar">
         <span class="close-btn" onclick="stop()"></span>
     </div>
+    <div class="search">
+        <form action="{{ path('_report_search') }}" method="get" id="search">
+            <div class="text">
+                <input class="keyword" autocomplete="off" placeholder="音乐搜索，找人..." name="title">
+                <input class="icon submit" type="submit" value="" title="搜索">
+            </div>
+            <div class="select">
+                <span style="float:left;">榜期</span>
+                <select name="term-no">
+                    {% for i in current_term_no..1 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="select">
+                <span>打榜区域</span>
+                <select name="zone">
+                    <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::PRCZONE') }}">內地榜</option>
+                    <option value="{{ constant('Acme\\BackendBundle\\Entity\\Constant::HKTWZONE') }}">港台榜</option>
+                </select>
+            </div>
+        </form>
+    </div>
     <div class="report-list details">
         <div class="title">
             <span class="fm">投票媒体</span>

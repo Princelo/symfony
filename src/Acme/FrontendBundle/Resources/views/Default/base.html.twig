@@ -314,7 +314,7 @@
                     <a href="{{ path('_article') }}" >星闻汇总</a>
                 </li>
                 <li>
-                    <a href="" >媒投查询</a>
+                    <a href="{{ path('_report_search') }}" >媒投查询</a>
                 </li>
                 <li>
                     <a href="" >广播节目</a>
@@ -339,11 +339,12 @@
     </div>
 {% endblock %}
 {% block body %}{% endblock %}
+{% if fms is defined %}
 <div class="section fm-list">
     <h4 class="title">
         <strong>成员电台</strong>
         <span>
-            <a href="{{ path('_fm_list') }}">/更多</a>
+            <a href="{{ path('_fm') }}">/更多</a>
         </span>
     </h4>
     <div class="fm-list-content">
@@ -352,6 +353,7 @@
     {% endfor %}
     </div>
 </div>
+{% endif %}
 <div class="section coop-list">
     <h4 class="title">
         <strong>合作伙伴</strong>
