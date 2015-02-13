@@ -33,4 +33,25 @@ class ActRepository extends EntityRepository
             "
             );
     }
+
+    public function getArrActList($intCount, $strOrderField, $strOrderType)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT
+                    a.strTitle title,
+                    a.id id,
+                    a.strActFile file
+                FROM
+                    AcmeBackendBundle:Act a
+                WHERE
+                    a.intType = 1
+                ORDER BY a.{$strOrderField} {$strOrderType}
+            "
+            )
+            ->setMaxResults($intCount)
+            ->getResult();
+
+    }
 }

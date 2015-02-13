@@ -317,7 +317,7 @@
                     <a href="{{ path('_report_search') }}" >媒投查询</a>
                 </li>
                 <li>
-                    <a href="" >广播节目</a>
+                    <a href="{{ path('_act') }}" >广播节目</a>
                 </li>
                 <li>
                     <a href="{{ path('_fm') }}" >协作媒体</a>
@@ -349,7 +349,7 @@
     </h4>
     <div class="fm-list-content">
     {% for f in fms %}
-        <a href="{{ path('_fm', {'id': f.id }) }}">{{ f.fm_name }}</a>
+        <a href="{{ path('_fm_detail', {'id': f.id }) }}">{{ f.fm_name }}</a>
     {% endfor %}
     </div>
 </div>

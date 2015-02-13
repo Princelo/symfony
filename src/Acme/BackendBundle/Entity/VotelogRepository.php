@@ -138,5 +138,45 @@ class VotelogRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getArrVotelogInfo($intFmId, $intTermNo, $intZone)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            "
+                SELECT
+                    s.id id,
+                    s.strTitle title,
+                    s.arrStrArtistName artists,
+                    s.strCorpName corp,
+                    lv.intIndex last_index,
+                    COUNT(vd.id) week_count,
+                    MIN(vd.intIndex) top,
+                    v.intIndex rank_index,
+                    (11 - v.intIndex)*4 as score,
+                    s.strSongFile file
+                FROM
+                    AcmeBackendBundle:Votelog v
+                    JOIN AcmeBackendBundle:Song s
+                        WITH v.intSongId = s.id
+                    LEFT JOIN AcmeBackendBundle:Votelog lv
+                        WITH lv.intMemberId = v.intMemberId
+                        AND lv.intTermNo + 1 = v.intTermNo
+                        AND lv.intZone = v.intZone
+                    LEFT JOIN AcmeBackendBundle:Votelog vd
+                        WITH vd.intMemberId = v.intMemberId
+                        AND vd.intZone = v.intZone
+                        AND vd.intSongId = s.id
+                WHERE
+                    v.intMemberId = {$intFmId}
+                    AND v.intTermNo = {$intTermNo}
+                    AND v.intZone = {$intZone}
+                GROUP BY s.strTitle, s.arrStrArtistName, s.strCorpName,
+                         lv.intIndex, v.intIndex, s.strSongFile, s.id
+
+            "
+            )
+            ->getResult();
+    }
+
 
 }

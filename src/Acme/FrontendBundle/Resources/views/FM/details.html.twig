@@ -1,0 +1,141 @@
+{% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
+
+{% block body %}
+    <div class="main-partition">
+    </div>
+        <div class="fm-banner">
+            <div class="fm-banner-inner">
+                <div class="title">{{ fm.strFullName }}</div>
+                <div class="cast-time">总榜播出时间: {{ fm.intCastWeekDay|week }}{{ fm.strCastTimeFrom }}-{{ fm.strCastTimeTo }}</div>
+                <div class="cast-time">距下期揭榜还有</div>
+                <div class="rank-countdown"></div>
+            </div>
+        </div>
+    <div class="main-partition">
+        <div class="left fm-details">
+            <div class="fm-section fm-details-section">
+                <div class="title">电台简介</div>
+                <img src="{{ app.url }}/uploads/fmlogo/{{ fm.strLogo }}" />
+                <div class="details">
+                    <ul>
+                        <li>简称: {{ fm.strShortName }}</li>
+                        <li>分类: {{ fm.intType }}</li>
+                        <li>频率: {{ fm.floatFMValue }}</li>
+                        <li>功率: {{ fm.strFMFactor }}</li>
+                        <li>覆盖率: {{ fm.strFMCoverPopular }}</li>
+                        <li>加盟节目: {{ fm.strFMJoinAct }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fm-section fm-host-section">
+                <div class="title">主持人介绍</div>
+                <span>播名: {{ fm.strUserNickName }}</span>
+                <img src="{{ app.url }}/uploads/fmavatar/{{ fm.strAvatar }}" />
+            </div>
+            <div class="fm-section fm-search">
+                <form action="{{ path('_fm_detail', {'id': fm.id}) }}" method="get">
+                    <div>
+                        <label>內地榜</label>
+                        <select name="prc-term-no" class="form-control">
+                            {% for i in current_term_no..1 %}
+                                <option value="{{ i }}">第{{ i }}期</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label>港台榜</label>
+                        <select name="hktw-term-no" class="form-control" data-style="btn-info">
+                            {% for i in current_term_no..1 %}
+                                <option value="{{ i }}">第{{ i }}期</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type="submit" value="查询" class="btn btn-primary" style="margin-top:20px;">
+                </form>
+            </div>
+        </div>
+
+        <div class="right fm-details">
+            <div class="audio-list prc">
+                <div class="rank-countdown prc">
+                    {{ fm.strFullName }}&nbsp;&nbsp;&nbsp;&nbsp;內地榜&nbsp;第<label class="term_no">{{ prc_term_no }}</label>期
+                </div>
+                <div class="title">
+                    <span class="index">名次</span>
+                    <span class="title">歌曲名称</span>
+                    <span class="artist">歌手</span>
+                    <span class="corp">唱片公司</span>
+                    <span class="last-index">上周排名</span>
+                    <span class="count-rank">上榜次数</span>
+                    <span class="top-rank">最高排名</span>
+                    <span class="change">浮动</span>
+                    <span class="score">得分</span>
+                    <span class="play">试听</span>
+                </div>
+                <ul>
+                    {% for s in prc_votelog %}
+                        <li  {% if loop.index is odd %}class="color"{% endif %}>
+                            <span class="index">{{ loop.index }}</span>
+                            <span class="title">{{ s.title }}</span>
+                    <span class="artist">
+                        {% for a in s.artists %}
+                            {{ a.name }}
+                        {% endfor %}
+                    </span>
+                            <span class="corp">{{ s.corp }}</span>
+                            <span class="last-index">{{ s.last_index }}</span>
+                            <span class="count-rank">{{ s.week_count }}</span>
+                            <span class="top-rank">{{ s.top }}</span>
+                            <span class="change">{{ s.rank_index - s.last_index }}</span>
+                            <span class="score">{{ s.score }}</span>
+                    <span class="play">
+                        <a href="javascript:;">*</a>
+                    </span>
+                        </li>
+                    {% endfor %}
+                    <div style="clear:both"></div>
+                </ul>
+            </div>
+            <div class="audio-list hktw">
+                <div class="rank-countdown hk">
+                    {{ fm.strFullName }}&nbsp;&nbsp;&nbsp;&nbsp;港台榜&nbsp;第<label class="term_no">{{ hktw_term_no }}</label>期
+                </div>
+                <div class="title">
+                    <span class="index">名次</span>
+                    <span class="title">歌曲名称</span>
+                    <span class="artist">歌手</span>
+                    <span class="corp">唱片公司</span>
+                    <span class="last-index">上周排名</span>
+                    <span class="count-rank">上榜次数</span>
+                    <span class="top-rank">最高排名</span>
+                    <span class="change">浮动</span>
+                    <span class="score">得分</span>
+                    <span class="play">试听</span>
+                </div>
+                <ul>
+                    {% for s in hktw_votelog %}
+                        <li  {% if loop.index is odd %}class="color"{% endif %}>
+                            <span class="index">{{ loop.index }}</span>
+                            <span class="title">{{ s.title }}</span>
+                    <span class="artist">
+                        {% for a in s.artists %}
+                            {{ a.name }}
+                        {% endfor %}
+                    </span>
+                            <span class="corp">{{ s.corp }}</span>
+                            <span class="last-index">{{ s.last_index }}*</span>
+                            <span class="count-rank">{{ s.week_count }}*</span>
+                            <span class="top-rank">{{ s.top }}</span>
+                            <span class="change">{{ s.rank_index - s.last_index }}</span>
+                            <span class="score">{{ s.score }}</span>
+                    <span class="play">
+                        <a href="javascript:;" onclick="play('{{ s.file | md5 }}{{ s.id }}', {{ s.id }})" >*</a>
+                    </span>
+                        </li>
+                    {% endfor %}
+                    <div style="clear:both"></div>
+                </ul>
+            </div>
+        </div>
+    <div style="clear:both"></div>
+{% endblock %}

@@ -49,13 +49,13 @@ class FMController extends CustomerController
         {
             $intPrcTermNo = $request->query->get('prc-term-no');
         }else{
-            $intPrcTermNo = $request->getSession()->get('current-term-no');
+            $intPrcTermNo = $request->getSession()->get('last_term_no');
         }
         if ($request->query->get('hktw-term-no') != null)
         {
             $intHktwTermNo = $request->query->get('hktw-term-no');
         }else{
-            $intHktwTermNo = $request->getSession()->get('current-term-no');
+            $intHktwTermNo = $request->getSession()->get('last_term_no');
         }
         $arrPrcVotelog = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotelogInfo($id, $intPrcTermNo, Constant::PRCZONE);
@@ -67,9 +67,12 @@ class FMController extends CustomerController
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
                 'fm' => $objFM,
-                'prc-votelog' => $arrPrcVotelog,
-                'hktw-votelog' => $arrHktwVotelog,
+                'prc_votelog' => $arrPrcVotelog,
+                'hktw_votelog' => $arrHktwVotelog,
                 'next_rank_time' => $intNextRankTime,
+                'prc_term_no' => $intPrcTermNo,
+                'hktw_term_no' => $intHktwTermNo,
+                'current_term_no' => $request->getSession()->get('last_term_no'),
             ));
     }
 

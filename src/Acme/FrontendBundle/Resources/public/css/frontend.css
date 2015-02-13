@@ -228,3 +228,18 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 .fm-menu-title{margin: 10px 0; font-size:24px; color:#555;}
 .fm-menu-list
 {width:100%; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
+/************menu fm list***************/
+
+/************fm details**************/
+.main-partition .left.fm-details{width:300px;}
+
+.fm-section{
+width:300px; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 222px;
+    margin-bottom:22px;}
+.fm-section .title { height: 41px; margin: 0;
+    background: url('../images/tit_hot_room.png') no-repeat; line-height: 40px; padding-left:16px; font-size:16px;
+    color:#fff; margin-bottom:6px;}
+.fm-section img{width:262px; height:262px; margin-bottom: 4px; margin-top: 4px;}
+.fm-banner{background: #d44711; width:100%;}
+.fm-banner-inner{width:1140px; margin:0 auto; padding:30px; color: #fff; font-size:24px;}
+.fm-banner-inner .title{ font-size: 64px; font-weight: bold;}

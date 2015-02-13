@@ -130,6 +130,7 @@ class ArticleController extends CustomerController
                 'fms' => $arrFMList,
                 'pagination' => $pagination,
                 'list_title' => $strListTitle,
+                'category_id' => $category_id,
             )
         );
     }

@@ -4,7 +4,7 @@
     <div class="main-partition">
     <div class="article-list img pic-block ">
         <div class="nav-content">
-            <span class="tag current"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">明星访谈</a></span>
+            <span class="tag current"><a href="{{ path('_article_img_list', {"category_id": category_id}) }}">{{ list_title }}</a></span>
         </div>
         <ul>
             {% for a in pagination %}

@@ -38,6 +38,11 @@ _fm_frontend:
     resource: "@AcmeFrontendBundle/Controller/FMController.php"
     type:     annotation
 
+_act:
+    resource: "@AcmeFrontendBundle/Controller/ActController.php"
+    type:     annotation
+
+
 random:
      path:     /random/{limit}
      defaults: { _controller: AcmeDemoBundle:Random:index }

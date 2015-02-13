@@ -19,14 +19,14 @@ class ActController extends CustomerController
     public function actListAction()
     {
         $objORM = $this->getDoctrine()->getManager();
-        $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+        $arrActList = $objORM->getRepository('AcmeBackendBundle:Act')
+            ->getArrActList(100, 'timeUploadDateTime', 'DESC');
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
-        return $this->render('AcmeFrontendBundle:FM:list.html.twig',
+        return $this->render('AcmeFrontendBundle:Act:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
-                'fms' => $arrFMList,
+                'acts' => $arrActList,
             ));
     }
 
