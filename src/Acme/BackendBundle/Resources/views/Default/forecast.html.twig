@@ -1,4 +1,21 @@
-{{ form(form) }}
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-body" id="">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.strContent) }}
+                {{ form_widget(form.strContent, {'attr' : {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(form.提交, {'attr' : {'class': 'form-control'} }) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmebackend/css/backend.css') }}"/>
+
 <script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
 <script>
     console.log(window.parent);

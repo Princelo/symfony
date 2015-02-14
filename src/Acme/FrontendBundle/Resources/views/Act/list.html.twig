@@ -2,16 +2,45 @@
 
 {% block body %}
     <div class="main-partition">
+    <div id="play-bar">
+        <span class="close-btn" onclick="stop()"></span>
+    </div>
     <div class="fm-menu-list ">
         <div class="fm-menu-title">广播节目列表</div>
         <ul>
             {% for a in acts %}
                 <li style="width: 249px; padding-left:10px; padding-bottom: 4px; float:left; margin:16px; border-bottom:1px dashed #f60;">
-                    <a href="" style="">{{ a.title }}</a>
+                    <span>{{ a.title }}</span>
+                    <a href="javascript:;" onclick="play('{{ a.file | md5 }}{{ a.id }}', {{ a.id }})" class="play-btn"></a>
                 </li>
             {% endfor %}
             <div style="clear:both;"></div>
         </ul>
     </div>
     <div style="clear:both"></div>
+    <script>
+        var play = function(token, id)
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            var player = '<audio src="{{ app.url }}/app_dev.php/playact/'+token+'" preload="auto" />';
+            $('#play-bar').show();
+            $('#play-bar').append(player);
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
+        }
+        var stop = function()
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            $('#play-bar').hide();
+        }
+    </script>
 {% endblock %}

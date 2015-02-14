@@ -49,11 +49,12 @@ class Menu {
                         {
                             "name": "账号管理",
                             "route": "_unvadmin_password_edit"
-                        },
-                        {
-                            "name": "管理员管理",
-                            "route": "_admin_admin_edit"
-                        }
+                        }'.//,'.
+                        //{
+                        //    "name": "管理员管理",
+                        //    "route": "_admin_admin_edit"
+                        //}
+                        '
                     ]
                 },
                 {

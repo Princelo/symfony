@@ -64,7 +64,7 @@
                         <span class="fm-count">{{ r.fm_count }}</span>
                         <span class="first-count">{{ r.champion_count }}</span>
                         <span class="play">
-                            <a href="javascript:;">*</a>
+                            <a href="javascript:;" onclick="play('{{ r.file | md5 }}{{ r.id }}', {{ r.id }})" class="play-btn"></a>
                         </span>
                     </li>
                 {% endfor %}

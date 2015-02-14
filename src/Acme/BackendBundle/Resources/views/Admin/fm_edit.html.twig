@@ -1,4 +1,293 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
-    {{ form(form) }}
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">首页</li>
+        <li class="active">资料修改</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">资料修改</h1>
+    </div>
+    <style>
+        .form-control{height:100%; min-height: 34px;}
+        .form-control.color{margin-top:3px; margin-bottom:3px; border:1px solid #30a5ff;}
+        .myalert.mybg-warning{background: #ffb53e;max-height: 30px !important; margin:0 !important;
+            color:#fff;line-height:30px !important; cursor: normal; padding:0px 12px;}
+    </style>
+    {% for m in message %}
+        {{ m }}
+    {% endfor %}
+    {{ form_start(form) }}
+    <div class="col-lg-12">
+<div class="panel panel-default">
+    <div class="panel-heading">资料修改</div>
+<div class="panel-body" id="pre-vote-list">
+<div class="main-partition">
+<div class="registration-form fm_step_two">
+    <div class="col-md-12">
+        <div class="form-group col-md-6">
+            {{ form_label(form.boolIsValid) }}
+            {{ form_widget(form.boolIsValid, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>电台LOGO</label>
+            {{ form_widget(form.strLogo,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strLogo) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strFullName) }}
+            {{ form_widget(form.strFullName,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strFullName) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strShortName) }}
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            {{ form_widget(form.strShortName,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strShortName) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.intLevel) }}
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            {{ form_widget(form.intLevel,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.intLevel) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.intFMType) }}
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            {{ form_widget(form.intFMType,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.intFMType) }}</span>
+        </div>
+        <div class="form-group">
+            <label>电台频率</label>
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            <div class="form-control">
+                {{ form_widget(form.intFMValueType) }}
+                {{ form_widget(form.floatFMValue) }}
+            </div>
+            <span class="form_errors">{{ form_errors(form.intFMValueType) }} {{ form_errors(form.floatFMValue) }}</span>
+        </div>
+        <div class="form-group">
+            <label>电台地址</label>
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            <div class="form-control">
+                {{ form_widget(form.intProvinceId, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.intCityId, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.strAddressInfo, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <span class="form_errors">{{ form_errors(form.intProvinceId) }} {{ form_errors(form.intCityId) }} {{ form_errors(form.strAddressInfo) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strFMFactor) }}
+            {{ form_widget(form.strFMFactor,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strFMFactor) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strSite) }}
+            {{ form_widget(form.strSite,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strSite) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strFMFoundTime) }}
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            {{ form_widget(form.strFMFoundTime,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strFMFoundTime) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strFMCoverPopular) }}
+            {{ form_widget(form.strFMCoverPopular,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strFMCoverPopular) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strFMJoinAct) }}
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            {{ form_widget(form.strFMJoinAct,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strFMJoinAct) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.boolIsOneRank) }}
+            <div class="form-control">
+                {{ form_widget(form.boolIsOneRank,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            </div>
+            <span class="form_errors">{{ form_errors(form.boolIsOneRank) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.intCastType) }}
+            <div class="myalert mybg-warning btn pull-right">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                必填
+            </div>
+            {{ form_widget(form.intCastType,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.intCastType) }}</span>
+        </div>
+        <div class="form-group">
+            <label>播出XX榜成品节目时间</label>
+            <div class="form-control">
+                {{ form_widget(form.intCastWeekDay) }}
+                从
+                {{ form_widget(form.strCastTimeFrom) }}
+                到
+                {{ form_widget(form.strCastTimeTo) }}
+                {{ form_widget(form.boolCastTimeToTomorrow) }} <span class="tip">(终止时间是否为次日)</span>
+            </div>
+            <span class="form_errors">{{ form_errors(form.intCastWeekDay) }} {{ form_errors(form.strCastTimeFrom) }} {{ form_errors(form.strCastTimeTo) }}</span>
+        </div>
+    </div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label>用户头像</label>
+        {{ form_widget(form.strAvatar,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strAvatar) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strUserName) }}
+        {{ form_widget(form.strUserName,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strUserName) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strUserNickName) }}
+        <div class="myalert mybg-warning btn pull-right">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            必填
+        </div>
+        {{ form_widget(form.strUserNickName,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strUserNickName) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.intUserGender) }}
+        <div class="myalert mybg-warning btn pull-right">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            必填
+        </div>
+        {{ form_widget(form.intUserGender,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.intUserGender) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strSeniority) }}
+        <div class="myalert mybg-warning btn pull-right">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            必填
+        </div>
+        {{ form_widget(form.strSeniority,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strSeniority) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strUserCitizenId) }}
+        {{ form_widget(form.strUserCitizenId,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strUserCitizenId) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strUserMobile) }}
+        <div class="myalert mybg-warning btn pull-right">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            必填
+        </div>
+        {{ form_widget(form.strUserMobile,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strUserMobile) }}</span>
+    </div>
+    <div class="form-group">
+        <label class="float-left">免骚扰繁忙时段</label>
+        <div class="busytime-block form-control">
+            <div>
+                <div class="form-control color">
+                    从{{ form_widget(form.intBusyWeekDayFrom1) }}
+                    到{{ form_widget(form.intBusyWeekDayTo1) }}
+                    <div class="form-control">
+                        从{{ form_widget(form.strBusyTimeFrom1) }}<span class="form_errors">{{ form_errors(form.strBusyTimeFrom1) }}</span>
+                        到{{ form_widget(form.strBusyTimeTo1) }}<span class="form_errors">{{ form_errors(form.strBusyTimeTo1) }}</span>
+                        {{ form_widget(form.boolBusyTimeTo1Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form-control color">
+                    从{{ form_widget(form.intBusyWeekDayFrom2) }}
+                    到{{ form_widget(form.intBusyWeekDayTo2) }}
+                    <div class="form-control">
+                        从{{ form_widget(form.strBusyTimeFrom2) }}<span class="form_errors">{{ form_errors(form.strBusyTimeFrom2) }}</span>
+                        到{{ form_widget(form.strBusyTimeTo2) }}<span class="form_errors">{{ form_errors(form.strBusyTimeTo2) }}</span>
+                        {{ form_widget(form.boolBusyTimeTo2Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form-control color">
+                    从{{ form_widget(form.intBusyWeekDayFrom3) }}
+                    到{{ form_widget(form.intBusyWeekDayTo3) }}
+                    <div class="form-control">
+                        从{{ form_widget(form.strBusyTimeFrom3) }}<span class="form_errors">{{ form_errors(form.strBusyTimeFrom3) }}</span>
+                        到{{ form_widget(form.strBusyTimeTo3) }}<span class="form_errors">{{ form_errors(form.strBusyTimeTo3) }}</span>
+                        {{ form_widget(form.boolBusyTimeTo3Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form-control color">
+                    从{{ form_widget(form.intBusyWeekDayFrom4) }}
+                    到{{ form_widget(form.intBusyWeekDayTo4) }}
+                    <div class="form-control">
+                        从{{ form_widget(form.strBusyTimeFrom4) }}<span class="form_errors">{{ form_errors(form.strBusyTimeFrom4) }}</span>
+                        到{{ form_widget(form.strBusyTimeTo4) }}<span class="form_errors">{{ form_errors(form.strBusyTimeTo4) }}</span>
+                        {{ form_widget(form.boolBusyTimeTo4Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form-control color">
+                    从{{ form_widget(form.intBusyWeekDayFrom5) }}
+                    到{{ form_widget(form.intBusyWeekDayTo5) }}
+                    <div class="form-control">
+                        从{{ form_widget(form.strBusyTimeFrom5) }}<span class="form_errors">{{ form_errors(form.strBusyTimeFrom5) }}</span>
+                        到{{ form_widget(form.strBusyTimeTo5) }}<span class="form_errors">{{ form_errors(form.strBusyTimeTo5) }}</span>
+                        {{ form_widget(form.boolBusyTimeTo5Tomorrow) }}(终止时间是否为次日)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strUserTel) }}
+        {{ form_widget(form.strUserTel,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strUserTel) }}</span>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.strUserQQ) }}
+        {{ form_widget(form.strUserQQ,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+        <span class="form_errors">{{ form_errors(form.strUserQQ) }}</span>
+    </div>
+    <div class="form-group">
+    {{ form_widget(form.完成, {attr: {'class': 'btn btn-primary pull-right'}}) }}
+    </div>
+    </div>
+    <div style="clear:both"></div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    {{ form_end(form) }}
 {% endblock %}

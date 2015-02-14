@@ -317,10 +317,10 @@
                     <a href="{{ path('_report_search') }}" >媒投查询</a>
                 </li>
                 <li>
-                    <a href="{{ path('_act') }}" >广播节目</a>
+                    <a href="" >广播节目</a>
                 </li>
                 <li>
-                    <a href="{{ path('_fm') }}" >协作媒体</a>
+                    <a href="" >协作媒体</a>
                 </li>
                 <li>
                     <a href="{{ path('_register_corp') }}" >唱片公司</a>
@@ -332,9 +332,8 @@
                     <a href="{{ path('_login') }}" >用户登录</a>
                 </li>
                 <li>
-                    <a href="javascript:;" onclick="coming();" >热歌皮具</a>
+                    <a href="" >XX世家</a>
                 </li>
-                <script>function coming(){alert('即将开放，敬请期待')}</script>
             </ul>
         </div>
     </div>
@@ -350,7 +349,7 @@
     </h4>
     <div class="fm-list-content">
     {% for f in fms %}
-        <a href="{{ path('_fm_detail', {'id': f.id }) }}">{{ f.fm_name }}</a>
+        <a href="{{ path('_fm', {'id': f.id }) }}">{{ f.fm_name }}</a>
     {% endfor %}
     </div>
 </div>

@@ -93,4 +93,38 @@ class DefaultController extends CustomerController
     }
 
 
+    /**
+     * @param $token
+     * @return Response
+     * @Route("/playact/{token}", name="_playact")
+     */
+    public function playActAction($token)
+    {
+        $md5 = substr($token, 0, 32);
+        $id = substr($token, 32);
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $boolIsVistor = $session->get('is_visitor');
+        if(!$boolIsVistor)
+            return new Response('請勿盜鏈 Please Do Not Pivate Link');
+        $objORM = $this->getDoctrine()->getManager();
+        $act =
+            $objORM->getRepository('AcmeBackendBundle:Act')->find($id);
+        if(md5($act->getStrActFile()) != $md5)
+            return new Response('請勿盜鏈 Please Do Not Pivate Link');
+
+        $options = array(
+            'serve_filename' => $act->getStrTitle().".".pathinfo($act->getStrActFile(), PATHINFO_EXTENSION),
+            'absolute_path' => false,
+            'inline' => false,
+        );
+        if(strpos($act->getStrActFile(), '.mp3')>0)
+            $strMimeType = 'audio/mpeg';
+        if(strpos($act->getStrActFile(), '.wav')>0)
+            $strMimeType = 'audio/x-wav';
+        return $this->get('igorw_file_serve.response_factory')
+            ->create('../web/uploads/gallery/'.$act->getStrActFile(), $strMimeType, $options);
+    }
+
+
 }

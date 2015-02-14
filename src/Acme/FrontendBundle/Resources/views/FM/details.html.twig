@@ -2,6 +2,9 @@
 
 {% block body %}
     <div class="main-partition">
+    <div id="play-bar">
+        <span class="close-btn" onclick="stop()"></span>
+    </div>
     </div>
         <div class="fm-banner">
             <div class="fm-banner-inner">
@@ -89,7 +92,7 @@
                             <span class="change">{{ s.rank_index - s.last_index }}</span>
                             <span class="score">{{ s.score }}</span>
                     <span class="play">
-                        <a href="javascript:;">*</a>
+                        <a href="javascript:;" onclick="play('{{ r.file | md5 }}{{ r.id }}', {{ r.id }})" class="play-btn"></a>
                     </span>
                         </li>
                     {% endfor %}
@@ -110,7 +113,6 @@
                     <span class="top-rank">最高排名</span>
                     <span class="change">浮动</span>
                     <span class="score">得分</span>
-                    <span class="play">试听</span>
                 </div>
                 <ul>
                     {% for s in hktw_votelog %}
@@ -129,7 +131,7 @@
                             <span class="change">{{ s.rank_index - s.last_index }}</span>
                             <span class="score">{{ s.score }}</span>
                     <span class="play">
-                        <a href="javascript:;" onclick="play('{{ s.file | md5 }}{{ s.id }}', {{ s.id }})" >*</a>
+                        <a href="javascript:;" onclick="play('{{ r.file | md5 }}{{ r.id }}', {{ r.id }})" class="play-btn"></a>
                     </span>
                         </li>
                     {% endfor %}
@@ -138,4 +140,29 @@
             </div>
         </div>
     <div style="clear:both"></div>
+    <script>
+        var play = function(token, id)
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            $('#play-bar').show();
+            $('#play-bar').append(player);
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
+        }
+        var stop = function()
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            $('#play-bar').hide();
+        }
+    </script>
 {% endblock %}

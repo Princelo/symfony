@@ -2,7 +2,7 @@
 {% block body %}
     <ol class="breadcrumb">
         <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-        <li class="active">XX榜后台管理系统首页</li>
+        <li class="active">热歌风云榜后台管理系统首页</li>
     </ol>
     <div class="col-lg-12">
         <h1 class="page-header">后台首页</h1>
@@ -22,6 +22,7 @@
                 autoOpen: false,
                 modal: true,
                 height: 600,
+                width:800,
                 open: function(ev, ui){
                     console.log(ev);
                 }
@@ -102,7 +103,6 @@
             </div>
             <div class="panel-body chat" id="">
                 <div class="dialog" id="dialog">
-                    Your Iframe Below
                     <iframe id="" src="{{ path('_unvadmin_forecast') }}"></iframe>
                 </div>
                 <div class="forecast">

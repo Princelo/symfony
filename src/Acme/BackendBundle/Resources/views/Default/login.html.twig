@@ -18,6 +18,52 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script language="javascript">google.load("jquery", "1.7.1"); </script>
     -->
+    <style>
+    body{font-family: "Microsoft Yahei" !important;}
+    .google_textfield{
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
+    height: 36px;
+    padding: 0 8px;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    font-size: 15px;
+    color: #404040;
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    direction: ltr;
+    height: 44px;
+    font-size: 16px;
+    width:274px;
+    }
+    .google_email{
+    margin-bottom:0;
+    }
+    .yform{
+    width:274px;
+    }
+    .captcha{width:110px; display:inline-block;}
+    .div-captcha img{float:right;}
+    .type-button{padding-top: 0;}
+    table{border-spacing: 0;}
+    h1{color:#555; font-family: "Microsoft Yahei"; margin-bottom:15px; font-weight: normal !important; font-size: 38px !important;}
+    h2{color:#555; font-family: "Microsoft Yahei"; margin-bottom:15px; font-weight: normal !important; font-size: 18px !important;}
+    </style>
 </head>
 <body>
 
@@ -37,19 +83,13 @@
 
                     <!--<div style="background:url('includes/images/login_interface.jpg'); width:500px; height:300px;border:6px solid #fff">-->
                     <div>
-                        <p class="title">UNVWEB Management System 远维网络管理系统</p>
+                        <h1 class="title">欢迎来到热歌风云榜</h1>
+                        <h2 class="">使用您的帐号登陆</h2>
                         <p style="width:100%; text-align:center; color:#f00;">
                             {% if error.message is defined %}
                                 {{ error.message|trans }}
                             {% endif %}
                         </p>
-                        <div class="choose-block" style="display:none;">
-                            <div class="choose">
-                                <div id="drpro" onClick="$('#bal').removeClass();$('#onespine').removeClass();this.className='selected'"><span>Dr Pro</span></div>
-                                <div id="bal" onClick="$('#drpro').removeClass();$('#onespine').removeClass();this.className='selected'"><span>Bealady</span></div>
-                                <div id="onespine" onClick="$('#bal').removeClass();$('#drpro').removeClass();this.className='selected'"><span>Onespine</span></div>
-                            </div>
-                        </div>
 
 
                         <!-- begin: Login Form -->
@@ -60,38 +100,28 @@
 
                             <div align="left">
                                 <form action="{{ path('_security_check') }}" method="post" class="yform columnar" id="frm">
-                                    <fieldset>
-                                        <legend>登入系统 </legend>
-
-                                        <table>
-                                            <tr>
-                                                <td class="display_field"></td><td class="input_field">
-                                                    <input type="text" id="username" name="_username" value="" class="textfield" placeholder="Email"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="display_field"></td><td class="input_field">
-                                                    <input type="password" id="password" name="_password" class="textfield" placeholder="Password"/>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <input type="hidden" name="_target_path" value="account" />
 
 
-                                    </fieldset>
-                                    <div class="info_msg">
+                                    <div style="width:113px; margin:0 auto; margin-bottom: 10px;">
+                                        <img src="{{ asset('bundles/acmefrontend/css/images/photo.png') }}" style="width:113px; margin:0 auto"/>
+                                    </div>
+                                    <input type="text" name="_username" value="" id="username" class="google_textfield google_email" placeholder="登入帐号 "  />
+                                    <input type="password" name="_password" value="" id="password" class="google_textfield google_email" placeholder="密码 "  />
+
+                                    <div class="info_msg" style="display:block; width:100%; height:20px;">
                                     </div>
 
                                     <div class="type-button" align="right">
 
-                                        <input type="submit" name="login" value="登入 "  />
-                                        <input type="reset" value="重设 " class="reset" id="btnReset" name="btnReset" />
+                                        <input type="submit" name="btnSubmit" value="登入 "  />										<input type="reset" value="重设 " class="reset" id="btnReset" name="btnReset" />
+                                        <input type="hidden" value="" id="system" name="system" />
                                     </div>
 
                                 </form>								</div>
                             <div align="" style="color:red;font-weight:bold">
                             </div>
                         </div>
+                    </div>
                         <!-- end: Login Form -->
 
 

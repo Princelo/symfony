@@ -589,6 +589,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:fm_edit.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
 
@@ -661,6 +662,7 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:corp_edit.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
 
