@@ -167,7 +167,7 @@ class Song
      */
     protected $ranks;
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="song")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="song", cascade={"remove"})
      */
     protected $comments;
 

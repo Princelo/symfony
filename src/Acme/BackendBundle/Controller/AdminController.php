@@ -731,11 +731,16 @@ class AdminController extends DefaultController
     {
         $objORM = $this->getDoctrine()->getManager();
         $where = null;
-        $query = $objORM->createQuery('DELETE
+        /*$query = $objORM->createQuery('DELETE
                                          FROM AcmeBackendBundle:Song s
                                          WHERE s.id = :id')
             ->setParameters(array('id'=>$id))
             ->execute();
+        */
+        $objSong = $objORM->getRepository('AcmeBackendBundle:Song')
+            ->find($id);
+        $objORM->remove($objSong);
+        $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_song_list',
             array(

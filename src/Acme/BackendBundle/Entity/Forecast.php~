@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Forecast
 {
+    public function __construct()
+    {
+        $this->boolIsUp = false;
+    }
     /**
      * @var integer
      *
