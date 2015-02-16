@@ -33,7 +33,9 @@ class RankRepository extends EntityRepository
                         {$intTermNo} term_no,
                         COUNT(rl.id) champion_count,
                         COUNT(vl.id) fm_count,
-                        MIN(rv.intIndex) top_index
+                        CASE WHEN MIN(rv.intIndex) = 0
+                             ELSE 1
+                             END AS top_index
                     FROM
                     AcmeBackendBundle:Rank r
                     JOIN r.song s
