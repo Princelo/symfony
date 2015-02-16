@@ -34,7 +34,8 @@ class RankRepository extends EntityRepository
                         COUNT(rl.id) champion_count,
                         COUNT(vl.id) fm_count,
                         CASE WHEN MIN(rv.intIndex) = 0
-                             ELSE 1
+                             THEN 1
+                             ELSE MIN(rv.intIndex)
                              END AS top_index
                     FROM
                     AcmeBackendBundle:Rank r
