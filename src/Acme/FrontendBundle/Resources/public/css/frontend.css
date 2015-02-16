@@ -121,6 +121,7 @@ a.play-btn{width:20px; height: 19px; background: url('images/play.png') no-repea
 /***********article-list**********/
 .article-list.img .nav-content{ overflow: hidden; border-top: 2px solid #3A3935; border-bottom: 1px solid #EBEBEB;
     background-color: #FFF; margin-bottom:25px;}
+.article-list ul li a.title{height:27px; width:100%; display: block; overflow: hidden;}
 .article-list .tag{float:left;}
 .article-list .tag a{ height: 42px; padding: 0 20px; line-height: 42px; font-size: 14px; }
 .article-list.img .nav-content .current{background-color: #3A3935; border-color: 1px solid #3A3935; }
