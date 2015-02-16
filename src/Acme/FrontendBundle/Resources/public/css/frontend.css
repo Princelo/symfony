@@ -134,6 +134,7 @@ a.play-btn{width:20px; height: 19px; background: url('images/play.png') no-repea
 /**********article-detail***********/
 .article-detail { border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; width:700px;
     padding:20px; min-height: 800px; position:relative;}
+.article-detail .content{padding-bottom:40px;}
 .jiathis-block{position:absolute; bottom:15px; left:15px;}
 /**********article-detail***********/
 
