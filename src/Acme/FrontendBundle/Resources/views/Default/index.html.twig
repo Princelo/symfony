@@ -137,7 +137,7 @@
                             <span class="last-index">{% if s.last_index_index > 0 %}{{ s.last_rank_index }}{% else %}未上榜{% endif %}</span>
                             <span class="count-rank">{{ s.count_on_list }}</span>
                             <span class="top-rank">{{ s.top_index }}</span>
-                            <span class="change">{% if s.last_index_index > 0 %}{{ s.rank_index - s.last_rank_index }}{% else %}新上榜{% endif %}</span>
+                            <span class="change">{% if s.last_rank_index > 0 %}{{ s.rank_index - s.last_rank_index }}{% else %}新上榜{% endif %}</span>
                             <span class="score">{{ s.score }}</span>
                     <span class="play">
                         <a href="javascript:;" onclick="play('{{ s.file | md5 }}{{ s.id }}', {{ s.id }})" class="play-btn"></a>
