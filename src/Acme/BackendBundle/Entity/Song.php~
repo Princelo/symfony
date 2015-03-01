@@ -163,7 +163,7 @@ class Song
     protected $strSpecial;
 
     /**
-     * @ORM\OneToMany(targetEntity="Rank", mappedBy="song")
+     * @ORM\OneToMany(targetEntity="Rank", mappedBy="song", cascade={"remove"})
      */
     protected $ranks;
     /**

@@ -68,7 +68,7 @@
             </li>
             <li>
                 {{ form_label(form.corp.strIntro) }}
-                {{ form_widget(form.corp.strIntro) }}
+                {{ form_widget(form.corp.strIntro, { 'attr': {'maxlength' : '100'} }) }}
                 <span class="form_errors">{{ form_errors(form.corp.strIntro) }}</span>
             </li>
             <li>

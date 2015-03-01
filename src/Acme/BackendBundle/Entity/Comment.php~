@@ -40,7 +40,7 @@ class Comment
     protected $song;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Member", inversedBy="comments", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="comments")
      * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
      */
     protected $member;

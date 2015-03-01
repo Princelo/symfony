@@ -415,7 +415,7 @@ class DefaultController extends CustomerController
     public function fileHandleUploadFileWithoutType($form, $strField, $strDir)
     {
         $fileOri = $form[$strField]->getData();
-        if($fileOri=="")
+        if($fileOri=="" || $fileOri == null)
             return "";
         $extension = $fileOri->guessExtension();
         if (!$extension) {

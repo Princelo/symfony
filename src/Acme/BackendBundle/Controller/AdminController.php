@@ -6,6 +6,7 @@ use Acme\BackendBundle\Entity\Constant;
 use Acme\BackendBundle\Form\Type\ActType;
 use Acme\BackendBundle\Form\Type\AdminType;
 use Acme\BackendBundle\Form\Type\ArticleType;
+use Acme\BackendBundle\Form\Type\CoopType;
 use Acme\BackendBundle\Form\Type\EditCorpType;
 use Acme\BackendBundle\Form\Type\EditFMType;
 use Acme\BackendBundle\Form\Type\FlashType;
@@ -14,6 +15,7 @@ use Acme\BackendBundle\Form\Type\SongModelType;
 use Acme\BackendBundle\Form\Model\SongModel;
 use Acme\BackendBundle\Form\Type\AdminWizardType;
 use Acme\FrontendBundle\Entity\Article;
+use Acme\FrontendBundle\Entity\Coop;
 use Acme\FrontendBundle\Entity\Flash;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -337,13 +339,32 @@ class AdminController extends DefaultController
     public function adminFlashDeleteAction($id)
     {
         $objORM = $this->getDoctrine()->getManager();
-        $query = $objORM->createQuery('DELETE
-                                         FROM AcmeFrontendBundle:Flash f
-                                         WHERE f.id = :id')
-            ->setParameters(array('id'=>$id))
-            ->execute();
+        $obj = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->find($id);
+        $objORM->remove($obj);
+        $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_flash_list',
+            array(
+                'message' => $this->get('session')->getFlashBag()->get('message'),
+                'strAlertJs' => $strAlertJs
+            )));
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/admin/coop_delete/{id}", name="_admin_coop_delete")
+     */
+    public function adminCoopDeleteAction($id)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $obj = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->find($id);
+        $objORM->remove($obj);
+        $objORM->flush();
+        $strAlertJs = "<script>alert(\"刪除成功\");</script>";
+        return $this->redirect($this->generateUrl('_admin_coop',
             array(
                 'message' => $this->get('session')->getFlashBag()->get('message'),
                 'strAlertJs' => $strAlertJs
@@ -840,11 +861,10 @@ class AdminController extends DefaultController
     {
         $objORM = $this->getDoctrine()->getManager();
         $where = null;
-        $query = $objORM->createQuery('DELETE
-                                         FROM AcmeBackendBundle:Act a
-                                         WHERE a.id = :id')
-            ->setParameters(array('id'=>$id))
-            ->execute();
+        $objSong = $objORM->getRepository('AcmeBackendBundle:Act')
+            ->find($id);
+        $objORM->remove($objSong);
+        $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_act_list',
             array(
@@ -891,6 +911,63 @@ class AdminController extends DefaultController
             'AcmeBackendBundle:Admin:act_edit.html.twig',
             array('form' => $form->createView(),
                 'menu' => $this->menu,
+            )
+        );
+    }
+
+    /**
+     * @return Response
+     * @Route("/admin/coop", name="_admin_coop")
+     */
+    public function adminCoopAction()
+    {
+        parent::init();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')->getArrCoopList(999);
+        return $this->render(
+            'AcmeBackendBundle:Admin:coop.html.twig',
+            array(
+                'message' => $this->get('session')->getFlashBag()->get('message'),
+                'menu' => $this->menu,
+                'coops' => $arrCoopList,
+            )
+        );
+    }
+
+    /**
+     * @return Response
+     * @Route("/admin/coop_add", name="_admin_coop_add")
+     */
+    public function adminCoopAddAction()
+    {
+        parent::init();
+        $request = $this->get('request');
+        $objORM = $this->getDoctrine()->getManager();
+        $objCoop = new Coop();
+        $type = new CoopType();
+        $form = $this->createForm($type, $objCoop, array(
+            //'validation_groups' => array('corp_song_add'),
+        ));
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $objCoop = $form->getData();
+                $objCoop->setTimeUploadTime(new \DateTime());
+                $strThumb = $this->fileHandleUploadFileWithoutType($form, 'strThumb', 'uploads/coop');
+                $objCoop->setStrThumb($strThumb);
+                $objORM->persist($objCoop);
+                $objORM->flush();
+
+                return $this->redirect($this->generateUrl('_admin_coop'));
+            }
+        }
+
+        return $this->render(
+            'AcmeBackendBundle:Admin:coop_add.html.twig',
+            array('form' => $form->createView(),
+                'menu' => $this->menu,
+                'message' => $this->get('session')->getFlashBag()->get('message'),
             )
         );
     }

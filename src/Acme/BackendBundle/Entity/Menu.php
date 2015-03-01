@@ -75,6 +75,10 @@ class Menu {
                         {
                             "name": "广告位",
                             "route": "_admin_site_img_edit"
+                        },
+                        {
+                            "name": "合作伙伴",
+                            "route": "_admin_coop"
                         }
                     ]
                 },

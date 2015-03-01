@@ -35,7 +35,16 @@ class DefaultController extends CustomerController
         $arrChampionlogHKTW = $objORM->getRepository('AcmeBackendBundle:Championlog')
             ->getArrChampionlog(Constant::HKTWZONE, 22);
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(5, 5, 'timeCreateTime', 'DESC');
+        $arrIndustryNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(1, 5, 'timeCreateTime', 'DESC');
+        $arrEntertainmentList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(2, 5, 'timeCreateTime', 'DESC');
+        $arrTodayNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(3, 5, 'timeCreateTime', 'DESC');
+        $arrHotPicList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(4, 5, 'timeCreateTime', 'DESC');
+
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
         $intLastTermNo = $session->get('last_term_no');
@@ -44,6 +53,8 @@ class DefaultController extends CustomerController
         $arrLastRankSongHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
             ->getArrNewestRankList(Constant::HKTWZONE, 20, $intLastTermNo);
         $intNextRankTime = $session->get('next_rank_time');
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         return $this->render('AcmeFrontendBundle:Default:index.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -51,6 +62,11 @@ class DefaultController extends CustomerController
                 'champion_log_prc' => $arrChampionlogPRC,
                 'champion_log_hktw' => $arrChampionlogHKTW,
                 'articles' => $arrStarInterviewList,
+                'articles1' => $arrIndustryNewsList,
+                'articles2' => $arrEntertainmentList,
+                'articles3' => $arrTodayNewsList,
+                'articles4' => $arrHotPicList,
+                'coops' => $arrCoopList,
                 'rank_songs_prc' => $arrLastRankSongPRC,
                 'rank_songs_hktw' => $arrLastRankSongHKTW,
                 'fms' => $arrFMList,

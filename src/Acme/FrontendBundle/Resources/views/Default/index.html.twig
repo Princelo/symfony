@@ -201,14 +201,90 @@
         </div>
         <div class="article-list img">
             <div class="nav-content">
-                <span class="tag current"><a href="{{ path('_article_img_list', {"category_id": "5"}) }}">明星访谈</a></span>
-                <span class="tag"><a href="{{ path('_article_list', {"category_id": "1"}) }}" >行业资讯</a></span>
-                <span class="tag"><a href="{{ path('_article_list', {"category_id": "2"}) }}">娱乐新闻</a></span>
-                <span class="tag"><a href="{{ path('_article_list', {"category_id": "3"}) }}">每日星闻榜</a></span>
-                <span class="tag"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">热点图片</a></span>
+                <span class="tag tag5 current" onmouseover="display(5);"><a href="{{ path('_article_img_list', {"category_id": "5"}) }}">明星访谈</a></span>
+                <span class="tag tag1" onmouseover="display(1);"><a href="{{ path('_article_list', {"category_id": "1"}) }}" >行业资讯</a></span>
+                <span class="tag tag2" onmouseover="display(2);"><a href="{{ path('_article_list', {"category_id": "2"}) }}">娱乐新闻</a></span>
+                <span class="tag tag3" onmouseover="display(3);"><a href="{{ path('_article_list', {"category_id": "3"}) }}">每日星闻榜</a></span>
+                <span class="tag tag4" onmouseover="display(4);"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">热点图片</a></span>
             </div>
-            <ul>
+            <style> .article-list.img > ul{display:none;} #category5 {display:block;}</style>
+            <script>
+                function display(category_id){
+                    $(".article-list.img > ul").hide(); $("#category"+category_id).show();
+                    $(".nav-content .tag").removeClass('current');
+                    $(".nav-content .tag"+category_id).addClass('current');
+                }
+            </script>
+            <ul id="category5">
                 {% for a in articles %}
+                    <li>
+                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                {% endfor %}
+                <div style="clear:both;"></div>
+            </ul>
+            <ul id="category1">
+                {% for a in articles1 %}
+                    <li>
+                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                {% endfor %}
+                <div style="clear:both;"></div>
+            </ul>
+            <ul id="category2">
+                {% for a in articles2 %}
+                    <li>
+                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                {% endfor %}
+                <div style="clear:both;"></div>
+            </ul>
+            <ul id="category3">
+                {% for a in articles3 %}
+                    <li>
+                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                        <span class="time">
+                        {{ time_diff(a.time) }}
+                        </span>
+                    </li>
+                {% endfor %}
+                <div style="clear:both;"></div>
+            </ul>
+            <ul id="category4">
+                {% for a in articles4 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
                             <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />

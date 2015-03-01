@@ -249,4 +249,22 @@ width:300px; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; backgr
 .fm-banner-inner .title{ font-size: 64px; font-weight: bold;}
 /************fm details**************/
 
+/***********juno*********/
+.juno_nav{width: 1202px; height: 26px; background: url(../images/juno_nav_1.jpg)}
+.juno_nav a{float: right; color: #f5f5f5; font-size: 14px; position: relative;right: 15px; top: 4px}
+/*.article-list ul{ margin-top:15px }*/
+
+.juno_section{margin: 0 auto; width: 1202px; margin-top: 30px; min-height: 50px;}
+.juno_nav_2{width: 1202px; height: 26px; background: url(../images/juno_nav_2.jpg)}
+.juno_nav_2 a{float: right; color: #f5f5f5; font-size: 14px; position: relative;right: 15px; top: 4px}
+.juno_section ul{ width: 1150px; min-height: 50px; margin:30px auto 0 auto;}
+.juno_section ul li{ float: left; margin-right: 29px; margin-top:7px }
+#juno_null_div{content: ".";display: block;height: 0;visibility: hidden;clear: both;}
+
+
+.juno_nav_3{width: 1202px; height: 26px; background: url(../images/juno_nav_3.jpg)}
+.juno_nav_3 a{float: right; color: #f5f5f5; font-size: 14px; position: relative;right: 15px; top: 4px}
+
+/*.article-list ul{ margin-top:15px }*/
+/***********juno*********/
 
