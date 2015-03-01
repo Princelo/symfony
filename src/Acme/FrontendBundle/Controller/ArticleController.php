@@ -34,6 +34,8 @@ class ArticleController extends CustomerController
             ->getArrArticleList(1, 4, 'timeCreateTime', 'DESC');
         $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getArrArticleList(2, 4, 'timeCreateTime', 'DESC');
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         return $this->render('AcmeFrontendBundle:Article:detail.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -43,6 +45,7 @@ class ArticleController extends CustomerController
                 'hot_pics' => $arrHotPic,
                 'hot_news_b' => $arrHotNewsB,
                 'hot_news_a' => $arrHotNewsA,
+                'coops' => $arrCoopList,
             ));
     }
 
@@ -67,6 +70,8 @@ class ArticleController extends CustomerController
             ->getArrArticleList(2, 20, 'timeCreateTime', 'DESC');
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         return $this->render('AcmeFrontendBundle:Article:all.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -76,6 +81,7 @@ class ArticleController extends CustomerController
                 'hot_news_b' => $arrHotNewsB,
                 'hot_news_a' => $arrHotNewsA,
                 'star_interviews' => $arrStarInterviewList,
+                'coops' => $arrCoopList,
             )
         );
     }
@@ -96,6 +102,8 @@ class ArticleController extends CustomerController
             ->getArrFrontendInfo();
         $queryActlist = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getQueryArticleList($category_id);
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         switch($category_id)
         {
             case 1:
@@ -131,6 +139,7 @@ class ArticleController extends CustomerController
                 'pagination' => $pagination,
                 'list_title' => $strListTitle,
                 'category_id' => $category_id,
+                'coops' => $arrCoopList,
             )
         );
     }
@@ -151,6 +160,8 @@ class ArticleController extends CustomerController
             ->getArrFrontendInfo();
         $queryActlist = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getQueryArticleList($category_id);
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         switch($category_id)
         {
             case 1:
@@ -200,6 +211,7 @@ class ArticleController extends CustomerController
                 'hot_news_b' => $arrHotNewsB,
                 'hot_news_a' => $arrHotNewsA,
                 'star_interviews' => $arrStarInterviewList,
+                'coops' => $arrCoopList,
             )
         );
     }

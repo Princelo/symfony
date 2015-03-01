@@ -23,10 +23,13 @@ class FMController extends CustomerController
             ->getArrFMFullName('timeCreateTime', 'DESC');
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         return $this->render('AcmeFrontendBundle:FM:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'allfms' => $arrFMList,
+                'coops' => $arrCoopList,
             ));
     }
 
@@ -45,6 +48,8 @@ class FMController extends CustomerController
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         if ($request->query->get('prc-term-no') != null)
         {
             $intPrcTermNo = $request->query->get('prc-term-no');
@@ -73,6 +78,7 @@ class FMController extends CustomerController
                 'prc_term_no' => $intPrcTermNo,
                 'hktw_term_no' => $intHktwTermNo,
                 'current_term_no' => $request->getSession()->get('last_term_no'),
+                'coops' => $arrCoopList,
             ));
     }
 

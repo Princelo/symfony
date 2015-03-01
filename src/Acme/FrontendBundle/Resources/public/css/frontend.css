@@ -119,12 +119,12 @@ a.play-btn{width:20px; height: 19px; background: url('images/play.png') no-repea
 /************champion*************/
 
 /***********article-list**********/
-.article-list.img .nav-content{ overflow: hidden; border-top: 2px solid #3A3935; border-bottom: 1px solid #EBEBEB;
+.article-list.img .nav-content{ overflow: hidden; border-top: 2px solid #F60; border-bottom: 1px solid #EBEBEB;
     background-color: #FFF; margin-bottom:25px;}
 .article-list ul li a.title{height:27px; width:100%; display: block; overflow: hidden;}
 .article-list .tag{float:left;}
-.article-list .tag a{ height: 42px; padding: 0 20px; line-height: 42px; font-size: 14px; }
-.article-list.img .nav-content .current{background-color: #3A3935; border-color: 1px solid #3A3935; }
+.article-list .tag a{ height: 42px; padding: 0 20px; line-height: 42px; font-size: 14px; color:#f60;}
+.article-list.img .nav-content .current{background-color: #F60; border-color: 1px solid #F60; color:#fff;}
 .article-list.img .nav-content .current a{ color: #FFF; cursor: default; outline: none; }
 .article-list.img li{ border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; float:left; margin-right:12px;
     padding:8px; width:204px; height:270px; line-height:30px; margin-left:18px; margin-right:18px;}

@@ -27,6 +27,8 @@ class ReportController extends CustomerController
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
         $intLastTermNo = $session->get('last_term_no');
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         if ($request->getMethod() == 'GET'
             && $request->query->get('zone') != null && $request->query->get('term-no') != null) {
             $where = $this->_getStrSearchStr($request->query->get('search') );
@@ -39,6 +41,7 @@ class ReportController extends CustomerController
                     'list' => $arrLastRankSong,
                     'current_term_no' => $intLastTermNo,
                     'search_term_no' => $request->query->get('term-no'),
+                    'coops' => $arrCoopList,
                 ));
         }
         //if($strZone == 'prc')
@@ -54,6 +57,7 @@ class ReportController extends CustomerController
                 'list' => $arrLastRankSong,
                 'current_term_no' => $intLastTermNo,
                 'search_term_no' => $intTermNo,
+                'coops' => $arrCoopList,
             ));
     }
 
@@ -75,11 +79,14 @@ class ReportController extends CustomerController
         $arrVoteDetails = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVoteDetails($intTermNo, $intZone, $intSongId);
 
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         return $this->render('AcmeFrontendBundle:Report:details.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
                 'list' => $arrVoteDetails,
+                'coops' => $arrCoopList,
             ));
     }
 
@@ -95,6 +102,8 @@ class ReportController extends CustomerController
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         $arrVoteDetails = null;
         if($request->query->get('title') != null && $request->query->get('term-no') != null
             && $request->query->get('zone')) {
@@ -111,6 +120,7 @@ class ReportController extends CustomerController
                 'fms' => $arrFMList,
                 'list' => $arrVoteDetails,
                 'current_term_no' => $request->getSession()->get('last_term_no'),
+                'coops' => $arrCoopList,
             ));
     }
 

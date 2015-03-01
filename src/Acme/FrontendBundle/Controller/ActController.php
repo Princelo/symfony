@@ -23,10 +23,13 @@ class ActController extends CustomerController
             ->getArrActList(100, 'timeUploadDateTime', 'DESC');
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7);
         return $this->render('AcmeFrontendBundle:Act:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'acts' => $arrActList,
+                'coops' => $arrCoopList,
             ));
     }
 
