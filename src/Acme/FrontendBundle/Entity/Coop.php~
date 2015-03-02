@@ -125,4 +125,50 @@ class Coop
     {
         return $this->strLink;
     }
+
+    /**
+     * Set timeUploadTime
+     *
+     * @param \DateTime $timeUploadTime
+     * @return Coop
+     */
+    public function setTimeUploadTime($timeUploadTime)
+    {
+        $this->timeUploadTime = $timeUploadTime;
+
+        return $this;
+    }
+
+    /**
+     * Get timeUploadTime
+     *
+     * @return \DateTime 
+     */
+    public function getTimeUploadTime()
+    {
+        return $this->timeUploadTime;
+    }
+
+    /**
+     * Set intWeight
+     *
+     * @param integer $intWeight
+     * @return Coop
+     */
+    public function setIntWeight($intWeight)
+    {
+        $this->intWeight = $intWeight;
+
+        return $this;
+    }
+
+    /**
+     * Get intWeight
+     *
+     * @return integer 
+     */
+    public function getIntWeight()
+    {
+        return $this->intWeight;
+    }
 }

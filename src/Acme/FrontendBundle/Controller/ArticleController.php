@@ -65,9 +65,9 @@ class ArticleController extends CustomerController
         $arrHotPic = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC');
         $arrHotNewsB = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(1, 20, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(1, 8, 'timeCreateTime', 'DESC');
         $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(2, 20, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(2, 8, 'timeCreateTime', 'DESC');
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
@@ -188,7 +188,7 @@ class ArticleController extends CustomerController
         $pagination = $paginator->paginate(
             $queryActlist,
             $request->query->get('page', $page)/*page number*/,
-            30/*limit per page*/
+            6/*limit per page*/
         );
         $arrStarNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC');

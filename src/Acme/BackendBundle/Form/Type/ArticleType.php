@@ -56,6 +56,9 @@ class ArticleType extends AbstractType
             'label' => '缩略图',
             'data_class' => null,
         ));
+        $builder->add('textSummary', 'textarea', array(
+            'label' => '文章摘要',
+        ));
         $builder->add('textContent', 'ckeditor', array(
             'label' => '文章內容',
             'config' => array(

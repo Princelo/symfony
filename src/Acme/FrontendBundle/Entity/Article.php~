@@ -26,6 +26,10 @@ class Article
      */
     protected $textContent;
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $textSummary;
+    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $strTitle;

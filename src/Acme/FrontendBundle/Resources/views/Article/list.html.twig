@@ -3,22 +3,32 @@
 {% block body %}
     <div class="main-partition">
     <div class="left article">
-        <div class="article-block hot_news">
+        <div class="article-block">
             <div class="category-title"><a href="">{{ list_title }}</a></div>
-            <ul>
-                {% for a in pagination %}
-                    <li>
-                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            {{ a.title }}
-                        </a>
-                        <span>{{ time_diff(a.time) }}</span>
+            <div class="juno_box">
+            {% for a in pagination %}
+                <ul class="juno_box_ul" style="border:none;border:0;">
+                    <li class="juno_box_title" style="border:none; border:0">
+                        <h2><a href="{{ path('_article_detail', {"id": a.id}) }}">{{ a.title }}</a></h2>
                     </li>
-                {% endfor %}
-            </ul>
+                    <li class="juno_box_content" style="border:none; border:0">
+                        <div class="juno_box_img">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </div>
+                        <div class="juno_box_cont">
+                            {{ a.summary }}
+                            <a href="{{ path('_article_detail', {"id": a.id}) }}">[详细]</a>
+                        </div>
+                    </li>
+                    <li class="juno_box_time" style="border:none; border:0">{{ time_diff(a.time) }}</li>
+                </ul>
+            {% endfor %}
+            </div>
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </div>
-        <div class="navigation">
-            {{ knp_pagination_render(pagination) }}
-        </div>
+
     </div>
     <div class="right article">
         <div class="article-block star_news" style="display: none;">
@@ -69,7 +79,7 @@
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
                             {{ a.title }}
-                        </a><br>
+                        </a>
                         <span class="time">
                         {{ time_diff(a.time) }}
                         </span>

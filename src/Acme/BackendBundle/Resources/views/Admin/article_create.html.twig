@@ -38,6 +38,10 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
+                        {{ form_label(form.textSummary) }}
+                        {{ form_widget(form.textSummary, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
                         {{ form_label(form.textContent) }}
                         {{ form_widget(form.textContent, {'attr': {'class': 'form-control'}}) }}
                     </div>

@@ -20,7 +20,8 @@ class ArticleRepository extends EntityRepository
                         a.strTitle title,
                         a.intCategory category,
                         a.strThumb thumb,
-                        a.timeCreateTime time
+                        a.timeCreateTime time,
+                        a.textSummary summary
                     FROM AcmeFrontendBundle:Article a
                     WHERE a.intCategory = {$intCategory}
                     ORDER BY a.{$strOrderBy} {$strOrderType}
@@ -39,7 +40,8 @@ class ArticleRepository extends EntityRepository
                        a.strTitle title,
                        a.intCategory category,
                        a.strThumb thumb,
-                       a.timeCreateTime time
+                       a.timeCreateTime time,
+                       a.textSummary summary
                  FROM AcmeFrontendBundle:Article a
                 WHERE a.intCategory = {$intCategory}
                 {$strWhere}

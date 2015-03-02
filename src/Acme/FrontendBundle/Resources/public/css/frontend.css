@@ -218,8 +218,8 @@ a.play-btn{width:20px; height: 19px; background: url('images/play.png') no-repea
 .right img{width:185px; height:185px;}
 .category-title {margin: 10px 0; font-size:24px; color:#555;}
 .category-title a{color:#555;}
-.left .article-block li{border-bottom: 1px dashed #ccc; height:30px; line-height: 30px;}
-.left .article-block li span{float:right;}
+/*.left .article-block li{border-bottom: 1px dashed #ccc; height:30px; line-height: 30px;}
+.left .article-block li span{float:right;}*/
 .right .article-block li span{float:right;}
 .right .article-block li{border-bottom: 1px solid #ebebeb; height:30px; line-height: 26px;}
 .right .article-block li:hover{background:#ebebeb;}
@@ -268,3 +268,34 @@ width:300px; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; backgr
 /*.article-list ul{ margin-top:15px }*/
 /***********juno*********/
 
+/************juno article-list*************/
+
+.juno_box{width: 660px; margin: 0 auto;padding: 18px;border: 1px solid #EBEBEB;border-radius: 4px;background-color: #FFF;min-height: 552px;margin-bottom: 22px;}
+
+.juno_box_type{ width:100%; background: #f98521;text-align: center;line-height: 40px;height: 40px;border-bottom: 2px solid #de6802;font-size: 20px;}
+.juno_box_a_current{background: #de6802;color: #fff;}
+.juno_box_a_notcurrent{color: #9b5d27;}
+.juno_box_type a{display: block;float: left;width: 128px;}
+.juno_box_type a:hover{ text-decoration: none;color:#fff;}
+
+.juno_box_ul{padding: 18px 0 20px;border-bottom: 1px solid #d5d5d5;}
+
+.juno_box ul li h2{color:#000; font-size: 20px; font-weight: bold; line-height: 28px;}
+.juno_box_title a{color:#000;}
+.juno_box ul li a:hover{color:#be0900; text-decoration: none;}
+.juno_box ul:hover{background: #fcfcfc}
+
+
+
+.juno_box_title{ width:100%; height: 28px;line-height: 28px;}
+
+
+.juno_box_img{width: 130px; height: 87px;float: left;position: relative;margin-top: 5px;margin-right: 15px;}
+.juno_box_cont{font-size: 15px;line-height: 26px;color: #555;}
+.juno_box_cont a{color: #666;}
+.juno_box_time{margin-top: 12px;font-size: 14px;color: #555;height: 20px;overflow: hidden;}
+.juno_box_time a{margin-left: 20px;color: #666;}
+
+.juno_box_cont:after {content: ".";display: block;height: 0;visibility: hidden;clear: both;}
+
+/************juno article-list*************/

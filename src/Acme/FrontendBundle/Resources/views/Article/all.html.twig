@@ -3,29 +3,59 @@
 {% block body %}
     <div class="main-partition">
     <div class="left article">
-        <div class="article-block hot_news">
-            <div class="category-title"><a href="">行业资讯</a></div>
-            <ul>
-                {% for a in hot_news_b %}
-                    <li>
-                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            {{ a.title }}
-                        </a>
-                        <span>{{ time_diff(a.time) }}</span>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="category-title"><a href="">娱乐快报</a></div>
-            <ul>
+        <div class="juno_box">
+            <div class="juno_box_type">
+                <a href="{{ path('_article_list', {"category_id": "1"}) }}" id="industry-list-type" onmouseover="display('industry-list');" class="juno_box_a_current">行业咨询</a>
+                <a href="{{ path('_article_list', {"category_id": "2"}) }}" id="entertainment-list-type" onmouseover="display('entertainment-list');" class="juno_box_a_notcurrent">娱乐快报</a>
+            </div>
+            <script>
+                function display(category_id){
+                    $("#industry-list").hide();
+                    $("#entertainment-list").hide();
+                    $("#"+category_id).show();
+                    $(".juno_box_type a").removeClass('juno_box_a_current');
+                    $(".juno_box_type a").addClass('juno_box_a_not_current');
+                    $("#"+category_id+"-type").addClass('juno_box_a_current');
+                }
+            </script>
+            <div id="industry-list">
                 {% for a in hot_news_a %}
-                    <li>
-                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            {{ a.title }}
-                        </a>
-                        <span>{{ time_diff(a.time) }}</span>
-                    </li>
+                    <ul class="juno_box_ul">
+                        <li class="juno_box_title">
+                            <h2><a href="{{ path('_article_detail', {"id": a.id}) }}">{{ a.title }}</a></h2>
+                        </li>
+                        <li class="juno_box_content">
+                            <div class="juno_box_img">
+                                <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            </div>
+                            <div class="juno_box_cont">
+                                {{ a.summary }}
+                                <a href="{{ path('_article_detail', {"id": a.id}) }}">[详细]</a>
+                            </div>
+                        </li>
+                        <li class="juno_box_time">{{ time_diff(a.time) }}</li>
+                    </ul>
                 {% endfor %}
-            </ul>
+            </div>
+            <div id="entertainment-list" style="display: none;">
+                {% for a in hot_news_b %}
+                    <ul class="juno_box_ul">
+                        <li class="juno_box_title">
+                            <h2><a href="{{ path('_article_detail', {"id": a.id}) }}">{{ a.title }}</a></h2>
+                        </li>
+                        <li class="juno_box_content">
+                            <div class="juno_box_img">
+                                <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            </div>
+                            <div class="juno_box_cont">
+                                {{ a.summary }}
+                                <a href="{{ path('_article_detail', {"id": a.id}) }}">[详细]</a>
+                            </div>
+                        </li>
+                        <li class="juno_box_time">{{ time_diff(a.time) }}</li>
+                    </ul>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="right article">
