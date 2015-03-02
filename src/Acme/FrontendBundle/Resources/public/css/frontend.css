@@ -289,8 +289,8 @@ width:300px; padding:18px; border: 1px solid #EBEBEB; border-radius: 4px; backgr
 
 .juno_box_title{ width:100%; height: 28px;line-height: 28px;}
 
-
-.juno_box_img{width: 130px; height: 87px;float: left;position: relative;margin-top: 5px;margin-right: 15px;}
+.juno_box img{width:130px;}
+.juno_box_img{width: 130px; height: 87px;float: left;position: relative;margin-top: 5px;margin-right: 15px; overflow: hidden;}
 .juno_box_cont{font-size: 15px;line-height: 26px;color: #555;}
 .juno_box_cont a{color: #666;}
 .juno_box_time{margin-top: 12px;font-size: 14px;color: #555;height: 20px;overflow: hidden;}
