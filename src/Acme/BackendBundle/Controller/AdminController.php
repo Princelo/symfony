@@ -215,7 +215,7 @@ class AdminController extends DefaultController
                 $objORM->persist($objOtherInfo);
                 $objORM->flush();
 
-                return $this->redirect($this->generateUrl('_admin_rank_setting'));
+                return $this->redirect($this->generateUrl('_admin_site_info_edit'));
             }
         }
         return $this->render(

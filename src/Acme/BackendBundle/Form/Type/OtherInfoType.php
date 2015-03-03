@@ -16,7 +16,12 @@ class OtherInfoType extends AbstractType
         $choice = new Choice();
         $builder->add('strSiteTitle', 'text', array('label'=>'网站标题'));
         $builder->add('strSiteSubTitle', 'text', array('label'=>'网站副标题'));
-        $builder->add('strFootInfo', 'text', array('label'=>'脚部信息'));
+        $builder->add('strFootInfo', 'ckeditor', array('label'=>'脚部信息',
+                'config' => array(
+                    'font_names' => 'Microsoft YaHei;SimSun;PMingLiU;Arial/Arial, Helvetica, sans-serif;Comic Sans MS/Comic Sans MS, cursive;Courier New/Courier New, Courier, monospace;Georgia/Georgia, serif;Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;Tahoma/Tahoma, Geneva, sans-serif;Times New Roman/Times New Roman, Times, serif;Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;Verdana/Verdana, Geneva, sans-serif',
+                )
+            )
+        );
         $builder->add('strADImg1', 'file', array('label'=>'广告位1 图片',
             'data_class' => null));
         $builder->add('strADLink1', 'text', array('label'=>'广告位1 LINK'));
