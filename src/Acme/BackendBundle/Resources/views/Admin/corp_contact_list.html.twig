@@ -49,6 +49,7 @@
                         <th>
                             备注
                         </th>
+                        <th>审核</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -91,6 +92,13 @@
                                 </div>
                             </td>
                             <td>
+                                {% if f.accepted == 'true' %}
+                                    <span class="green">通过</span>
+                                {% else %}
+                                    <span class="red">未通过</span>
+                                {% endif %}
+                            </td>
+                            <td>
                                 <a href="{{ path('_admin_corp_edit', {"id": c.id}) }}">检视</a>
                             </td>
                             <td>
@@ -98,7 +106,7 @@
                             </td>
                         </tr>
                         <tr class="children collapse" id="expand-{{ loop.index }}">
-                            <td colspan="12" id="col-expand-{{ loop.index }}" class="col-expand">
+                            <td colspan="13" id="col-expand-{{ loop.index }}" class="col-expand">
                                 <ul class="childrenbak collapsebak details-ul" id="bakexpand-{{ loop.index }}">
                                     <li>
                                         <span class="col-md-6"><label>Email: </label>{{ c.email }}</span>

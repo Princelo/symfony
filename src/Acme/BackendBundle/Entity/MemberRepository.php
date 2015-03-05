@@ -171,6 +171,7 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                      (SELECT COUNT(cc.id) FROM AcmeBackendBundle:Comment cc WHERE cc.member = m.id) AS comment_count,
                      c.strContent content,
                      mf.strShortName sender,
+                     (CASE WHEN m.boolIsValid = true THEN 'true' ELSE 'false' END) AS accepted,
                      (CASE WHEN(
                         m.intBusyWeekDayFrom1 <= ".date('w')."
                         AND m.intBusyWeekDayTo1 >= ".date('w')."
@@ -336,7 +337,8 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                 m.strIntro intro,
                 (SELECT COUNT(cc.id) FROM AcmeBackendBundle:Comment cc WHERE cc.member = m.id) AS comment_count,
                 c.strContent content,
-                mf.strShortName sender
+                mf.strShortName sender,
+                (CASE WHEN m.boolIsValid = true THEN 'true' ELSE 'false' END) AS accepted
 
                FROM
                 AcmeBackendBundle:Member m

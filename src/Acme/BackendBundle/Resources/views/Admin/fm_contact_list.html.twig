@@ -36,6 +36,7 @@
                         <th>主持人</th>
                         <th>主持人电话</th>
                         <th>评论</th>
+                        <th>审核</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -96,11 +97,18 @@
                                     <iframe id="" src="{{ path('_unvadmin_member_comment', {'id': f.id}) }}"></iframe>
                                 </div>
                             </td>
+                            <td>
+                                {% if f.accepted == 'true' %}
+                                    <span class="green">通过</span>
+                                {% else %}
+                                    <span class="red">未通过</span>
+                                {% endif %}
+                            </td>
                             <td><a href="{{ path('_admin_fm_edit', {"id": f.id}) }}">检视</a></td>
                             <td><a href="{{ path('_admin_fm_delete', {"id": f.id}) }}">刪除</a></td>
                         </tr>
                         <tr class="children collapse" id="expand-{{ loop.index }}">
-                            <td colspan="12" id="col-expand-{{ loop.index }}" class="col-expand">
+                            <td colspan="13" id="col-expand-{{ loop.index }}" class="col-expand">
                                 <ul class="childrenbak collapsebak details-ul" id="bakexpand-{{ loop.index }}">
                                     <li>
                                         <span class="col-md-3"><label>Email: </label>{{ f.email }}</span>
@@ -124,7 +132,7 @@
                                     <li>
                                         <span class="col-md-3"><label>成立时间: </label>{{ f.found_time }}</span>
                                         <span class="col-md-3"><label>覆盖人口: </label>{{ f.cover_popular }}</span>
-                                        <span class="col-md-3"><label>XX榜播放时间: </label>{{ f.cast_day|week }}&nbsp;&nbsp;{{ f.cast_time_from }}&nbsp;-&nbsp;{{ f.cast_time_to }}</span>
+                                        <span class="col-md-3"><label>热歌风云榜播放时间: </label>{{ f.cast_day|week }}&nbsp;&nbsp;{{ f.cast_time_from }}&nbsp;-&nbsp;{{ f.cast_time_to }}</span>
                                         <span class="col-md-3"><label>主持人QQ: </label>{{ f.qq }}</span>
                                     </li>
                                 </ul>

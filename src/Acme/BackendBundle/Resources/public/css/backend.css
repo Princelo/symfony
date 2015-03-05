@@ -867,3 +867,7 @@ h1.page-header {
 .fixed-table-pagination .pagination-detail {
     margin-top: 20px;
 }
+
+.green{color:#4db849;}
+.red{color:#f00;}
+li{list-style: none;}
