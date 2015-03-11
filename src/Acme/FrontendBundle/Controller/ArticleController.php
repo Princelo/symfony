@@ -36,6 +36,8 @@ class ArticleController extends CustomerController
             ->getArrArticleList(2, 4, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:Article:detail.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -46,6 +48,7 @@ class ArticleController extends CustomerController
                 'hot_news_b' => $arrHotNewsB,
                 'hot_news_a' => $arrHotNewsA,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 
@@ -72,6 +75,8 @@ class ArticleController extends CustomerController
             ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:Article:all.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -82,6 +87,7 @@ class ArticleController extends CustomerController
                 'hot_news_a' => $arrHotNewsA,
                 'star_interviews' => $arrStarInterviewList,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -132,6 +138,8 @@ class ArticleController extends CustomerController
             $request->query->get('page', $page)/*page number*/,
             30/*limit per page*/
         );
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:Article:img_list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -140,6 +148,7 @@ class ArticleController extends CustomerController
                 'list_title' => $strListTitle,
                 'category_id' => $category_id,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }

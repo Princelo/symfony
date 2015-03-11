@@ -29,6 +29,8 @@ class ReportController extends CustomerController
         $intLastTermNo = $session->get('last_term_no');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         if ($request->getMethod() == 'GET'
             && $request->query->get('zone') != null && $request->query->get('term-no') != null) {
             $where = $this->_getStrSearchStr($request->query->get('search') );
@@ -42,6 +44,7 @@ class ReportController extends CustomerController
                     'current_term_no' => $intLastTermNo,
                     'search_term_no' => $request->query->get('term-no'),
                     'coops' => $arrCoopList,
+                    'top_flash' => $arrTopFlash,
                 ));
         }
         //if($strZone == 'prc')
@@ -58,6 +61,7 @@ class ReportController extends CustomerController
                 'current_term_no' => $intLastTermNo,
                 'search_term_no' => $intTermNo,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 
@@ -81,12 +85,15 @@ class ReportController extends CustomerController
 
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:Report:details.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
                 'list' => $arrVoteDetails,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 
