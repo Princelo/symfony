@@ -111,6 +111,11 @@ class Menu {
                             "param": "5"
                         },
                         {
+                            "name": "'.Constant::CATEGORY6.'",
+                            "route": "_admin_article_list",
+                            "param": "6"
+                        },
+                        {
                             "name": "发布新文章",
                             "route": "_admin_article_create"
                         }

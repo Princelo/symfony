@@ -206,6 +206,7 @@
                 <span class="tag tag2" onmouseover="display(2);"><a href="{{ path('_article_list', {"category_id": "2"}) }}">娱乐新闻</a></span>
                 <span class="tag tag3" onmouseover="display(3);"><a href="{{ path('_article_list', {"category_id": "3"}) }}">每日星闻榜</a></span>
                 <span class="tag tag4" onmouseover="display(4);"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">热点图片</a></span>
+                <span class="tag tag6" onmouseover="display(6);"><a href="{{ path('_article_img_list', {"category_id": "6"}) }}">DJ介紹</a></span>
             </div>
             <style> .article-list.img > ul{display:none;} #category5 {display:block;}</style>
             <script>
@@ -273,6 +274,20 @@
             </ul>
             <ul id="category4">
                 {% for a in articles4 %}
+                    <li>
+                        <a href="{{ path('_article_detail', {"id": a.id}) }}">
+                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                        </a>
+                        <br>
+                        <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
+                            {{ a.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <div style="clear:both;"></div>
+            </ul>
+            <ul id="category6">
+                {% for a in articles6 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
                             <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />

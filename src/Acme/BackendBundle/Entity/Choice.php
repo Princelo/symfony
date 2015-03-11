@@ -103,6 +103,7 @@ class Choice {
             3   =>  Constant::CATEGORY3,
             4   =>  Constant::CATEGORY4,
             5   =>  Constant::CATEGORY5,
+            6   =>  Constant::CATEGORY6,
         );
     }
     public function getActTypelist()

@@ -86,6 +86,9 @@ class AcmeExtension extends \Twig_Extension
             case '5':
                 $string = Constant::CATEGORY5;
                 break;
+            case '6':
+                $string = Constant::CATEGORY6;
+                break;
             default:
                 break;
         }

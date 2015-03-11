@@ -44,7 +44,8 @@ class DefaultController extends CustomerController
             ->getArrArticleList(3, 5, 'timeCreateTime', 'DESC');
         $arrHotPicList = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->getArrArticleList(4, 5, 'timeCreateTime', 'DESC');
-
+        $arrDJInfoList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(6, 5, 'timeCreateTime', 'DESC');
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
         $intLastTermNo = $session->get('last_term_no');
@@ -66,6 +67,7 @@ class DefaultController extends CustomerController
                 'articles2' => $arrEntertainmentList,
                 'articles3' => $arrTodayNewsList,
                 'articles4' => $arrHotPicList,
+                'articles6' => $arrDJInfoList,
                 'coops' => $arrCoopList,
                 'rank_songs_prc' => $arrLastRankSongPRC,
                 'rank_songs_hktw' => $arrLastRankSongHKTW,
