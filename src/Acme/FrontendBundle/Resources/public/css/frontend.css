@@ -32,7 +32,8 @@ a{text-decoration: none;}
 .main-partition .left{display:inline-block; width:865px; float:left;}
 .main-partition .right{display:inline-block; width:300px; float:left; padding-left:35px;}
 .home-ad1{ width:1200px; margin:0 auto; padding-bottom: 22px;}
-.home-ad2{ width:1200px; padding: 22px 0;}
+.home-ad2{ width:1200px; margin-bottom:22px;}
+.top-flash{ width:1200px;}
 /*********section list **********/
 .section{ margin:0 auto; border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF;
     width:1200px; margin-top:30px; padding:20px; min-height: 50px;}

@@ -79,12 +79,15 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_corp.html.twig',
             array('form' => $form->createView(),
                 'otherinfo' =>  $objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -152,6 +155,8 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
 
         return $this->render(
             'AcmeFrontendBundle:Registration:register_corp_1.html.twig',
@@ -160,6 +165,7 @@ class AccountController extends CustomerController
                   'otherinfo' => $objFrontendInfo,
                   'fms' =>  $arrFM,
                   'coops' => $arrCoopList,
+                  'top_flash' => $arrTopFlash,
                 )
         );
     }
@@ -231,12 +237,15 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_corp_2.html.twig',
             array('form' => $form->createView(),
                 'otherinfo'=>$objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -258,12 +267,15 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_corp_finish.html.twig',
             array(
                 'otherinfo'=>$objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -311,12 +323,15 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_fm.html.twig',
             array('form' => $form->createView(),
                 'otherinfo' =>  $objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -370,6 +385,8 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_fm_1.html.twig',
             array('form' => $form->createView(),
@@ -377,6 +394,7 @@ class AccountController extends CustomerController
                 'otherinfo' => $objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -442,12 +460,15 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_fm_2.html.twig',
             array('form' => $form->createView(),
                 'otherinfo'=>$objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }
@@ -469,12 +490,15 @@ class AccountController extends CustomerController
             ->getArrFMList(30, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render(
             'AcmeFrontendBundle:Registration:register_fm_finish.html.twig',
             array(
                 'otherinfo'=>$objFrontendInfo,
                 'fms' => $arrFM,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             )
         );
     }

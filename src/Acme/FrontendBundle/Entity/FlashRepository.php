@@ -12,14 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class FlashRepository extends EntityRepository
 {
-    public function getArrFlashlist()
+    public function getArrFlashlist($intCategory)
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT f
+                "SELECT f
                     FROM
                     AcmeFrontendBundle:Flash f
-                    '
+                    WHERE f.intCategory = {$intCategory}
+                    "
             )
             ->getResult();
     }

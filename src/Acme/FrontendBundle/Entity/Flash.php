@@ -36,6 +36,11 @@ class Flash
      */
     protected $boolIsNewTab;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $intCategory;
+
 
     /**
      * Get id
@@ -114,5 +119,28 @@ class Flash
     public function getBoolIsNewTab()
     {
         return $this->boolIsNewTab;
+    }
+
+    /**
+     * Set intCategory
+     *
+     * @param integer $intCategory
+     * @return Flash
+     */
+    public function setIntCategory($intCategory)
+    {
+        $this->intCategory = $intCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get intCategory
+     *
+     * @return integer 
+     */
+    public function getIntCategory()
+    {
+        return $this->intCategory;
     }
 }

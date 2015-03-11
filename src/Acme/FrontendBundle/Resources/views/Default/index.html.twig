@@ -92,13 +92,13 @@
                         {% endfor %}
                     </span>
                             <span class="corp">{{ s.corp }}</span>
-                            <span class="last-index">{{ s.last_rank_index }}*</span>
-                            <span class="count-rank">{{ s.count_on_list }}*</span>
-                            <span class="top-rank">{{ s.top }}*</span>
-                            <span class="change">{{ s.rank_index - s.last_rank_index }}*</span>
-                            <span class="score">{{ s.score }}*</span>
+                            <span class="last-index">{% if s.last_rank_index > 0 %}{{ s.last_rank_index }}{% else %}未上榜{% endif %}</span>
+                            <span class="count-rank">{{ s.count_on_list }}</span>
+                            <span class="top-rank">{{ s.top_index }}</span>
+                            <span class="change">{% if s.last_rank_index > 0 %}{{ s.rank_index - s.last_rank_index }}{% else %}新上榜{% endif %}</span>
+                            <span class="score">{{ s.score }}</span>
                     <span class="play">
-                        <a href="javascript:;">*</a>
+                        <a href="javascript:;" onclick="play('{{ s.file | md5 }}{{ s.id }}', {{ s.id }})" class="play-btn"></a>
                     </span>
                         </li>
                     {% endfor %}
@@ -194,11 +194,44 @@
                 </ul>
             </div>
         </div>
-        <div class="home-ad2">
+        <div class="home-ad2" style="display: none;">
             <a href="{{ otherinfo.strAdLink2 }}">
                 <img src="{{ app.url }}/uploads/site_info/{{ otherinfo.strAdImg2 }}" />
             </a>
         </div>
+        <div style="display: none;"></div>
+        <div class="home-ad2" style="float:left;">
+            <script>
+                $(document).ready(function(){
+                    $('#slider-ad2').slides({
+                        preload: true,
+                        preloadImage: '/skin/default/images/loading.gif',
+                        play: 2000,
+                        pause: 2500,
+                        fadeSpeed: 850,
+                        crossfade: true,
+                        effect:'fade',
+                        hoverPause: true
+                    });
+                });
+            </script>
+            <div class="mybanner">
+                <div id="slider-ad2">
+                    <div class="slides_container">
+                            {% for item in flash2 %}
+                        <div class="slide">
+                            <a target="_blank" href="{{ item.strlink }}" style="background:url('{{ app.url }}/uploads/flash/{{ item.strimg }}')">
+                                <img alt="" title="" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" style="width: 1200px; height: 110px;"/>
+                            </a>
+                        </div>
+                            {% endfor %}
+                    </div>
+                </div>
+                <div class="bann-left" style="display: none;" onclick="$('.pagination .current').prev().children().click();"></div>
+                <div class="bann-right" style="display:none;" onclick="$('.pagination .current').next().children().click();"></div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
         <div class="article-list img">
             <div class="nav-content">
                 <span class="tag tag5 current" onmouseover="display(5);"><a href="{{ path('_article_img_list', {"category_id": "5"}) }}">明星访谈</a></span>

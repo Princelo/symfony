@@ -104,6 +104,8 @@ class ReportController extends CustomerController
             ->getArrFrontendInfo();
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         $arrVoteDetails = null;
         if($request->query->get('title') != null && $request->query->get('term-no') != null
             && $request->query->get('zone')) {
@@ -121,6 +123,7 @@ class ReportController extends CustomerController
                 'list' => $arrVoteDetails,
                 'current_term_no' => $request->getSession()->get('last_term_no'),
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 

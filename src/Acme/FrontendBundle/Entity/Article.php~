@@ -22,11 +22,11 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $textContent;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $textSummary;
     /**
@@ -201,5 +201,28 @@ class Article
     public function getTimeCreateTime()
     {
         return $this->timeCreateTime;
+    }
+
+    /**
+     * Set textSummary
+     *
+     * @param string $textSummary
+     * @return Article
+     */
+    public function setTextSummary($textSummary)
+    {
+        $this->textSummary = $textSummary;
+
+        return $this;
+    }
+
+    /**
+     * Get textSummary
+     *
+     * @return string 
+     */
+    public function getTextSummary()
+    {
+        return $this->textSummary;
     }
 }

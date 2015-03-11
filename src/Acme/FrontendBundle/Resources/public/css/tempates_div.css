@@ -1,0 +1,23 @@
+
+.mybanner{ width: 1200px; margin: 0 auto;  position:relative;}
+#slider-ad2{ width:1200px; position:relative; height:110px; margin:0 auto; overflow:hidden; /*border-radius:13px;*/}
+#slider-ad2 li{ width:1200px; list-style:none;}
+#slider-ad2 ul{ width:1200px; }
+#slider-top-flash{ width:1200px; position:relative; height:110px; margin:0 auto; overflow:hidden; /*border-radius:13px;*/}
+#slider-top-flash li{ width:1200px; list-style:none;}
+#slider-top-flash ul{ width:1200px; }
+#slider-ad2 .pagination{background:#fff; bottom:1px; padding-left:420px; display: none;}
+#slider-top-flash .pagination{background:#fff; bottom:1px; padding-left:420px; display: none;}
+#slider .pagination{ height:37px; position:absolute;width:100%; display:block; z-index:9999; padding-left:420px;}
+#slider .pagination li a{ width:13px; height:13px; display:block;}
+#slider .pagination li{ width:10px; height:9px; background:url('num.png') no-repeat right top; list-style:none; text-indent:-9999px; float:left; margin-right:8px; margin-top:14px;}
+#slider .pagination li:hover{background:url('num.png') no-repeat left top;}
+#slider .pagination li.current{background:url('num.png') no-repeat left top; width:10px; height:9px;}
+/*.slides_container{ height:430px !important;}*/
+
+
+#slider #flashnvanum{ height:13px; position:absolute; bottom:0px; padding-bottom:10px; width:1200px; display:block;}
+#slider #flashnvanum span{ width:13px; height:13px; /*background:url('../images/yutang/num.png') no-repeat right top;*/ list-style:none; text-indent:-9999px; float:right; margin-right:8px;}
+#slider #flashnvanum span.on,
+#slider #flashnvanum span:hover{/*background:url('../images/yutang/num.png') no-repeat left top;*/}
+

@@ -118,4 +118,13 @@ class Choice {
             99   =>  Constant::ACTTYPE99,
         );
     }
+
+    public function getFlashCategories()
+    {
+        return array(
+            0 => '默认主幻灯片',
+            1 => '网页头部',
+            2 => '首页广告位置',
+        );
+    }
 }

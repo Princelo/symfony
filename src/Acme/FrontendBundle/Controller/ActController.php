@@ -25,11 +25,14 @@ class ActController extends CustomerController
             ->getArrFrontendInfo();
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:Act:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'acts' => $arrActList,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 

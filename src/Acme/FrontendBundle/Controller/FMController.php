@@ -67,6 +67,8 @@ class FMController extends CustomerController
         $arrHktwVotelog = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotelogInfo($id, $intHktwTermNo, Constant::HKTWZONE);
         $intNextRankTime = $request->getSession()->get('next-rank-time');
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:FM:details.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -79,6 +81,7 @@ class FMController extends CustomerController
                 'hktw_term_no' => $intHktwTermNo,
                 'current_term_no' => $request->getSession()->get('last_term_no'),
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 

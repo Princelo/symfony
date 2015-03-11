@@ -301,7 +301,39 @@
 <body>
 {% block header %}
     <div class="header">
-        <img src="{{ app.url }}/uploads/site_info/{{ otherinfo.strtopimg }}" />
+        <div class="top-flash" style="">
+            <script src="{{ asset('bundles/acmefrontend/js/jquery.scrollshow.js') }}"></script>
+            <script src="{{ asset('bundles/acmefrontend/js/slides.min.jquery.js') }}"></script>
+            <script>
+                $(document).ready(function(){
+                    $('#slider-top-flash').slides({
+                        preload: true,
+                        preloadImage: '/skin/default/images/loading.gif',
+                        play: 2000,
+                        pause: 2500,
+                        fadeSpeed: 850,
+                        crossfade: true,
+                        effect:'fade',
+                        hoverPause: true
+                    });
+                });
+            </script>
+            <div class="slider-top-flash-block">
+                <div id="slider-top-flash">
+                    <div class="slides_container">
+                        {% for item in top_flash %}
+                            <div class="slide">
+                                <a target="_blank" href="{{ item.strlink }}" style="background:url('{{ app.url }}/uploads/flash/{{ item.strimg }}')">
+                                    <img alt="" title="" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" style="width: 1200px; height: 110px;"/>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="bann-left" style="display: none;" onclick="$('.pagination .current').prev().children().click();"></div>
+                <div class="bann-right" style="display:none;" onclick="$('.pagination .current').next().children().click();"></div>
+            </div>
+        </div>
         <div class="menu">
             <ul>
                 <li>

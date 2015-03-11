@@ -1,0 +1,64 @@
+/* 水平滚动
+------------------------------ */
+.scroll_horizontal{position:relative;width:734px;height:174px;padding:1px 25px 1px;line-height:20px; margin-top:24px;}
+
+.scroll_horizontal .box{overflow:hidden;position:relative;width:712px;height:174px;margin:0 auto;}
+.scroll_horizontal .plus,
+.scroll_horizontal .minus{position:absolute;top:0px;width:25px;height:120px; text-indent:-9999px; cursor:pointer; background:url(left_ico.png) no-repeat;}
+.scroll_horizontal .plus{left:0px;  background:url(left_ico.png) no-repeat left center; width:25px; height:120px; display:block;}
+.scroll_horizontal .minus{right:0px; background:url(right_ico.png) no-repeat right center;  width:25px; height:120px; display:block;}
+
+
+.scroll_horizontal ul{position:absolute;top:0;left:0;width:9999px; list-style:none;}
+.scroll_horizontal li{float:left;width:137px; height:172px; padding-right:11px; list-style:none; }
+.scroll_horizontal li .block{padding:11px 11px 0px 11px; width:115px; height:161px; border:1px solid #e7e7e7;}
+.scroll_horizontal li .tit{ line-height:32px; display:block; color:#545454;}
+.scroll_horizontal li img{ float:left; border:1px solid #d7d7d7;}
+.scroll_horizontal li p a{ background:url(pro_ico.gif) 2px 7px no-repeat; padding-left:12px;}
+
+.scroll_horizontal li .pro-text{ float:left; width:137px; padding-left:8px; text-align:left;}
+.jewe-block .scroll_horizontal li{float:left;width:91px;text-align:center; border:none; padding:0px 24px 0px 0px; margin:0px;}
+
+.jewe-block .scroll_horizontal{ height:85px; width:437px; padding:1px 25px 1px;}
+.jewe-block .scroll_horizontal .box{width:437px; height:85px;}
+
+.jewe-block .scroll_horizontal .plus,
+.jewe-block .scroll_horizontal .minus{position:absolute;top:0px;width:25px;height:176px; text-indent:-9999px; cursor:pointer; background:url(show.png) no-repeat;}
+.jewe-block .scroll_horizontal .plus{left:0px; background-position:-129px top; width:25px; height:176px; display:block;}
+.jewe-block .scroll_horizontal .minus{right:0px; background-position:-151px top; width:25px; height:176px; display:block;}
+.jewe-block .scroll_horizontal .plus:hover{ background-position:-103px top;}
+.jewe-block .scroll_horizontal .minus:hover{ background-position:-177px top;}
+
+
+.friend-block .scroll_horizontal ul{position:absolute;top:0;left:0;width:227px; overflow:hidden; list-style:none;}
+.friend-block .scroll_horizontal li{float:left;width:100px; height:87px; text-align:center; border:none; display:block; padding:0px 13px 0px 0px; margin:0px;}
+.friend-block .scroll_horizontal li a{border:1px solid #e7e7e7; width:98px; height:85px;display:block; overflow:hidden; position:relative;}
+.friend-block .scroll_horizontal li img{ width:98px; height:85px; display:block; overflow:hidden;}
+
+.friend-block .scroll_horizontal{ height:87px; width:214px; padding:0px 0px 0px;}
+.friend-block .scroll_horizontal .box{width:214px; height:88px; *height:87px;}
+
+.friend-block .scroll_horizontal .plus,
+.friend-block .scroll_horizontal .minus{ display:none; position:absolute;top:0px;width:25px;height:176px; text-indent:-9999px; cursor:pointer; background:url(show.png) no-repeat;}
+.friend-block .scroll_horizontal .plus{left:0px; background-position:-129px top; width:25px; height:176px;}
+.friend-block .scroll_horizontal .minus{right:0px; background-position:-151px top; width:25px; height:176px;}
+.friend-block .scroll_horizontal .plus:hover{ background-position:-103px top;}
+.friend-block .scroll_horizontal .minus:hover{ background-position:-177px top;}
+
+
+
+
+
+
+/* 垂直滚动
+------------------------------ */
+.scroll_vertical{position:relative;width:180px;height:340px;padding:20px;line-height:20px;}
+.scroll_vertical .box{overflow:hidden;position:relative;height:280px;margin:40px 0 0 0;}
+.scroll_vertical .plus,
+.scroll_vertical .minus{position:absolute;left:50px;width:120px;height:30px;background:#09f;cursor:pointer;}
+.scroll_vertical .plus{top:10px;}
+.scroll_vertical .minus{bottom:10px;}
+.scroll_vertical .plus:hover,
+.scroll_vertical .minus:hover{background:#0cf;}
+.scroll_vertical ul{position:absolute;top:0;left:0;}
+.scroll_vertical li{height:140px;text-align:center;}
