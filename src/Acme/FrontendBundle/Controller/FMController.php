@@ -25,11 +25,14 @@ class FMController extends CustomerController
             ->getArrFrontendInfo();
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
+        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
+            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:FM:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'allfms' => $arrFMList,
                 'coops' => $arrCoopList,
+                'top_flash' => $arrTopFlash,
             ));
     }
 
