@@ -75,8 +75,6 @@ class ArticleController extends CustomerController
             ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
-        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
-            ->findBy(array('intCategory' => 1));
         return $this->render('AcmeFrontendBundle:Article:all.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -87,7 +85,6 @@ class ArticleController extends CustomerController
                 'hot_news_a' => $arrHotNewsA,
                 'star_interviews' => $arrStarInterviewList,
                 'coops' => $arrCoopList,
-                'top_flash' => $arrTopFlash,
             )
         );
     }

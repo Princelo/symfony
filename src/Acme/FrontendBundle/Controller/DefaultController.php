@@ -30,8 +30,6 @@ class DefaultController extends CustomerController
             ->getArrFrontendInfo();
         $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 0));
-        $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
-            ->findBy(array('intCategory' => 1));
         $arrFlash2 = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 2));
         $arrChampionlogPRC = $objORM->getRepository('AcmeBackendBundle:Championlog')
@@ -64,7 +62,6 @@ class DefaultController extends CustomerController
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'flash' => $arrFlash,
-                'top_flash' => $arrTopFlash,
                 'flash2' => $arrFlash2,
                 'champion_log_prc' => $arrChampionlogPRC,
                 'champion_log_hktw' => $arrChampionlogHKTW,
