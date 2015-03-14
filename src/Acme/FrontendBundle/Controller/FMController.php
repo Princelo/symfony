@@ -66,7 +66,7 @@ class FMController extends CustomerController
             ->getArrVotelogInfo($id, $intPrcTermNo, Constant::PRCZONE);
         $arrHktwVotelog = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotelogInfo($id, $intHktwTermNo, Constant::HKTWZONE);
-        $intNextRankTime = $request->getSession()->get('next-rank-time');
+        $intNextRankTime = $request->getSession()->get('next_rank_time');
         return $this->render('AcmeFrontendBundle:FM:details.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,

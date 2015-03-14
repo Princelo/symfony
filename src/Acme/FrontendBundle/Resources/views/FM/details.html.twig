@@ -10,7 +10,9 @@
             <div class="fm-banner-inner">
                 <div class="title">{{ fm.strFullName }}</div>
                 <div class="cast-time">总榜播出时间: {{ fm.intCastWeekDay|week }}{{ fm.strCastTimeFrom }}-{{ fm.strCastTimeTo }}</div>
-                <div class="cast-time">距下期揭榜还有</div>
+                <div class="cast-time">距下期揭榜还有
+                    <label class="countdown" id="rank-countdown"></label>
+                </div>
                 <div class="rank-countdown"></div>
             </div>
         </div>
@@ -141,6 +143,13 @@
         </div>
     <div style="clear:both"></div>
     <script>
+        var clock1 = document.getElementById('rank-countdown')
+                , targetDate = {{ next_rank_time }}*1000;
+
+        clock1.innerHTML = countdown(targetDate).toString();
+        setInterval(function(){
+            clock1.innerHTML = countdown(targetDate).toString();
+        }, 1000);
         var play = function(token, id)
         {
             $('audio').each(function(){
