@@ -42,7 +42,7 @@ class VotelogRepository extends EntityRepository
                        COUNT(vd.id)   as week_count,
                        lv.intIndex as last_index,
                        min(fv.intIndex)     as top_index,
-                       (11-v.intIndex)*4    as score,
+                       (11-v.intIndex)*4+8    as score,
                        r.intIndex   all_index,
                        r.intLastIndex  all_last_index,
                        r.intScore all_score,
@@ -97,7 +97,7 @@ class VotelogRepository extends EntityRepository
                        COUNT(vd.id)   as week_count,
                        lv.intIndex as last_index,
                        min(fv.intIndex)     as top_index,
-                       (11-v.intIndex)*4    as score,
+                       (11-v.intIndex)*4+8    as score,
                        r.intIndex   all_index,
                        r.intLastIndex  all_last_index,
                        r.intScore all_score,
@@ -152,7 +152,7 @@ class VotelogRepository extends EntityRepository
                     COUNT(vd.id) week_count,
                     MIN(vd.intIndex) top,
                     v.intIndex rank_index,
-                    (11 - v.intIndex)*4 as score,
+                    (11 - v.intIndex)*4+8 as score,
                     s.strSongFile file
                 FROM
                     AcmeBackendBundle:Votelog v

@@ -32,7 +32,7 @@
                     <span class="last-index">{% if r.last_index > 0 %} {{ r.last_index }} {% else %} 未上榜 {% endif %}</span>
                     <span class="top-index">{{ r.top_index }}</span>
                     <span class="score">{{ r.score }}</span>
-                    <span class="change">{{ r.last_index - r.rank_index }}</span>
+                    <span class="change">{% if r.last_index > 0 %}{{ r.last_index - r.rank_index }}{% else %}新上榜{% endif %}</span>
                     <span class="all-index">{{ r.all_index }}</span>
                     <span class="all-week">{{ r.all_week_count }}</span>
                     <span class="all-last-index">{% if r.all_last_index > 0 %}{{ r.all_last_index }}{% else %}未上榜{% endif %}</span>
@@ -43,7 +43,7 @@
                             {{ a.name }}
                         {% endfor %}
                     </span>
-                    <span class="is-pre">{{ r.is_pre }}</span>
+                    <span class="is-pre">{% if r.is_pre == 1 %}是{% else %}否{% endif %}</span>
                         <span class="play hidden">
                             <a href="javascript:;">*</a>
                         </span>
