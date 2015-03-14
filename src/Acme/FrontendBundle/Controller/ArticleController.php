@@ -124,6 +124,9 @@ class ArticleController extends CustomerController
             case 5:
                 $strListTitle = Constant::CATEGORY5;
                 break;
+            case 5:
+                $strListTitle = Constant::CATEGORY6;
+                break;
             default:
                 $strListTitle = "category error";
                 break;
