@@ -1,5 +1,59 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">基础设置</li>
+        <li class="active">幻灯片</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">幻灯片编辑</h1>
+    </div>
+    <style>
+        .form-control{height:100%; min-height: 34px;}
+        .form-control.color{margin-top:3px; margin-bottom:3px; border:1px solid #30a5ff;}
+        .myalert.mybg-warning{background: #ffb53e;max-height: 30px !important; margin:0 !important;
+            color:#fff;line-height:30px !important; cursor: normal; padding:0px 12px;}
+        li{list-style: none;}
+    </style>
+    {% for m in message %}
+        {{ m }}
+    {% endfor %}
     {{ form_start(form) }}
+    <div class="col-lg-12">
+    <div class="panel panel-default">
+    <div class="panel-heading">幻灯片编辑</div>
+    <div class="panel-body" id="pre-vote-list">
+    <div class="main-partition">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.strImg) }}
+            {{ form_widget(form.strImg,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strImg) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.strLink) }}
+            {{ form_widget(form.strLink,  {'attr': {'novalidate': 'novalidate', 'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.strLink) }}</span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {{ form_label(form.boolIsNewTab) }}
+            {{ form_widget(form.boolIsNewTab,  {'attr': {'novalidate': 'novalidate', 'class': ''}}) }}
+            <span class="form_errors">{{ form_errors(form.boolIsNewTab) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.intCategory) }}
+            {{ form_widget(form.intCategory, {'attr': {'class': 'form-control'}}) }}
+            <span class="form_errors">{{ form_errors(form.intCategory) }}</span>
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.提交, {'attr': {'class': 'btn btn-primary btn-normal'}}) }}
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

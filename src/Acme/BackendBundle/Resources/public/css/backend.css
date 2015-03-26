@@ -306,7 +306,7 @@ a.bg-danger:hover {
 }
 
 .panel-default .panel-heading {
-    background: #fff;
+    background: #b3ccdd;
     border-bottom: 1px solid #eee;
     color: #5f6468;
 }
@@ -871,3 +871,4 @@ h1.page-header {
 .green{color:#4db849;}
 .red{color:#f00;}
 li{list-style: none;}
+.panel {background: #f5fbff !important;}

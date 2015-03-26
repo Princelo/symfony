@@ -1,5 +1,28 @@
 {% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
 {% block body %}
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">基础设置</li>
+        <li class="active">幻灯片</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">幻灯片列表</h1>
+    </div>
+    <style>
+        .form-control{height:100%; min-height: 34px;}
+        .form-control.color{margin-top:3px; margin-bottom:3px; border:1px solid #30a5ff;}
+        .myalert.mybg-warning{background: #ffb53e;max-height: 30px !important; margin:0 !important;
+            color:#fff;line-height:30px !important; cursor: normal; padding:0px 12px;}
+        li{list-style: none;}
+    </style>
+    {% for m in message %}
+        {{ m }}
+    {% endfor %}
+    <div class="col-lg-12">
+    <div class="panel panel-default">
+    <div class="panel-heading">幻灯片列表</div>
+    <div class="panel-body" id="pre-vote-list">
+    <div class="main-partition">
     <table class="table table-striped">
         <tr>
         </tr>
@@ -9,13 +32,17 @@
                 <td>{{ f.strLink }}</td>
                 <td><img style="height:50px;" src="{{ app.url }}/uploads/flash/{{ f.strImg }}"/></td>
                 <td>
-                    <a href="{{ path('_admin_flash_edit', {'id': f.id} ) }}">编辑</a>
+                    <a href="{{ path('_admin_flash_edit', {'id': f.id} ) }}" class="btn btn-primary">编辑</a>
                 </td>
                 <td>
-                    <a href="{{ path('_admin_flash_delete', {'id': f.id}) }}">刪除</a>
+                    <a href="{{ path('_admin_flash_delete', {'id': f.id}) }}" class="btn btn-danger">刪除</a>
                 </td>
             </tr>
         {% endfor %}
     </table>
-    <a href="{{ path('_admin_flash_create') }}">发布新幻灯片</a>
+    <a href="{{ path('_admin_flash_create') }}" class="btn btn-primary btn-normal">发布新幻灯片</a>
+    </div>
+    </div>
+    </div>
+    </div>
 {% endblock %}

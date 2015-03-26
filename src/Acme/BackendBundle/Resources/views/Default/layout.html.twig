@@ -13,6 +13,7 @@
     <script src="{{ asset('bundles/acmefrontend/js/countdown.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/audio.min.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/bootstrap-ie.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/jquery.timepicker.js') }}"></script>
     <!--[if lt IE 9]>
     <script src="{{ asset('bundles/acmefrontend/js/html5shiv.js') }}"></script>
@@ -20,6 +21,8 @@
     <![endif]-->
 {% endblock %}
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap-ie6.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/ie.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/fileupload.style.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery.dataTables.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery.fileupload.css') }}"/>
@@ -27,6 +30,9 @@
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery-ui.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmebackend/css/backend.css') }}"/>
 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+<style>
+    label{display:inline-block !important;}
+</style>
 {% if (alertjs is defined) %}{{ alertjs|raw }}{% endif %}
     <script>
         function isValidDate( input ) {
