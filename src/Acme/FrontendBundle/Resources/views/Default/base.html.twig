@@ -15,9 +15,13 @@
     <script src="{{ asset('bundles/acmefrontend/js/audio.min.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/slides.min.jquery.js') }}"></script>
 {% endblock %}
-{% stylesheets 'bundles/acmefrontend/css/*' filter='cssrewrite'%}
-<link rel="stylesheet" href="{{ asset_url }}"/>
-{% endstylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/flash.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/frontend.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery.timepicker.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/jquery-ui.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/scrollshow.css') }}"/>
+<link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/tempates_div.css') }}"/>
 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 <script>
     function isValidDate( input ) {
