@@ -62,10 +62,10 @@
                 <td>{{ item.id }}</td>
                 <td>{{ item.title }}</td>
                 <td>
-                    <a href="{{ path('_admin_article_edit', {'id': item.id} ) }}">编辑</a>
+                    <a href="{{ path('_admin_article_edit', {'id': item.id} ) }}" class="btn btn-primary">编辑</a>
                 </td>
                 <td>
-                    <a href="{{ path('_admin_article_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+                    <a href="{{ path('_admin_article_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}" class="btn btn-danger">刪除</a>
                 </td>
                 <td>
                     {{ item.time|date('Y-m-d H:i:s') }}

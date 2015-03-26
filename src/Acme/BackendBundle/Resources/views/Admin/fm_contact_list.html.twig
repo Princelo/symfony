@@ -92,8 +92,8 @@
                             <td>
                                 {{ f.sender }}
                                 {{  f.content }}
-                                <a href="javascript:;" onclick="openDialog({{ f.id }})" >{{  f.comment_count }}</a>
-                                <div class="dialog" id="dialog{{ f.id }}">
+                                <a href="javascript:;" onclick="openDialog({{ f.id }})" class="btn btn-primary" >{{  f.comment_count }}</a>
+                                <div class="dialog" id="dialog{{ f.id }}" style="display: none;">
                                     <iframe id="" src="{{ path('_unvadmin_member_comment', {'id': f.id}) }}"></iframe>
                                 </div>
                             </td>
@@ -104,8 +104,8 @@
                                     <span class="red">未通过</span>
                                 {% endif %}
                             </td>
-                            <td><a href="{{ path('_admin_fm_edit', {"id": f.id}) }}">检视</a></td>
-                            <td><a href="{{ path('_admin_fm_delete', {"id": f.id}) }}">刪除</a></td>
+                            <td><a href="{{ path('_admin_fm_edit', {"id": f.id}) }}" class="btn btn-primary">检视</a></td>
+                            <td><a href="{{ path('_admin_fm_delete', {"id": f.id}) }}" class="btn btn-danger">刪除</a></td>
                         </tr>
                         <tr class="children collapse" id="expand-{{ loop.index }}">
                             <td colspan="13" id="col-expand-{{ loop.index }}" class="col-expand">

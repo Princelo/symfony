@@ -153,20 +153,20 @@
                                 {% endif %}
                             </td>
                             <td id="songid{{ item.id }}">
-                                <a href="{{ app.url }}/app_dev.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self">下载歌曲</a><br>
+                                <a href="{{ app.url }}/app_dev.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self" class="btn btn-primary">下载歌曲</a><br>
                                 <a style="display:none;" href="javascript:;" onclick="play('{{ item.file | md5 }}{{ item.id }}', {{ item.id }})" >PLAY</a>
                             </td>
                             <td>
-                                <a href="javascript:;" onclick="openDialog({{ item.id }})" >我要点评({{ item.comment_count }})</a>
-                                <div class="dialog" id="dialog{{ item.id }}">
+                                <a href="javascript:;" onclick="openDialog({{ item.id }})" class="btn btn-primary">我要点评({{ item.comment_count }})</a>
+                                <div class="dialog" id="dialog{{ item.id }}" style="display: none;">
                                     <iframe id="" src="{{ path('_unvadmin_song_comment', {'id': item.id}) }}"></iframe>
                                 </div>
                             </td>
                             <td>
-                                <a href="{{ path('_admin_song_edit', {'id': item.id} ) }}">编辑</a>
+                                <a href="{{ path('_admin_song_edit', {'id': item.id} ) }}" class="btn btn-primary">编辑</a>
                             </td>
                             <td>
-                                <a href="{{ path('_admin_song_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+                                <a href="{{ path('_admin_song_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}" class="btn btn-danger">刪除</a>
                             </td>
                         </tr>
                     {% endfor %}

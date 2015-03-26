@@ -124,14 +124,14 @@
                                     <a style="display:none;" href="javascript:;" onclick="play('{{ item.file | md5 }}{{ item.id }}', {{ item.id }})" >PLAY</a>
                                 {% endif %}
                                 {%  if item.other_link is defined and item.other_link != "" %}
-                                    <a href="{{ item.other_link }}">外部链接</a>
+                                    <a href="{{ item.other_link }}" class="btn btn-primary">外部链接</a>
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('_admin_act_edit', {'id': item.id} ) }}">编辑</a>
+                                <a href="{{ path('_admin_act_edit', {'id': item.id} ) }}" class="btn btn-primary">编辑</a>
                             </td>
                             <td>
-                                <a href="{{ path('_admin_act_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}">刪除</a>
+                                <a href="{{ path('_admin_act_delete', {'id': item.id, 'page': pagination.currentPageNumber}) }}" class="btn btn-danger">刪除</a>
                             </td>
                         </tr>
                     {% endfor %}

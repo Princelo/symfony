@@ -32,10 +32,10 @@
                 <td>{{ f.strLink }}</td>
                 <td><img style="height:50px;" src="{{ app.url }}/uploads/coop/{{ f.strThumb }}"/></td>
                 <td style="display: none;">
-                    <a href="{# path('_admin_flash_edit', {'id': f.id} ) #}">编辑</a>
+                    <a href="{# path('_admin_flash_edit', {'id': f.id} ) #}" class="">编辑</a>
                 </td>
                 <td>
-                    <a href="{{ path('_admin_coop_delete', {'id': f.id}) }}">刪除</a>
+                    <a href="{{ path('_admin_coop_delete', {'id': f.id}) }}" class="btn btn-danger">刪除</a>
                 </td>
             </tr>
         {% endfor %}

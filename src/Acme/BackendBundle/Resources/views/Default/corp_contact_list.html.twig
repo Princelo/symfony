@@ -83,8 +83,8 @@
                             <td>
                                 {{ c.sender }}
                                 {{  c.content }}
-                                <a href="javascript:;" onclick="openDialog({{ c.id }})" >备注({{  c.comment_count }})</a>
-                                <div class="dialog" id="dialog{{ c.id }}">
+                                <a href="javascript:;" onclick="openDialog({{ c.id }})" class="btn btn-primary">备注({{  c.comment_count }})</a>
+                                <div class="dialog" id="dialog{{ c.id }}" style="display: none;">
                                     <iframe id="" src="{{ path('_unvadmin_member_comment', {'id': c.id}) }}"></iframe>
                                 </div>
                             </td>

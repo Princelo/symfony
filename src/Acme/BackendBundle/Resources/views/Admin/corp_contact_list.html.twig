@@ -86,8 +86,8 @@
                             <td>
                                 {{ c.sender }}
                                 {{  c.content }}
-                                <a href="javascript:;" onclick="openDialog({{ c.id }})" >备注({{  c.comment_count }})</a>
-                                <div class="dialog" id="dialog{{ c.id }}">
+                                <a href="javascript:;" onclick="openDialog({{ c.id }})" class="btn btn-primary">备注({{  c.comment_count }})</a>
+                                <div class="dialog" id="dialog{{ c.id }}" style="display: none;">
                                     <iframe id="" src="{{ path('_unvadmin_member_comment', {'id': c.id}) }}"></iframe>
                                 </div>
                             </td>
@@ -99,10 +99,10 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('_admin_corp_edit', {"id": c.id}) }}">检视</a>
+                                <a href="{{ path('_admin_corp_edit', {"id": c.id}) }}" class="btn btn-primary">检视</a>
                             </td>
                             <td>
-                                <a href="{{ path('_admin_corp_delete', {"id": c.id}) }}">刪除</a>
+                                <a href="{{ path('_admin_corp_delete', {"id": c.id}) }}" class="btn btn-danger">刪除</a>
                             </td>
                         </tr>
                         <tr class="children collapse" id="expand-{{ loop.index }}">
