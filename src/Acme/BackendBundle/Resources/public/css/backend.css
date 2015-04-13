@@ -294,7 +294,7 @@ a.bg-danger:hover {
 /*Panels*/
 
 .panel {
-    border: 0;
+    /*border: 0;*/
 }
 
 .panel-heading {
@@ -649,6 +649,14 @@ h1.page-header {
     border-bottom: 0;
 }
 
+.page-header {
+    padding: 10px;
+    background: #d50;
+    color: #fff;
+    border-raduis: 5px;
+    border-radius: 5px;
+}
+
 /*Charts*/
 
 .main-chart {
@@ -871,4 +879,5 @@ h1.page-header {
 .green{color:#4db849;}
 .red{color:#f00;}
 li{list-style: none;}
-.panel {background: #f5fbff !important;}
+.panel {background: #f5fbff !important; border-bottom: 3px solid #C5D8E8 !important;
+    border-right: 3px solid #c5d8e8 !important;}
