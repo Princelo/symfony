@@ -347,56 +347,43 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ path('_unvadmin_info_edit') }}"><span class="glyphicon glyphicon-user"></span> 我的资料</a></li>
                     <li><a href="{{ path('_unvadmin_password_edit') }}"><span class="glyphicon glyphicon-cog"></span> 我的设置</a></li>
-                    <li><a href="{{ path('_logout') }}"><span class="glyphicon glyphicon-log-out"></span> 退出登陆</a></li>
+                    <li><a href="{# path('_logout') #}"><span class="glyphicon glyphicon-log-out"></span> 退出登陆</a></li>
                 </ul>
             </li>
         </ul>
     </div>
 </div><!-- /.container-fluid -->
 </nav>
-<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar collapse in" style="height:0px; min-height:100%;">
-    <form role="search">
-        <div class="form-group">
-            <!--<input type="text" class="form-control" placeholder="Search">-->
-        </div>
-    </form>
-    <ul class="nav menu">
-        <!--<li class="active"><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-        <li><a href="widgets.html"><span class="glyphicon glyphicon-th"></span> Widgets</a></li>
-        <li><a href="charts.html"><span class="glyphicon glyphicon-stats"></span> Charts</a></li>
-        <li><a href="tables.html"><span class="glyphicon glyphicon-list-alt"></span> Tables</a></li>
-        <li><a href="forms.html"><span class="glyphicon glyphicon-pencil"></span> Forms</a></li>
-        <li><a href="panels.html"><span class="glyphicon glyphicon-info-sign"></span> Alerts &amp; Panels</a></li>-->
+
+<link href="http://ting100.cn/public/admin/css/left.css" rel="stylesheet" type="text/css">
+<!--<script src="http://ting100.cn/public/admin/js/showleft.js" type="text/javascript"></script>-->
+<div id="my_menu" class="col-sm-3 col-lg-2 sidebar collapse in biweb" style="height:0px; min-height:100%; background:#25607e">
+    <span class="top">
+    <a href="{{ path('homepage') }}" target="_blank">网站首页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{{ path('_unvadmin_index') }}" target="main">后台首页</a>
+    </span>
+    <!-- 第一级菜单，即大频道 -->
+    <dl class="MenuList" id="index">
         {% for menu_block in menu %}
-        <li class="parent ">
-            <a href="#">
-                <span class="glyphicon glyphicon-list"></span> {{ menu_block.name }} <span data-toggle="collapse" href="#sub-item-{{ loop.index }}" class="icon pull-right">
-                    <em class="glyphicon glyphicon-s glyphicon-plus"></em></span>
-            </a>
-            <ul class="children collapse" id="sub-item-{{ loop.index }}">
-                {% for item in menu_block.item %}
+        <!-- 第二级菜单 -->
+        <div class="">
+            <span id="1" class="actuator" hidefocus="true" style="outline:none;">{{ menu_block.name }}</span>
+            <!-- 第三级菜单 -->
+            {% for item in menu_block.item %}
                 {% if item.param is defined %}
-                    <li>
-                        <a href="{{ path(item.route, {category: item.param, page: 1}) }}" target="_self">
-                            <span class="glyphicon glyphicon-share-alt"></span> {{ item.name }}
-                        </a>
-                    </li>
+                    <a id="menu_x" href="{{ path(item.route, {category: item.param, page:1}) }}" target="_self" class="submenuA" hidefocus="true" style="outline:none;">
                 {% else %}
-                    <li>
-                        <a href="{{ path(item.route) }}" target="_self">
-                            <span class="glyphicon glyphicon-share-alt"></span> {{ item.name }}
-                        </a>
-                    </li>
+                    <a id="menu_x" href="{{ path(item.route) }}" target="_self" class="submenuA" hidefocus="true" style="outline:none;">
                 {% endif %}
-                {% endfor %}
-            </ul>
-        </li>
+                {{ item.name }}
+            </a>
+            {% endfor %}
+        </div>
         {% endfor %}
-        <li role="presentation" class="divider"></li>
-        <li><a href="{{ path("_login") }}"><span class="glyphicon glyphicon-user"></span> 登陆页面</a></li>
-    </ul>
+    </dl>
+    <div style="height:50px; display:block;"></div>
 </div>
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-1 main">
 {% block body %}{% endblock %}
 </div>
 <script>
@@ -431,3 +418,4 @@
 </script>
 </body>
 </html>
+
