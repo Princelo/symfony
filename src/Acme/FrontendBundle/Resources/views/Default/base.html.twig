@@ -361,19 +361,18 @@
     </div>
 </div>
 {% endif %}
-<div class="section coop-list" style="display: none;">
+<div class="section coop-list" style="">
     <h4 class="title">
         <strong>合作伙伴</strong>
+        <span>
+            <a href="{{ path('_fm') }}">/更多</a>
+        </span>
     </h4>
-    <img src="{{ asset('bundles/acmefrontend/images/coop.png') }}" />
-</div>
-<div class="juno_section">
-    <div class="juno_nav_3"><a href="#" style="display: none;">更多</a></div>
-    <ul>
+    <ul style="border-top: 1px dashed #ccc; padding-top:12px">
         {% for c in coops %}
-            <li>
+            <li style="float: left; border: 2px solid #c6c6c6; border-radius: 1px; margin-left:55px; {% if loop.index == 1 %} margin-left:0 {% endif %}">
                 <a href="{{ c.strLink }}">
-                    <img src="{{ app.url }}/uploads/coop/{{ c.strThumb }}" style="height:135px;"/>
+                    <img src="{{ app.url }}/uploads/coop/{{ c.strThumb }}" style="width:185px; height:99px;"/>
                 </a>
             </li>
         {% endfor %}

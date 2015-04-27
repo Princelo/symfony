@@ -45,8 +45,9 @@ a{text-decoration: none;}
     color: #999; }
 
 /*********footer**********/
-.footer { overflow: hidden; min-width: 984px; padding: 0 20px; border-top: 1px solid #e6e6e6; background-color: #FFF;
+.footer { overflow: hidden; min-width: 984px; padding: 0 20px; border-top: 1px solid #e6e6e6; background-color: #f67a18;
     text-align: center; min-height: 50px; padding-top:30px; padding-bottom:30px; margin-top:30px;}
+.footer a{color:#000;}
 /*********footer**end*********/
 
 
