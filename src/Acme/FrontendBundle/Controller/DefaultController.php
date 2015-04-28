@@ -147,5 +147,18 @@ class DefaultController extends CustomerController
             ->create('../web/uploads/gallery/'.$act->getStrActFile(), $strMimeType, $options);
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/coop", name="_coop")
+     */
+    public function coopAction(Request $request)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $coops =
+            $objORM->getRepository('AcmeFrontendBundle:Coop')->getArrCoopList();
+        return new Response();
+    }
+
 
 }

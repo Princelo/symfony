@@ -1,9 +1,9 @@
 
 .mybanner{ width: 1200px; margin: 0 auto;  position:relative;}
-#slider-ad2{ width:1200px; position:relative; height:110px; margin:0 auto; overflow:hidden; /*border-radius:13px;*/}
+#slider-ad2{ width:1200px; position:relative; height:224px; margin:0 auto; overflow:hidden; /*border-radius:13px;*/}
 #slider-ad2 li{ width:1200px; list-style:none;}
 #slider-ad2 ul{ width:1200px; }
-#slider-top-flash{ width:1200px; position:relative; height:110px; margin:0 auto; overflow:hidden; /*border-radius:13px;*/}
+#slider-top-flash{ width:1200px; position:relative; height:224px; margin:0 auto; overflow:hidden; /*border-radius:13px;*/}
 #slider-top-flash li{ width:1200px; list-style:none;}
 #slider-top-flash ul{ width:1200px; }
 #slider-ad2 .pagination{background:#fff; bottom:1px; padding-left:420px; display: none;}

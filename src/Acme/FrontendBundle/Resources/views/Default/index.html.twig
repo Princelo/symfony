@@ -57,10 +57,10 @@
             </div>
         </div>
     {% endblock %}
-        <div class="home-ad1" style="position:relative; height:120px; margin-bottom:20px;">
+        <div class="home-ad1" style="position:relative; height:120px; margin-bottom:34px;">
             <style>.FB_info_more{color:#fff !important;}</style>
             <img style="float:left;" src="{{ asset('bundles/acmefrontend/images/weibo.jpg') }}" />
-            <div style="position:absolute; right:17px; bottom:38px;">
+            <div style="position:absolute; right:300px; bottom:40px;">
                 <wb:follow-button uid="5312208960" type="red_3" width="200px;" height="24" ></wb:follow-button>
             </div>
         </div>
@@ -223,7 +223,7 @@
                             {% for item in flash2 %}
                         <div class="slide">
                             <a target="_blank" href="{{ item.strlink }}" style="background:url('{{ app.url }}/uploads/flash/{{ item.strimg }}')">
-                                <img alt="" title="" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" style="width: 1200px; height: 110px;"/>
+                                <img alt="" title="" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" style="width: 1200px; height: 224px;"/>
                             </a>
                         </div>
                             {% endfor %}
