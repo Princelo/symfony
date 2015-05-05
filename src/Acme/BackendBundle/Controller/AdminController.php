@@ -476,7 +476,7 @@ class AdminController extends DefaultController
     {
         $objORM = $this->getDoctrine()->getManager();
         $where = null;
-        $obj = $objORM->getRepository('AcmeBackendBundle:Article')
+        $obj = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->find($id);
         $objORM->remove($obj);
         $objORM->flush();
