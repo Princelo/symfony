@@ -478,11 +478,13 @@ class AdminController extends DefaultController
         $where = null;
         $obj = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->find($id);
+        $category = $obj->getIntCategory();
         $objORM->remove($obj);
         $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_article_list',
             array(
+                'category' => $category,
                 'page' => $page,
                 'strAlertJs' => $strAlertJs
             )));
