@@ -476,11 +476,10 @@ class AdminController extends DefaultController
     {
         $objORM = $this->getDoctrine()->getManager();
         $where = null;
-        $query = $objORM->createQuery('DELETE
-                                         FROM AcmeBackendBundle:Article a
-                                         WHERE a.id = :id')
-            ->setParameters(array('id'=>$id))
-            ->execute();
+        $obj = $objORM->getRepository('AcmeBackendBundle:Article')
+            ->find($id);
+        $objORM->remove($obj);
+        $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_article_list',
             array(
@@ -625,11 +624,10 @@ class AdminController extends DefaultController
     {
         $objORM = $this->getDoctrine()->getManager();
         $where = null;
-        $query = $objORM->createQuery('DELETE
-                                         FROM AcmeBackendBundle:Member s
-                                         WHERE s.id = :id')
-            ->setParameters(array('id'=>$id))
-            ->execute();
+        $obj = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->find($id);
+        $objORM->remove($obj);
+        $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_fm_contact_list',
             array(
@@ -698,11 +696,10 @@ class AdminController extends DefaultController
     {
         $objORM = $this->getDoctrine()->getManager();
         $where = null;
-        $query = $objORM->createQuery('DELETE
-                                         FROM AcmeBackendBundle:Member s
-                                         WHERE s.id = :id')
-            ->setParameters(array('id'=>$id))
-            ->execute();
+        $obj = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->find($id);
+        $objORM->remove($obj);
+        $objORM->flush();
         $strAlertJs = "<script>alert(\"刪除成功\");</script>";
         return $this->redirect($this->generateUrl('_admin_corp_contact_list',
             array(
