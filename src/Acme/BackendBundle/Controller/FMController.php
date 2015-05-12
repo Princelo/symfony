@@ -213,7 +213,7 @@ class FMController extends DefaultController
             $session = $request->getSession();
             //---------remove votelogs-----------//
             $arrObjVoteLog = $objORM->getRepository('AcmeBackendBundle:Votelog')
-                ->findAll(array(
+                ->find(array(
                     'intMemberId' => $intMemberId,
                     'intTermNo' => $session->get('current_term_no'),
                     'intZone' => $request->request->get('zone')
@@ -224,7 +224,7 @@ class FMController extends DefaultController
             }
             //---------remove championlogs-----------//
             $arrObjChampionLog = $objORM->getRepository('AcmeBackendBundle:Championlog')
-                ->findAll(array(
+                ->find(array(
                     'intTermNo' => $session->get('current_term_no'),
                     'intMemberId' => $intMemberId,
                     'intZone' => $request->request->get('zone'),
