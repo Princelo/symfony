@@ -215,7 +215,8 @@ class FMController extends DefaultController
             $arrObjVoteLog = $objORM->getRepository('AcmeBackendBundle:Votelog')
                 ->findAll(array(
                     'intMemberId' => $intMemberId,
-                    'intTermNo' => $session->get('current_term_no')
+                    'intTermNo' => $session->get('current_term_no'),
+                    'intZone' => $request->request->get('zone')
                 ));
             foreach($arrObjVoteLog as $k => $v)
             {
