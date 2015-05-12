@@ -18,6 +18,7 @@ class FMController extends CustomerController
      */
     public function fmListAction()
     {
+        $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
             ->getArrFMFullName('timeCreateTime', 'DESC');
@@ -25,12 +26,17 @@ class FMController extends CustomerController
             ->getArrFrontendInfo();
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
-        return $this->render('AcmeFrontendBundle:FM:list.html.twig',
+        $response = $this->render('AcmeFrontendBundle:FM:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'allfms' => $arrFMList,
                 'coops' => $arrCoopList,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -67,7 +73,7 @@ class FMController extends CustomerController
         $arrHktwVotelog = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotelogInfo($id, $intHktwTermNo, Constant::HKTWZONE);
         $intNextRankTime = $request->getSession()->get('next_rank_time');
-        return $this->render('AcmeFrontendBundle:FM:details.html.twig',
+        $response = $this->render('AcmeFrontendBundle:FM:details.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
@@ -80,6 +86,11 @@ class FMController extends CustomerController
                 'current_term_no' => $request->getSession()->get('last_term_no'),
                 'coops' => $arrCoopList,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
 }

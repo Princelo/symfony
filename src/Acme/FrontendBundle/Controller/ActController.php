@@ -18,6 +18,7 @@ class ActController extends CustomerController
      */
     public function actListAction()
     {
+        $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrActList = $objORM->getRepository('AcmeBackendBundle:Act')
             ->getArrActList(100, 'timeUploadDateTime', 'DESC');
@@ -25,12 +26,17 @@ class ActController extends CustomerController
             ->getArrFrontendInfo();
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
-        return $this->render('AcmeFrontendBundle:Act:list.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Act:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'acts' => $arrActList,
                 'coops' => $arrCoopList,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
 

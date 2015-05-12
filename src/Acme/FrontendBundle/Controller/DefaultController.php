@@ -58,7 +58,7 @@ class DefaultController extends CustomerController
         $intNextRankTime = $session->get('next_rank_time');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
-        return $this->render('AcmeFrontendBundle:Default:index.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Default:index.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'flash' => $arrFlash,
@@ -78,6 +78,11 @@ class DefaultController extends CustomerController
                 'current_term_no' => $intLastTermNo,
                 'next_rank_time' => $intNextRankTime,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**

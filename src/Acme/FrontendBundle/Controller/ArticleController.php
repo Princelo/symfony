@@ -19,6 +19,7 @@ class ArticleController extends CustomerController
      */
     public function articleDetailAction($id)
     {
+        $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $objArticle = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->find($id);
@@ -38,7 +39,7 @@ class ArticleController extends CustomerController
             ->getArrCoopList(7);
         $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 1));
-        return $this->render('AcmeFrontendBundle:Article:detail.html.twig',
+        $response =  $this->render('AcmeFrontendBundle:Article:detail.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'article' => $objArticle,
@@ -50,6 +51,11 @@ class ArticleController extends CustomerController
                 'coops' => $arrCoopList,
                 'top_flash' => $arrTopFlash,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -58,6 +64,7 @@ class ArticleController extends CustomerController
      */
     public function articleAllAction()
     {
+        $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
             ->getArrFMList(20, 'timeCreateTime', 'DESC');
@@ -75,7 +82,7 @@ class ArticleController extends CustomerController
             ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
-        return $this->render('AcmeFrontendBundle:Article:all.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Article:all.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
@@ -87,6 +94,11 @@ class ArticleController extends CustomerController
                 'coops' => $arrCoopList,
             )
         );
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -140,7 +152,7 @@ class ArticleController extends CustomerController
         );
         $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 1));
-        return $this->render('AcmeFrontendBundle:Article:img_list.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Article:img_list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
@@ -151,6 +163,11 @@ class ArticleController extends CustomerController
                 'top_flash' => $arrTopFlash,
             )
         );
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -214,7 +231,7 @@ class ArticleController extends CustomerController
             ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
         $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 1));
-        return $this->render('AcmeFrontendBundle:Article:list.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Article:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
@@ -229,6 +246,11 @@ class ArticleController extends CustomerController
                 'top_flash' => $arrTopFlash,
             )
         );
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
 }

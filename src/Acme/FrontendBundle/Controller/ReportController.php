@@ -50,7 +50,7 @@ class ReportController extends CustomerController
         //if($strZone == 'hktw')
         //    $arrLastRankSong = $objORM->getRepository('AcmeBackendBundle:Rank')
         //        ->getArrNewestRankList(Constant::HKTWZONE, 999, $intTermNo);
-        return $this->render('AcmeFrontendBundle:Report:list.html.twig',
+        $response =  $this->render('AcmeFrontendBundle:Report:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
@@ -59,6 +59,11 @@ class ReportController extends CustomerController
                 'search_term_no' => $intTermNo,
                 'coops' => $arrCoopList,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -81,13 +86,18 @@ class ReportController extends CustomerController
 
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7);
-        return $this->render('AcmeFrontendBundle:Report:details.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Report:details.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
                 'list' => $arrVoteDetails,
                 'coops' => $arrCoopList,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -114,7 +124,7 @@ class ReportController extends CustomerController
                 ->getArrVoteDetailsSearch($intTermNo, $intZone, $intSongInfo);
         }
 
-        return $this->render('AcmeFrontendBundle:Report:details_search.html.twig',
+        $response = $this->render('AcmeFrontendBundle:Report:details_search.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
                 'fms' => $arrFMList,
@@ -122,6 +132,11 @@ class ReportController extends CustomerController
                 'current_term_no' => $request->getSession()->get('last_term_no'),
                 'coops' => $arrCoopList,
             ));
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     private function _getStrSearchStr($search)
