@@ -38,12 +38,18 @@ class AjaxController extends Controller
             echo 'false';
         else
             echo 'true';
-        return new Response();
+        $response = new Response();
+        $response->sendHeaders('Access-Control-Allow-Origin', '*');
+        $response->send();
+        return $response;
     }
 
     public function jsonGetCity(){
         $city = new City();
         echo json_encode($city->getArrCity());
-        return new Response();
+        $response = new Response();
+        $response->sendHeaders('Access-Control-Allow-Origin', '*');
+        $response->send();
+        return $response;
     }
 } 
