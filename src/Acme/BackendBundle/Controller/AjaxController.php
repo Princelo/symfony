@@ -39,7 +39,7 @@ class AjaxController extends Controller
         else
             echo 'true';
         $response = new Response();
-        $response->sendHeaders('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->send();
         return $response;
     }
@@ -48,7 +48,7 @@ class AjaxController extends Controller
         $city = new City();
         echo json_encode($city->getArrCity());
         $response = new Response();
-        $response->sendHeaders('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->send();
         return $response;
     }
