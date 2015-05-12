@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class VotelogRepository extends EntityRepository
 {
 
-    public function getArrVotedList($intTermNo, $intMemberId, $strSortType)
+    public function getArrVotedList($intTermNo, $intMemberId, $strSortType, $intZone)
     {
         return $this->getEntityManager()
             ->createQuery(
@@ -22,6 +22,7 @@ class VotelogRepository extends EntityRepository
                 FROM AcmeBackendBundle:Votelog v
                 WHERE v.intTermNo = {$intTermNo}
                     AND v.intMemberId = {$intMemberId}
+                    AND v.intZone = {$intZone}
                 ORDER BY v.intIndex {$strSortType}
             "
             )

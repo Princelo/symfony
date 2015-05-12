@@ -150,7 +150,7 @@ class FMController extends DefaultController
             ->getArrRankingForVote($intLatestTermNo + 1, Constant::PRCZONE);
         $jsonSonglist = json_encode($arrSonglist);
         $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
-            ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC');
+            ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC', Constant::PRCZONE);
 
         return $this->render('AcmeBackendBundle:FM:prc_vote.html.twig',
             array(
@@ -180,7 +180,7 @@ class FMController extends DefaultController
             ->getArrRankingForVote($intLatestTermNo + 1, Constant::HKTWZONE);
         $jsonSonglist = json_encode($arrSonglist);
         $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
-            ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC');
+            ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC', Constant::HKTWZONE);
 
         return $this->render('AcmeBackendBundle:FM:hktw_vote.html.twig',
             array(
