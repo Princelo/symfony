@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
+
 
 /**
  * SongRepository
@@ -118,21 +120,22 @@ class SongRepository extends EntityRepository
     public function getArrRankingByTermNo($intTermNo, $intZone)
     {
         $intLastTermNo = $intTermNo - 1;
+        $rsm = new ResultSetMapping();
         return $this->getEntityManager()
-            ->createQuery(
+            ->createNativeQuery(
             "
                 SELECT s.id sid,
-                    (
+                    (SELECT SUM(foo.score) AS fm_score FROM (
                         SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 FROM AcmeBackendBundle:Votelog lv WHERE lv.intTermNo = {$intTermNo}
                             AND lv.intSongId = s.id AND lv.intZone = {$intZone}
-                    ) AS fm_score,
+                    ) AS foo ) as fm_score,
                     s.boolIsPremiere is_pre,
                     (
-                        SELECT lr2.intIndex FROM AcmeBackendBundle:Rank lr2 WHERE lr2.song = s.id
+                        SELECT lr2.intIndex FROM AcmeBackendBundle:Rank lr2 WHERE lr2.song_id = s.id
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
+                        SELECT COUNT(lr.song_id) FROM AcmeBackendBundle:Rank lr WHERE lr.song_id = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
                     ) AS count_rank,
                     (CASE WHEN s.intRankZone = " . Constant::PRCZONE . "
                         THEN
@@ -147,7 +150,8 @@ class SongRepository extends EntityRepository
                 WHERE
                     s.intRankZone = {$intZone}
                 GROUP BY s.id
-            "
+            ",
+            $rsm
             )
             ->getResult();
     }

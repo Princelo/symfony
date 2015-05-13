@@ -72,10 +72,11 @@ class Menu {
                             "name": "幻灯片",
                             "route": "_admin_flash_list"
                         },
-                        {
-                            "name": "广告位",
-                            "route": "_admin_site_img_edit"
-                        },
+                        '//{
+                         //   "name": "广告位",
+                         //   "route": "_admin_site_img_edit"
+                        //},
+                        .'
                         {
                             "name": "合作伙伴",
                             "route": "_admin_coop"
