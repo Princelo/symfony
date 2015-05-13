@@ -53,7 +53,7 @@ class CustomerController extends Controller implements InitializableControllerIn
     {
         $first = DateTime::createFromFormat('m/d/Y', $date1);
         $second = DateTime::createFromFormat('m/d/Y', $date2);
-        if($date1 > $date2) return $this->datediffInWeeks($date2, $date1);
+        if($date1 > $date2) return -1;
         return floor($first->diff($second)->days/7);
     }
 
