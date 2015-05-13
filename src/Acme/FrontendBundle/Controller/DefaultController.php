@@ -75,7 +75,8 @@ class DefaultController extends CustomerController
                 'rank_songs_prc' => $arrLastRankSongPRC,
                 'rank_songs_hktw' => $arrLastRankSongHKTW,
                 'fms' => $arrFMList,
-                'current_term_no' => $intLastTermNo,
+                'current_term_no' => $intLastTermNo + 1,
+                'last_term_no' => $intLastTermNo,
                 'next_rank_time' => $intNextRankTime,
             ));
         $response->setETag(md5($response->getContent()));
