@@ -4,6 +4,7 @@ namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 
 /**
@@ -120,22 +121,31 @@ class SongRepository extends EntityRepository
     public function getArrRankingByTermNo($intTermNo, $intZone)
     {
         $intLastTermNo = $intTermNo - 1;
+        $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMapping();
-        return $this->getEntityManager()
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('is_pre', 'is_pre');
+        $rsm->addScalarResult('corp', 'corp');
+        $rsm->addScalarResult('fm_score', 'fm_score');
+        $rsm->addScalarResult('last_index', 'last_index');
+        $rsm->addScalarResult('count_rank', 'count_rank');
+        $rsm->addScalarResult('last_score', 'last_score');
+        $rsm->addScalarResult('top', 'top');
+        return $entityManager
             ->createNativeQuery(
             "
                 SELECT s.id sid,
                     (SELECT SUM(foo.score) AS fm_score FROM (
-                        SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 FROM AcmeBackendBundle:Votelog lv WHERE lv.intTermNo = {$intTermNo}
+                        SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 AS score FROM Votelog lv WHERE lv.intTermNo = {$intTermNo}
                             AND lv.intSongId = s.id AND lv.intZone = {$intZone}
                     ) AS foo ) as fm_score,
                     s.boolIsPremiere is_pre,
                     (
-                        SELECT lr2.intIndex FROM AcmeBackendBundle:Rank lr2 WHERE lr2.song_id = s.id
+                        SELECT lr2.intIndex FROM Rank lr2 WHERE lr2.song_id = s.id
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song_id) FROM AcmeBackendBundle:Rank lr WHERE lr.song_id = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
+                        SELECT COUNT(lr.song_id) FROM Rank lr WHERE lr.song_id = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
                     ) AS count_rank,
                     (CASE WHEN s.intRankZone = " . Constant::PRCZONE . "
                         THEN
@@ -146,7 +156,7 @@ class SongRepository extends EntityRepository
                         ) AS top
 
                 FROM
-                    AcmeBackendBundle:Song s
+                    Song s
                 WHERE
                     s.intRankZone = {$intZone}
                 GROUP BY s.id
@@ -159,28 +169,42 @@ class SongRepository extends EntityRepository
     public function getArrRankingForVote($intTermNo, $intZone)
     {
         $intLastTermNo = $intTermNo - 1;
-        return $this->getEntityManager()
-            ->createQuery(
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('artists', 'artists', 'array');
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('is_pre', 'is_pre');
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('corp', 'corp');
+        $rsm->addScalarResult('rank_zone', 'rank_zone');
+        $rsm->addScalarResult('fm_score', 'fm_score');
+        $rsm->addScalarResult('last_index', 'last_index');
+        $rsm->addScalarResult('count_rank', 'count_rank');
+        $rsm->addScalarResult('last_score', 'last_score');
+        $rsm->addScalarResult('top', 'top');
+        return $entityManager
+            ->createNativeQuery(
             "
                 SELECT s.id id,
+                    (SELECT SUM(foo.score) AS fm_score FROM
                     (
-                        SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 FROM AcmeBackendBundle:Votelog lv WHERE lv.intTermNo = {$intTermNo}
+                        SELECT COUNT(s.id)*4*(11-lv.intIndex)+8 AS score FROM Votelog lv WHERE lv.intTermNo = {$intTermNo}
                             AND lv.intSongId = s.id AND lv.intZone = {$intZone}
-                    ) AS fm_score,
+                    ) AS foo) AS fm_score,
                     s.boolIsPremiere is_pre,
                     s.strTitle title,
                     s.arrStrArtistName artists,
                     s.strCorpName corp,
-                    s.intRankZone zone,
+                    s.intRankZone rank_zone,
                     (
-                        SELECT lr2.intIndex FROM AcmeBackendBundle:Rank lr2 WHERE lr2.song = s.id
+                        SELECT lr2.intIndex FROM Rank lr2 WHERE lr2.song_id = s.id
                             AND lr2.intTermNo = {$intLastTermNo} AND lr2.intZone = {$intZone}
                     ) AS last_index,
                     (
-                        SELECT COUNT(lr.song) FROM AcmeBackendBundle:Rank lr WHERE lr.song = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
+                        SELECT COUNT(lr.song_id) FROM Rank lr WHERE lr.song_id = s.id AND lr.intZone = {$intZone} AND lr.intIndex < 21
                     ) AS count_rank,
                     (
-                        SELECT lr3.intScore FROM AcmeBackendBundle:Rank lr3 WHERE lr3.song = s.id AND lr3.intZone = {$intZone}
+                        SELECT lr3.intScore FROM Rank lr3 WHERE lr3.song_id = s.id AND lr3.intZone = {$intZone}
                             AND lr3.intTermNo = {$intLastTermNo}
                     ) AS last_score,
                     (CASE WHEN s.intRankZone = " . Constant::PRCZONE . "
@@ -191,12 +215,12 @@ class SongRepository extends EntityRepository
                         END
                         ) AS top
                 FROM
-                    AcmeBackendBundle:Song s
+                    Song s
                 WHERE
                     s.intRankZone = {$intZone}
                 GROUP BY s.id
-
-            "
+            ",
+            $rsm
             )
             ->getResult();
     }
