@@ -159,6 +159,8 @@ class SongRepository extends EntityRepository
                     Song s
                 WHERE
                     s.intRankZone = {$intZone}
+
+                    ORDER BY fm_score DESC, is_pre DESC, sid DESC
                 GROUP BY s.id
             ",
             $rsm

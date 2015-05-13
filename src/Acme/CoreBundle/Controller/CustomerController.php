@@ -92,7 +92,7 @@ class CustomerController extends Controller implements InitializableControllerIn
                 if($v['fm_score'] > 0)
                     array_push($arrSortedSongHKTW, $v);
             }
-            if(!empty($arrSortedSongPRC)){
+            /*if(!empty($arrSortedSongPRC)){
                 foreach ($arrSortedSongPRC as $ikey => $row) {
                     $score[$ikey]  = $row['score'];
                     $is_pre[$ikey] = $row['is_pre'];
@@ -109,7 +109,7 @@ class CustomerController extends Controller implements InitializableControllerIn
                 array_multisort($score, SORT_DESC, $arrSortedSongHKTW,
                                 $is_pre, SORT_DESC, $arrSortedSongHKTW,
                                 $sid,    SORT_DESC, $arrSortedSongHKTW);
-            }
+            }*/
             foreach($arrSortedSongPRC as $k => $v)
             {
                 $objRank = new Rank();
