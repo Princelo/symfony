@@ -38,8 +38,8 @@ class CustomerController extends Controller implements InitializableControllerIn
         $session->set('rank_week_day', $intRankWeekDay);
         $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
         $session->set('next_rank_time', $intNextRankTime);
-        if($intWeek >= $intRankWeekDay)
-            $floatShouldRank += 1;
+        //if($intWeek >= $intRankWeekDay)
+            //$floatShouldRank += 1;
         //if should_rank_log's count > rank_log's count
         //generate rank
         if($floatShouldRank > $intCountRanked){
