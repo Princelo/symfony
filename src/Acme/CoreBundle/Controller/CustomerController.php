@@ -27,16 +27,20 @@ class CustomerController extends Controller implements InitializableControllerIn
         $timeNow = new \DateTime('now');
         $intWeek = date('w', $timeNow->getTimestamp());
         $floatShouldRank = $this->datediffInWeeks('5/10/2015', $timeNow->format('m/d/Y'));
+        var_dump($floatShouldRank);
         //get latest rank log
         $intCountRanked = $objORM->getRepository('AcmeBackendBundle:RankLog')
             ->getIntCountRanked();
+        var_dump($intCountRanked);
         $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
             ->getIntLatestTermNo();
+        var_dump($intLatestTermNo);
         $session = $request->getSession();
         $session->set('last_term_no', $intLatestTermNo);
         $session->set('current_term_no', $intLatestTermNo + 1);
         $session->set('rank_week_day', $intRankWeekDay);
         $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
+        var_dump($intRankWeekDay);exit;
         $session->set('next_rank_time', $intNextRankTime);
         if($intWeek >= $intRankWeekDay)
             $floatShouldRank += 1;
