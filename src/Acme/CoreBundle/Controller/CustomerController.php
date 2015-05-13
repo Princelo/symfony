@@ -32,7 +32,6 @@ class CustomerController extends Controller implements InitializableControllerIn
             ->getIntCountRanked();
         $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
             ->getIntLatestTermNo();
-        var_dump($intLatestTermNo);exit;
         $session = $request->getSession();
         $session->set('last_term_no', $intLatestTermNo);
         $session->set('current_term_no', $intLatestTermNo + 1);
