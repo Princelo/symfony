@@ -14,6 +14,7 @@
     <script src="{{ asset('bundles/acmefrontend/js/slider.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/audio.min.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/slides.min.jquery.js') }}"></script>
+    <script src="{{ asset('bundles/acmefrontend/js/jquery.timeago.js') }}"></script>
 {% endblock %}
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/flash.css') }}"/>
@@ -264,6 +265,7 @@
         'timeFormat': 'H:i',
         'step' : 10
     });
+        $('.time').timeago();
 });
 </script>
 <style>
