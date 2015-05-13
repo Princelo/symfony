@@ -26,7 +26,7 @@ class CustomerController extends Controller implements InitializableControllerIn
         //generate should_rank_log
         $timeNow = new \DateTime('now');
         $intWeek = date('w', $timeNow->getTimestamp());
-        $floatShouldRank = $this->datediffInWeeks('5/10/2015', $timeNow->format('m/d/Y'));
+        $floatShouldRank = $this->datediffInWeeks('5/4/2015', $timeNow->format('m/d/Y'));
         var_dump($floatShouldRank);
         //get latest rank log
         $intCountRanked = $objORM->getRepository('AcmeBackendBundle:RankLog')
@@ -42,8 +42,8 @@ class CustomerController extends Controller implements InitializableControllerIn
         $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
         var_dump($intRankWeekDay);exit;
         $session->set('next_rank_time', $intNextRankTime);
-        if($intWeek >= $intRankWeekDay)
-            $floatShouldRank += 1;
+        //if($intWeek >= $intRankWeekDay)
+            //$floatShouldRank += 1;
         //if should_rank_log's count > rank_log's count
         //generate rank
         if($floatShouldRank > $intCountRanked){
