@@ -123,7 +123,7 @@ class SongRepository extends EntityRepository
         $intLastTermNo = $intTermNo - 1;
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('sid', 'sid');
         $rsm->addScalarResult('is_pre', 'is_pre');
         $rsm->addScalarResult('corp', 'corp');
         $rsm->addScalarResult('fm_score', 'fm_score');

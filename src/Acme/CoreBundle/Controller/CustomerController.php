@@ -26,7 +26,7 @@ class CustomerController extends Controller implements InitializableControllerIn
         //generate should_rank_log
         $timeNow = new \DateTime('now');
         $intWeek = date('w', $timeNow->getTimestamp());
-        $floatShouldRank = $this->datediffInWeeks('5/10/2015', $timeNow->format('m/d/Y'));
+        $floatShouldRank = $this->datediffInWeeks('5/7/2015', $timeNow->format('m/d/Y'));
         //get latest rank log
         $intCountRanked = $objORM->getRepository('AcmeBackendBundle:RankLog')
             ->getIntCountRanked();
@@ -38,8 +38,8 @@ class CustomerController extends Controller implements InitializableControllerIn
         $session->set('rank_week_day', $intRankWeekDay);
         $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
         $session->set('next_rank_time', $intNextRankTime);
-        //if($intWeek >= $intRankWeekDay)
-            //$floatShouldRank += 1;
+        if($intWeek >= $intRankWeekDay)
+            $floatShouldRank += 1;
         //if should_rank_log's count > rank_log's count
         //generate rank
         if($floatShouldRank > $intCountRanked){
@@ -95,14 +95,20 @@ class CustomerController extends Controller implements InitializableControllerIn
             if(!empty($arrSortedSongPRC)){
                 foreach ($arrSortedSongPRC as $ikey => $row) {
                     $score[$ikey]  = $row['score'];
+                    $is_pre[$ikey] = $row['is_pre'];
+                    $sid[$ikey]     = $row['sid'];
                 }
                 array_multisort($score, SORT_DESC, $arrSortedSongPRC);
             }
             if(!empty($arrSortedSongHKTW)){
                 foreach ($arrSortedSongHKTW as $ikey => $row) {
                     $score[$ikey]  = $row['score'];
+                    $is_pre[$ikey] = $row['is_pre'];
+                    $sid[$ikey]     = $row['sid'];
                 }
-                array_multisort($score, SORT_DESC, $arrSortedSongHKTW);
+                array_multisort($score, SORT_DESC, $arrSortedSongHKTW,
+                                $is_pre, SORT_DESC, $arrSortedSongHKTW,
+                                $sid,    SORT_DESC, $arrSortedSongHKTW);
             }
             foreach($arrSortedSongPRC as $k => $v)
             {
