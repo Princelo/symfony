@@ -3,6 +3,8 @@
 namespace Acme\FrontendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * CoopRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class CoopRepository extends EntityRepository
 {
-    public function getArrCoopList($intLimit)
+    public function getArrCoopList($intLimit, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT c
@@ -22,6 +27,9 @@ class CoopRepository extends EntityRepository
                 "
             )
             ->setMaxResults($intLimit)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 }

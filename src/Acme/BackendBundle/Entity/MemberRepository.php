@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 /**
  * MemberRepository
  *
@@ -17,8 +19,11 @@ use Doctrine\ORM\NoResultException;
  */
 class MemberRepository extends EntityRepository implements UserProviderInterface
 {
-    public function getArrMemberList($intType, $intLimit, $strOrderBy, $strOrderType)
+    public function getArrMemberList($intType, $intLimit, $strOrderBy, $strOrderType, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT m
@@ -29,6 +34,9 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                     "
             )
             ->setMaxResults($intLimit)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 
@@ -102,8 +110,11 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
             ->getSingleScalarResult();
     }
 
-    public function getArrFMList($intCount, $strOrderField, $strOrderType)
+    public function getArrFMList($intCount, $strOrderField, $strOrderType, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "
@@ -118,11 +129,17 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
             "
             )
             ->setMaxResults($intCount)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 
-    public function getArrFMFullName($strOrderField, $strOrderType)
+    public function getArrFMFullName($strOrderField, $strOrderType, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "
@@ -136,11 +153,17 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                 ORDER BY m.{$strOrderField} {$strOrderType}
             "
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 
-    public  function getArrFMDetailsList($strWhere = " AND m.boolIsValid = TRUE ")
+    public  function getArrFMDetailsList($strWhere = " AND m.boolIsValid = TRUE ", $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "
@@ -312,11 +335,17 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                     m.intBusyWeekDayFrom5, m.intBusyWeekDayTo5, m.boolBusyTimeTo5Tomorrow, m.strBusyTimeFrom5, m.strBusyTimeTo5
             "
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 
-    public function getArrCorpDetailsList($strWhere = " AND m.boolIsValid = TRUE ")
+    public function getArrCorpDetailsList($strWhere = " AND m.boolIsValid = TRUE ", $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "
@@ -350,6 +379,9 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                 {$strWhere}
             "
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 }

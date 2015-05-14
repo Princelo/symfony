@@ -3,6 +3,8 @@
 namespace Acme\FrontendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * FlashRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class FlashRepository extends EntityRepository
 {
-    public function getArrFlashlist($intCategory)
+    public function getArrFlashlist($intCategory, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT f
@@ -22,6 +27,9 @@ class FlashRepository extends EntityRepository
                     WHERE f.intCategory = {$intCategory}
                     "
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 }

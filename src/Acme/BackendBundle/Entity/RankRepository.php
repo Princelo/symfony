@@ -4,7 +4,8 @@ namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Acme\BackendBundle\Entity\Constant;
-
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 /**
  * RankRepository
  *
@@ -13,9 +14,12 @@ use Acme\BackendBundle\Entity\Constant;
  */
 class RankRepository extends EntityRepository
 {
-    public function getArrNewestRankList($intZone, $intCount, $intTermNo, $strWhere = '')
+    public function getArrNewestRankList($intZone, $intCount, $intTermNo, $strWhere = '', $cache_time = 0)
     {
         $strTop = $intZone==0?"intTopRankPRC":"intTopRankHKTW";
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT s.strTitle title,
@@ -60,6 +64,9 @@ class RankRepository extends EntityRepository
                     "
             )
             ->setMaxResults($intCount)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 

@@ -21,11 +21,11 @@ class FMController extends CustomerController
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMFullName('timeCreateTime', 'DESC');
+            ->getArrFMFullName('timeCreateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         $response = $this->render('AcmeFrontendBundle:FM:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -51,11 +51,11 @@ class FMController extends CustomerController
         $objFM = $objORM->getRepository('AcmeBackendBundle:Member')
             ->find($id);
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         if ($request->query->get('prc-term-no') != null)
         {
             $intPrcTermNo = $request->query->get('prc-term-no');

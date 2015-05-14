@@ -24,19 +24,19 @@ class ArticleController extends CustomerController
         $objArticle = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->find($id);
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $arrStarNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC', 600);
         $arrHotPic = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC', 600);
         $arrHotNewsB = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(1, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(1, 4, 'timeCreateTime', 'DESC', 600);
         $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(2, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(2, 4, 'timeCreateTime', 'DESC', 600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 1));
         $response =  $this->render('AcmeFrontendBundle:Article:detail.html.twig',
@@ -67,21 +67,21 @@ class ArticleController extends CustomerController
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $arrStarNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC', 600);
         $arrHotPic = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC', 600);
         $arrHotNewsB = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(1, 8, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(1, 8, 'timeCreateTime', 'DESC', 600);
         $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(2, 8, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(2, 8, 'timeCreateTime', 'DESC', 600);
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC', 600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         $response = $this->render('AcmeFrontendBundle:Article:all.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,
@@ -112,13 +112,13 @@ class ArticleController extends CustomerController
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $queryActlist = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getQueryArticleList($category_id);
+            ->getQueryArticleList($category_id, 600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         switch($category_id)
         {
             case 1:
@@ -181,13 +181,13 @@ class ArticleController extends CustomerController
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $queryActlist = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getQueryArticleList($category_id);
+            ->getQueryArticleList($category_id, 600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         switch($category_id)
         {
             case 1:
@@ -220,15 +220,15 @@ class ArticleController extends CustomerController
             6/*limit per page*/
         );
         $arrStarNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC', 600);
         $arrHotPic = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC', 600);
         $arrHotNewsB = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(1, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(1, 4, 'timeCreateTime', 'DESC', 600);
         $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(2, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(2, 4, 'timeCreateTime', 'DESC', 600);
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC', 600);
         $arrTopFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 1));
         $response = $this->render('AcmeFrontendBundle:Article:list.html.twig',

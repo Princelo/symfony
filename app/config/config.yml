@@ -62,6 +62,8 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        metadata_cache_driver: redis
+        query_cache_driver: redis
         #entity_managers:
             #default:
                 #mappings:
@@ -135,6 +137,28 @@ fm_elfinder:
 knp_time: ~      # Enable the helper for use in templates
 gregwar_captcha: ~
 
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: redis://localhost
+    doctrine:
+        metadata_cache:
+            client: doctrine
+            entity_manager: default
+            document_manager: default
+        result_cache:
+            client: doctrine
+            entity_manager: [default]
+        query_cache:
+            client: doctrine
+            entity_manager: default
+#
 #framework:
     # ...
     #translator:      { fallback: %locale% } # uncomment this line if you see this line commented

@@ -27,37 +27,37 @@ class DefaultController extends CustomerController
         print_r($test);
         echo '</pre>';exit;*/
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $arrFlash = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 0));
         $arrFlash2 = $objORM->getRepository('AcmeFrontendBundle:Flash')
             ->findBy(array('intCategory' => 2));
         $arrChampionlogPRC = $objORM->getRepository('AcmeBackendBundle:Championlog')
-            ->getArrChampionlog(Constant::PRCZONE, 22);
+            ->getArrChampionlog(Constant::PRCZONE, 22, 600);
         $arrChampionlogHKTW = $objORM->getRepository('AcmeBackendBundle:Championlog')
-            ->getArrChampionlog(Constant::HKTWZONE, 22);
+            ->getArrChampionlog(Constant::HKTWZONE, 22, 600);
         $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(5, 5, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(5, 5, 'timeCreateTime', 'DESC', 600);
         $arrIndustryNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(1, 5, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(1, 5, 'timeCreateTime', 'DESC', 600);
         $arrEntertainmentList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(2, 5, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(2, 5, 'timeCreateTime', 'DESC', 600);
         $arrTodayNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(3, 5, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(3, 5, 'timeCreateTime', 'DESC', 600);
         $arrHotPicList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(4, 5, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(4, 5, 'timeCreateTime', 'DESC', 600);
         $arrDJInfoList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(6, 5, 'timeCreateTime', 'DESC');
+            ->getArrArticleList(6, 5, 'timeCreateTime', 'DESC', 600);
         $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC');
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
         $intLastTermNo = $session->get('last_term_no');
         $arrLastRankSongPRC = $objORM->getRepository('AcmeBackendBundle:Rank')
-            ->getArrNewestRankList(Constant::PRCZONE, 20, $intLastTermNo);
+            ->getArrNewestRankList(Constant::PRCZONE, 20, $intLastTermNo, null, 600);
         $arrLastRankSongHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
-            ->getArrNewestRankList(Constant::HKTWZONE, 20, $intLastTermNo);
+            ->getArrNewestRankList(Constant::HKTWZONE, 20, $intLastTermNo, null, 600);
         $intNextRankTime = $session->get('next_rank_time');
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         $response = $this->render('AcmeFrontendBundle:Default:index.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,

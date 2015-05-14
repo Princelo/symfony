@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * ForecastRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ForecastRepository extends EntityRepository
 {
-    public function getArrForecastlist($intCount)
+    public function getArrForecastlist($intCount, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT f.strContent content,
@@ -28,6 +33,9 @@ class ForecastRepository extends EntityRepository
                     "
             )
             ->setMaxResults($intCount)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 }

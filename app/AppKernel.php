@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

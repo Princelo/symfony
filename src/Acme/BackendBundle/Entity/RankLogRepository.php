@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * RankLogRepository
@@ -12,22 +14,34 @@ use Doctrine\ORM\EntityRepository;
  */
 class RankLogRepository extends EntityRepository
 {
-    public function getIntCountRanked()
+    public function getIntCountRanked($cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             'SELECT COUNT(l.id) - 1 FROM AcmeBackendBundle:RankLog l'
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getSingleScalarResult();
     }
 
-    public function getIntLatestTermNo()
+    public function getIntLatestTermNo($cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "SELECT l.intTermNo FROM AcmeBackendBundle:RankLog l ORDER BY l.id DESC"
             )
             ->setMaxResults(1)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getSingleScalarResult();
     }
 }

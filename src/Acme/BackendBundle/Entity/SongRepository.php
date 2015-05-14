@@ -5,6 +5,8 @@ namespace Acme\BackendBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 
 /**
@@ -16,8 +18,11 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 class SongRepository extends EntityRepository
 {
 
-    public function getQuerySonglist($where = null)
+    public function getQuerySonglist($where = null, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT
@@ -115,7 +120,11 @@ class SongRepository extends EntityRepository
                         s.timeRankTime, s.timeUploadDateTime, m.strShortName
                     ORDER BY upload_time DESC
                     "
-            );
+            )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
+            ;
     }
 
     public function getArrRankingByTermNo($intTermNo, $intZone)

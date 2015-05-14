@@ -3,6 +3,8 @@
 namespace Acme\FrontendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Predis\Client;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
 
 /**
  * OtherInfoRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class OtherInfoRepository extends EntityRepository
 {
-    public function getArrFrontendInfo()
+    public function getArrFrontendInfo($cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT o
@@ -21,6 +26,9 @@ class OtherInfoRepository extends EntityRepository
                     AcmeFrontendBundle:OtherInfo o
                     '
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult()[0];
     }
 }

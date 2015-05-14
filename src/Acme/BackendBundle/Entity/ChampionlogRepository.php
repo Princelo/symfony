@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * ChampionlogRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ChampionlogRepository extends EntityRepository
 {
-    public function getArrChampionlog($intZone, $intLimit)
+    public function getArrChampionlog($intZone, $intLimit, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT
@@ -29,6 +34,9 @@ class ChampionlogRepository extends EntityRepository
                 WHERE c.intZone = {$intZone}"
             )
             ->setMaxResults($intLimit)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 }

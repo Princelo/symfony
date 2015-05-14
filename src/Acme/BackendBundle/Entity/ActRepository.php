@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * ActRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ActRepository extends EntityRepository
 {
-    public function getQueryActList($strWhere = null)
+    public function getQueryActList($strWhere = null, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "
@@ -31,11 +36,17 @@ class ActRepository extends EntityRepository
                 WHERE 1 = 1
                     {$strWhere}
             "
-            );
+            )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime);
     }
 
-    public function getArrActList($intCount, $strOrderField, $strOrderType)
+    public function getArrActList($intCount, $strOrderField, $strOrderType, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "
@@ -51,6 +62,9 @@ class ActRepository extends EntityRepository
             "
             )
             ->setMaxResults($intCount)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
 
     }

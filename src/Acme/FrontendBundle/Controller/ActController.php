@@ -21,11 +21,11 @@ class ActController extends CustomerController
         $request = $this->getRequest();
         $objORM = $this->getDoctrine()->getManager();
         $arrActList = $objORM->getRepository('AcmeBackendBundle:Act')
-            ->getArrActList(100, 'timeUploadDateTime', 'DESC');
+            ->getArrActList(100, 'timeUploadDateTime', 'DESC', 600);
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo();
+            ->getArrFrontendInfo(600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7);
+            ->getArrCoopList(7, 600);
         $response = $this->render('AcmeFrontendBundle:Act:list.html.twig',
             array(
                 'otherinfo' => $arrFrontendInfo,

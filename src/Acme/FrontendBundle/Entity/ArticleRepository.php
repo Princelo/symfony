@@ -3,6 +3,8 @@
 namespace Acme\FrontendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * ArticleRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getArrArticleList($intCategory, $intLimit, $strOrderBy, $strOrderType)
+    public function getArrArticleList($intCategory, $intLimit, $strOrderBy, $strOrderType, $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT a.id id,
@@ -28,11 +33,17 @@ class ArticleRepository extends EntityRepository
                 "
             )
             ->setMaxResults($intLimit)
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getResult();
     }
 
-    public function getQueryArticleList($intCategory, $strWhere = "")
+    public function getQueryArticleList($intCategory, $strWhere = "", $cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             "
@@ -47,7 +58,10 @@ class ArticleRepository extends EntityRepository
                 {$strWhere}
                 ORDER BY a.timeCreateTime DESC
             "
-            );
+            )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime);
     }
 
 }

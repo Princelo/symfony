@@ -3,6 +3,8 @@
 namespace Acme\BackendBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
 
 /**
  * BasicRepository
@@ -12,8 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class BasicRepository extends EntityRepository
 {
-    public function getRankWeekDay()
+    public function getRankWeekDay($cache_time = 0)
     {
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+        $cache_lifetime = $cache_time;
         return $this->getEntityManager()
             ->createQuery(
             'SELECT b.intWeekDay
@@ -21,6 +26,9 @@ class BasicRepository extends EntityRepository
                 AcmeBackendBundle:Basic b
                 WHERE b.id = 1'
             )
+            ->setResultCacheDriver($predis)
+            # set cache lifetime
+            ->setResultCacheLifetime($cache_lifetime)
             ->getSingleScalarResult();
     }
 }
