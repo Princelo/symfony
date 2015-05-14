@@ -17,10 +17,10 @@ _ajax:
     resource: "@AcmeBackendBundle/Controller/AjaxController.php"
     type:     annotation
 
-_demo:
-    resource: "@AcmeDemoBundle/Controller/DemoController.php"
-    type:     annotation
-    prefix:   /demo
+#_demo:
+#    resource: "@AcmeDemoBundle/Controller/DemoController.php"
+#    type:     annotation
+#    prefix:   /demo
 
 _frontend:
     resource: "@AcmeFrontendBundle/Controller/DefaultController.php"

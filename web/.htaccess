@@ -18,8 +18,8 @@ AddType audio/x-wav .wav
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !^.*\.(gif|jpg|jpeg|png|swf|js|html|htm)$
     # Change below before deploying to production
-    #RewriteRule ^(.*)$ /app.php [QSA,L]
-    RewriteRule ^(.*)$ /app_dev.php [QSA,L]
+    RewriteRule ^(.*)$ /app.php [QSA,L]
+    #RewriteRule ^(.*)$ /app_dev.php [QSA,L]
 </IfModule>
 <IfModule mod_xsendfile.c>
     XSendFile On
