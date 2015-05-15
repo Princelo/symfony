@@ -16,32 +16,37 @@ class RankLogRepository extends EntityRepository
 {
     public function getIntCountRanked($cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             'SELECT COUNT(l.id) - 1 FROM AcmeBackendBundle:RankLog l'
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getSingleScalarResult();
+            );
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getSingleScalarResult();
     }
 
     public function getIntLatestTermNo($cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             "SELECT l.intTermNo FROM AcmeBackendBundle:RankLog l ORDER BY l.id DESC"
             )
-            ->setMaxResults(1)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getSingleScalarResult();
+            ->setMaxResults(1);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+
+        return $query->getSingleScalarResult();
     }
 }

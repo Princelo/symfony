@@ -16,19 +16,21 @@ class BasicRepository extends EntityRepository
 {
     public function getRankWeekDay($cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             'SELECT b.intWeekDay
                 FROM
                 AcmeBackendBundle:Basic b
                 WHERE b.id = 1'
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getSingleScalarResult();
+            );
+        if($cache_time) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getSingleScalarResult();
     }
 }

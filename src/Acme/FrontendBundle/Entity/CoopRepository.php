@@ -16,20 +16,22 @@ class CoopRepository extends EntityRepository
 {
     public function getArrCoopList($intLimit, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "SELECT c
                     FROM AcmeFrontendBundle:Coop c
                     ORDER BY c.intWeight DESC, c.timeUploadTime DESC
                 "
             )
-            ->setMaxResults($intLimit)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intLimit);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 }

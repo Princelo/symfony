@@ -17,10 +17,7 @@ class RankRepository extends EntityRepository
     public function getArrNewestRankList($intZone, $intCount, $intTermNo, $strWhere = '', $cache_time = 0)
     {
         $strTop = $intZone==0?"intTopRankPRC":"intTopRankHKTW";
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "SELECT s.strTitle title,
                         s.arrStrArtistName artists,
@@ -63,11 +60,16 @@ class RankRepository extends EntityRepository
                     ORDER BY r.intIndex ASC
                     "
             )
-            ->setMaxResults($intCount)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intCount);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 
     public function generateRank($arrIntTerm)

@@ -16,12 +16,9 @@ class ActRepository extends EntityRepository
 {
     public function getQueryActList($strWhere = null, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
-            "
+                "
                 SELECT a.id id,
                        a.intType type,
                        a.strTitle title,
@@ -36,18 +33,22 @@ class ActRepository extends EntityRepository
                 WHERE 1 = 1
                     {$strWhere}
             "
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime);
+            );
+        if($cache_time > 0)
+        {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query;
     }
 
     public function getArrActList($intCount, $strOrderField, $strOrderType, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             "
                 SELECT
@@ -61,11 +62,16 @@ class ActRepository extends EntityRepository
                 ORDER BY a.{$strOrderField} {$strOrderType}
             "
             )
-            ->setMaxResults($intCount)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intCount);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
 
     }
 }

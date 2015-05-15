@@ -16,19 +16,21 @@ class OtherInfoRepository extends EntityRepository
 {
     public function getArrFrontendInfo($cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT o
                     FROM
                     AcmeFrontendBundle:OtherInfo o
                     '
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult()[0];
+            );
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult()[0];
     }
 }

@@ -16,10 +16,7 @@ class ForecastRepository extends EntityRepository
 {
     public function getArrForecastlist($intCount, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "SELECT f.strContent content,
                         f.timeDateTime time,
@@ -32,10 +29,15 @@ class ForecastRepository extends EntityRepository
                     ORDER BY f.boolIsUp DESC, f.timeDateTime DESC
                     "
             )
-            ->setMaxResults($intCount)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intCount);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 }

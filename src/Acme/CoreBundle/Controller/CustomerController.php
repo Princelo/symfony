@@ -22,16 +22,16 @@ class CustomerController extends Controller implements InitializableControllerIn
         //get rank week day
         $objORM = $this->getDoctrine()->getManager();
         $intRankWeekDay = $objORM->getRepository('AcmeBackendBundle:Basic')
-            ->getRankWeekDay();
+            ->getRankWeekDay(60);
         //generate should_rank_log
         $timeNow = new \DateTime('now');
         $intWeek = date('w', $timeNow->getTimestamp());
         $floatShouldRank = $this->datediffInWeeks('5/17/2015', $timeNow->format('m/d/Y'));
         //get latest rank log
         $intCountRanked = $objORM->getRepository('AcmeBackendBundle:RankLog')
-            ->getIntCountRanked();
+            ->getIntCountRanked(60);
         $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
-            ->getIntLatestTermNo();
+            ->getIntLatestTermNo(60);
         $session = $request->getSession();
         $session->set('last_term_no', $intLatestTermNo);
         $session->set('current_term_no', $intLatestTermNo + 1);
@@ -43,8 +43,29 @@ class CustomerController extends Controller implements InitializableControllerIn
         //if should_rank_log's count > rank_log's count
         //generate rank
         if($floatShouldRank > $intCountRanked){
-            $this->generateRank($floatShouldRank - $intCountRanked, $intLatestTermNo);
-            $this->initialize($request);
+            $intRankWeekDay = $objORM->getRepository('AcmeBackendBundle:Basic')
+                ->getRankWeekDay(0);
+            //generate should_rank_log
+            $timeNow = new \DateTime('now');
+            $intWeek = date('w', $timeNow->getTimestamp());
+            $floatShouldRank = $this->datediffInWeeks('5/17/2015', $timeNow->format('m/d/Y'));
+            //get latest rank log
+            $intCountRanked = $objORM->getRepository('AcmeBackendBundle:RankLog')
+                ->getIntCountRanked(0);
+            $intLatestTermNo = $objORM->getRepository('AcmeBackendBundle:RankLog')
+                ->getIntLatestTermNo(0);
+            $session = $request->getSession();
+            $session->set('last_term_no', $intLatestTermNo);
+            $session->set('current_term_no', $intLatestTermNo + 1);
+            $session->set('rank_week_day', $intRankWeekDay);
+            $intNextRankTime = $this->getIntNextRankTime($intRankWeekDay);
+            $session->set('next_rank_time', $intNextRankTime);
+            if($intWeek >= $intRankWeekDay)
+                $floatShouldRank += 1;
+            if($floatShouldRank > $intCountRanked) {
+                $this->generateRank($floatShouldRank - $intCountRanked, $intLatestTermNo);
+                $this->initialize($request);
+            }
         }
 
     }

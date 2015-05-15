@@ -16,10 +16,7 @@ class ChampionlogRepository extends EntityRepository
 {
     public function getArrChampionlog($intZone, $intLimit, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "SELECT
                      s.strTitle title,
@@ -33,10 +30,15 @@ class ChampionlogRepository extends EntityRepository
                     WITH c.intMemberId = m.id
                 WHERE c.intZone = {$intZone}"
             )
-            ->setMaxResults($intLimit)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intLimit);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 }

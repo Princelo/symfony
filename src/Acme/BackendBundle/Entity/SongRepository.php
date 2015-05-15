@@ -20,10 +20,7 @@ class SongRepository extends EntityRepository
 
     public function getQuerySonglist($where = null, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "SELECT
                         s.id,
@@ -120,11 +117,16 @@ class SongRepository extends EntityRepository
                         s.timeRankTime, s.timeUploadDateTime, m.strShortName
                     ORDER BY upload_time DESC
                     "
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ;
+            );
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query;
     }
 
     public function getArrRankingByTermNo($intTermNo, $intZone)

@@ -21,10 +21,7 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
 {
     public function getArrMemberList($intType, $intLimit, $strOrderBy, $strOrderType, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "SELECT m
                     FROM
@@ -33,11 +30,16 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                     ORDER BY m.{$strOrderBy} {$strOrderType}
                     "
             )
-            ->setMaxResults($intLimit)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intLimit);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 
     public function loadUserByUsername($username)
@@ -112,10 +114,7 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
 
     public function getArrFMList($intCount, $strOrderField, $strOrderType, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             "
                 SELECT m.strShortName fm_name,
@@ -128,19 +127,21 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                 ORDER BY m.{$strOrderField} {$strOrderType}
             "
             )
-            ->setMaxResults($intCount)
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            ->setMaxResults($intCount);
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 
     public function getArrFMFullName($strOrderField, $strOrderType, $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
                 "
                     SELECT m.strFullName fm_name,
@@ -152,19 +153,21 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                     m.boolIsValid = TRUE
                 ORDER BY m.{$strOrderField} {$strOrderType}
             "
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            );
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 
     public  function getArrFMDetailsList($strWhere = " AND m.boolIsValid = TRUE ", $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             "
                  SELECT
@@ -334,19 +337,21 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                     m.intBusyWeekDayFrom4, m.intBusyWeekDayTo4, m.boolBusyTimeTo4Tomorrow, m.strBusyTimeFrom4, m.strBusyTimeTo4,
                     m.intBusyWeekDayFrom5, m.intBusyWeekDayTo5, m.boolBusyTimeTo5Tomorrow, m.strBusyTimeFrom5, m.strBusyTimeTo5
             "
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            );
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 
     public function getArrCorpDetailsList($strWhere = " AND m.boolIsValid = TRUE ", $cache_time = 0)
     {
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-        $cache_lifetime = $cache_time;
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             "
               SELECT
@@ -378,10 +383,15 @@ class MemberRepository extends EntityRepository implements UserProviderInterface
                 WHERE m.intType = ".Constant::CORP."
                 {$strWhere}
             "
-            )
-            ->setResultCacheDriver($predis)
-            # set cache lifetime
-            ->setResultCacheLifetime($cache_lifetime)
-            ->getResult();
+            );
+        if($cache_time > 0) {
+            $predis = new RedisCache();
+            $predis->setRedis(new Client());
+            $cache_lifetime = $cache_time;
+            $query
+                ->setResultCacheDriver($predis)
+                ->setResultCacheLifetime($cache_lifetime);
+        }
+        return $query->getResult();
     }
 }
