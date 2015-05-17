@@ -145,7 +145,7 @@ class VotelogRepository extends EntityRepository
             ->createQuery(
             "
                 SELECT
-                    s.id id,
+                    v.intSongId id,
                     s.strTitle title,
                     s.arrStrArtistName artists,
                     s.strCorpName corp,
