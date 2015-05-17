@@ -133,7 +133,7 @@
                             <span class="change">{{ s.rank_index - s.last_index }}</span>
                             <span class="score">{{ s.score }}</span>
                     <span class="play">
-                        <a href="javascript:;" onclick="play('{{ r.file | md5 }}{{ r.id }}', {{ r.id }})" class="play-btn"></a>
+                        <a href="javascript:;" onclick="play('{{ s.file | md5 }}{{ s.id }}', {{ s.id }})" class="play-btn"></a>
                     </span>
                         </li>
                     {% endfor %}
