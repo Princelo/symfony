@@ -48,8 +48,6 @@ class AjaxController extends Controller
         $city = new City();
         echo json_encode($city->getArrCity());
         $response = new Response();
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->send();
         return $response;
     }
 } 

@@ -83,7 +83,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            var player = '<audio src="{{ app.url }}/app.php/play/'+token+'" preload="auto" />';
             $('#play-bar').show();
             $('#play-bar').append(player);
             audiojs.events.ready(function() {

@@ -48,7 +48,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            var player = '<audio src="{{ app.url }}/app.php/play/'+token+'" preload="auto" />';
             $('#songid' + id).append(player);
             audiojs.events.ready(function() {
                 var as = audiojs.createAll();
@@ -151,7 +151,7 @@
                     {% endif %}
                 </td>
                 <td id="songid{{ item.id }}">
-                    <a href="{{ app.url }}/app_dev.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self" class="btn btn-primary">下载歌曲</a><br>
+                    <a href="{{ app.url }}/app.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self" class="btn btn-primary">下载歌曲</a><br>
                     <a style="display:none;" href="javascript:;" onclick="play('{{ item.file | md5 }}{{ item.id }}', {{ item.id }})" >PLAY</a>
                 </td>
                 <td>

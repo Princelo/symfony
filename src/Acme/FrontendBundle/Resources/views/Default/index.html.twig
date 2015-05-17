@@ -160,7 +160,7 @@
                     {% for c in champion_log_prc %}
                     <li>
                         <span class="voter">{{ c.voter }}</span>
-                        <span class="time" title="{{ c.time|date("Y-m-d H:i:s") }}">{# time_diff(c.time) #}</span>
+                        <span class="time" title="{{ c.time|date("Y-m-d H:i:s") }}">{{  time_diff(c.time) }}</span>
                         将冠军投给
                         <span class="artist">
                             {% for a in c.artists %}
@@ -182,7 +182,7 @@
                     {% for c in champion_log_hktw %}
                         <li>
                             <span class="voter">{{ c.voter }}</span><br />
-                            <span class="time" title="{{ c.time|date("Y-m-d H:i:s") }}">{# time_diff(c.time) #}</span>
+                            <span class="time" title="{{ c.time|date("Y-m-d H:i:s") }}">{{  time_diff(c.time) }}</span>
                             将冠军投给<br />
                         <span class="artist">
                             {% for a in c.artists %}
@@ -359,7 +359,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="{{ app.url }}/app_dev.php/play/'+token+'" preload="auto" />';
+            var player = '<audio src="{{ app.url }}/app.php/play/'+token+'" preload="auto" />';
             $('#play-bar').show();
             $('#play-bar').append(player);
             audiojs.events.ready(function() {

@@ -14,7 +14,6 @@
     <script src="{{ asset('bundles/acmefrontend/js/slider.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/audio.min.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/slides.min.jquery.js') }}"></script>
-    <script src="{{ asset('bundles/acmefrontend/js/jquery.timeago.js') }}"></script>
 {% endblock %}
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/flash.css') }}"/>
@@ -56,7 +55,7 @@
     $(".timepicker").keydown(false);
     $.verify.addRules({
         uniqueemail: function(r) {
-            var ajax = $.ajax({url:"{{ app.url }}/ajax/check_unique_email/" + r.val().trim(), async:false});
+            var ajax = $.ajax({url:"{{ path('check_unique_email') }}" + r.val().trim(), async:false});
             var data = ajax.responseText;
             if(data == 'false'){
                 return '此帐号已被占用';
@@ -265,7 +264,6 @@
         'timeFormat': 'H:i',
         'step' : 10
     });
-        $('.time').timeago();
 });
 </script>
 <style>
