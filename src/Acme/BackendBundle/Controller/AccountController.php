@@ -100,7 +100,7 @@ class AccountController extends CustomerController
         if($session->get('temp_corp_step') != 1
           || $session->get('temp_corp_id') == ""
         )
-            return $this->redirect('my404');
+            return $this->redirect('register_corp');
         $type = new CorpRegistrationType();
         $id = $session->get('temp_corp_id');
         $registration = new CorpRegistration();
@@ -175,7 +175,7 @@ class AccountController extends CustomerController
         if( $session->get('temp_corp_step') != 2
             || $session->get('temp_corp_id') == ""
         )
-            return $this->redirect('my404');
+            return $this->redirect('register_corp');
         $type = new CorpRegistrationType();
         $registration = new CorpRegistration();
         $type->setStep(2);
@@ -250,7 +250,7 @@ class AccountController extends CustomerController
     {
         $session = $request->getSession();
         if($session->get('temp_corp_step') != 3)
-            return $this->redirect('my404');
+            return $this->redirect('register_corp');
         $objORM = $this->getDoctrine()->getManager();
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
@@ -332,7 +332,7 @@ class AccountController extends CustomerController
         if($session->get('temp_fm_step') != 1
             || $session->get('temp_fm_id') == ""
         )
-            return $this->redirect('my404');
+            return $this->redirect('register_fm');
         $type = new FMRegistrationType();
         $id = $session->get('temp_fm_id');
         $fm = $this->getDoctrine()->getRepository('AcmeBackendBundle:FM')->find($id);
@@ -392,7 +392,7 @@ class AccountController extends CustomerController
         if( $session->get('temp_fm_step') != 2
             || $session->get('temp_fm_id') == ""
         )
-            return $this->redirect('my404');
+            return $this->redirect('register_fm');
         $type = new FMRegistrationType();
         $id = $session->get('temp_fm_id');
         $fm = $this->getDoctrine()->getRepository('AcmeBackendBundle:FM')->find($id);
@@ -461,7 +461,7 @@ class AccountController extends CustomerController
     {
         $session = $request->getSession();
         if($session->get('temp_fm_step') != 3)
-            return $this->redirect('my404');
+            return $this->redirect('register_fm');
         $objORM = $this->getDoctrine()->getManager();
         $objFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo();
