@@ -14,6 +14,9 @@ class CoopType extends AbstractType
     {
         $builder->add('strTitle', 'text', array(
             'label' => "标题",
+            'attr' => array(
+                'maxlength' => '20',
+            ),
         ));
         $builder->add('strThumb', 'file', array(
             'label' => '缩略图',
@@ -21,9 +24,15 @@ class CoopType extends AbstractType
         ));
         $builder->add('strLink', 'text', array(
             'label' => "链接",
+            'attr' => array(
+                'maxlength' => '200',
+            ),
         ));
         $builder->add('intWeight', 'text', array(
             'label' => "排序权重",
+            'attr' => array(
+                'maxlength' => '5',
+            ),
         ));
         $builder->add('提交', 'submit', array(
         ));

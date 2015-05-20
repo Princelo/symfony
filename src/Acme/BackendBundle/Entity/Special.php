@@ -25,7 +25,7 @@ class Special
      */
     protected $songs;
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      */
     protected $strTitle;
     /**
@@ -33,11 +33,11 @@ class Special
      */
     protected $arrStrArtistName;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=255)
      */
     protected $strReleaseDate;
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      */
     protected $strCorpName;
     /**

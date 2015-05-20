@@ -11,9 +11,15 @@ class AdminType extends AbstractType
     {
         $builder->add('strShortName', 'text', array(
             'label' => '显示名称',
+            'attr' => array(
+                'maxlength' => '10'
+            ),
         ));
         $builder->add('strTel', 'text', array(
             'label' => '联系电话',
+            'attr' => array(
+                'maxlength' => '15'
+            ),
         ));
         $builder->add('完成', 'submit');
     }

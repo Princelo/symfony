@@ -16,7 +16,9 @@ class FlashType extends AbstractType
         $choice = new Choice();
         $builder->add('strImg', 'file', array('label'=>'图片',
             'data_class' => null));
-        $builder->add('strLink', 'text', array('label'=>'LINK'));
+        $builder->add('strLink', 'text', array('label'=>'LINK',
+            'maxlength' => '200',
+            ));
         $builder->add('boolIsNewTab', 'checkbox', array('label'=>'是否跳转新页'));
         $builder->add('intCategory', 'choice', array(
             'choices' => $choice->getFlashCategories(),

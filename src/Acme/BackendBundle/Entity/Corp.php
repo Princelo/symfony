@@ -48,12 +48,12 @@ class Corp implements UserInterface, \Serializable
     public $isAcceptAuth;
 
     /**
-     * @ORM\Column(type="string",length=50, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      * @Assert\NotBlank(message="公司全称必填", groups={"corp_registration_step_two"})
      */
     public $strFullName;
     /**
-     * @ORM\Column(type="string",length=50, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      * @Assert\NotBlank(message="公司简称必填", groups={"corp_registration_step_two"})
      */
     public $strShortName;
@@ -90,11 +90,11 @@ class Corp implements UserInterface, \Serializable
      */
     public $strIntro;
     /**
-     * @ORM\Column(type="string",length=50, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      */
     public $strUserName;
     /**
-     * @ORM\Column(type="string",length=30, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      * @Assert\NotBlank(message="艺名必填", groups={"corp_registration_step_three"})
      */
     public $strUserNickName;

@@ -19,7 +19,8 @@ class SongType extends AbstractType
         $choice = new Choice();
         $builder->add('strTitle', 'text', array('label'=>'歌曲名称',
             'attr'=>array(
-                'data-validate'=>'required'
+                'data-validate'=>'required',
+                'maxlength' => '30',
             )));
         $builder->add('arrStrArtistName', 'collection',
             array(
@@ -27,19 +28,30 @@ class SongType extends AbstractType
                 'allow_add'    => true,
                 'label' => false,
             ));
-        $builder->add('strSpecial', 'text', array('label'=>'专辑名称'));
-        $builder->add('strLyricist', 'text', array('label'=>'作詞人'));
-        $builder->add('strComposer', 'text', array('label'=>'作曲人'));
+        $builder->add('strSpecial', 'text', array('label'=>'专辑名称',
+            'attr' => array(
+                'maxlength' => '30'
+            )));
+        $builder->add('strLyricist', 'text', array('label'=>'作詞人',
+            'attr'=>array(
+                'maxlength' => '10'
+            )));
+        $builder->add('strComposer', 'text', array('label'=>'作曲人',
+            'attr'=>array(
+                'maxlength' => '10'
+            )));
         if(!$this->boolIsEdit)
             $builder->add('strCorpName', 'text', array('label'=>'所属公司',
             'data'=>$this->strCompany,
             'attr'=>array(
-                'data-validation'=>'required'
+                'data-validation'=>'required',
+                'maxlength' => '10'
             )));
         else
             $builder->add('strCorpName', 'text', array('label'=>'所属公司',
                 'attr'=>array(
-                    'data-validation'=>'required'
+                    'data-validation'=>'required',
+                    'maxlength' => '10'
                 )));
         $builder->add('boolIsRank', 'checkbox', array('label'=>'是否打榜'));
         $builder->add('timeRankTimeFrom', 'date', array('label'=>false,
@@ -84,15 +96,18 @@ class SongType extends AbstractType
         }
         $builder->add('strOtherLink1', 'text', array('label'=>false,
             'attr'=>array(
-                'data-validate'=>'url'
+                'data-validate'=>'url',
+                'maxlegnth' => '200'
             )));
         $builder->add('strOtherLink2', 'text', array('label'=>false,
             'attr'=>array(
-                'data-validate'=>'url'
+                'data-validate'=>'url',
+                'maxlegnth' => '200'
             )));
         $builder->add('strOtherLink3', 'text', array('label'=>false,
             'attr'=>array(
-                'data-validate'=>'url'
+                'data-validate'=>'url',
+                'maxlegnth' => '200'
             )));
         if(!$this->boolIsEdit)
             $builder->add('请上传歌曲...', 'submit', array(

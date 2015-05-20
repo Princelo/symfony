@@ -58,8 +58,13 @@ class FMType extends AbstractType
                 'data_class'=>null,
                 'required'=>false));
             $builder->add('strFullName', 'text', array('label'=>'电台公司全称',
-                'attr'=>array('data-validate'=>'required')));
-            $builder->add('strShortName',  'text', array('label'=>'公司简称', 'attr'=>array('data-validate'=>'required')));
+                'attr'=>array('data-validate'=>'required',
+                    'maxlegnth' => '20',
+                    )));
+            $builder->add('strShortName',  'text', array('label'=>'公司简称',
+                'attr'=>array('data-validate'=>'required',
+                    'maxlength'=>'20',
+                    )));
             $builder->add('intLevel', 'choice', array('label'=>'电台等级',
                 'attr'=>array('data-validate'=>'required'),
                 'choices'=>$this->Choice->getLevellist()));
@@ -81,16 +86,27 @@ class FMType extends AbstractType
                         'class'=>'citySelect'),
                     'choices'=>$this->getAllCities(),)
             );
-            $builder->add('strAddressInfo',  'text', array('label'=>false, 'attr'=>array('data-validate'=>'required')));
+            $builder->add('strAddressInfo',  'text', array('label'=>false, 'attr'=>array('data-validate'=>'required',
+                'maxlength' => '50'
+                )));
             $builder->add('strFMFactor',  'text', array('label'=>'电台功率'));
-            $builder->add('strSite',  'text', array('label'=>'官方网站'));
+            $builder->add('strSite',  'text', array('label'=>'官方网站',
+                'attr' => array(
+                    'maxlength' => '200',
+                ),
+                ));
             $builder->add('strFMFoundTime',  'text', array('label'=>'电台创建时间',
                 'attr'=>array('data-validate'=>'required,mydate',
                     'class'=>'datepicker founddate')));
-            $builder->add('strFMCoverPopular',  'text', array('label'=>'电台覆盖人口'));
-            $builder->add('strFMJoinAct',  'text', array('label'=>'电台加盟节目', 'attr'=>array('data-validate'=>'required')));
+            $builder->add('strFMCoverPopular',  'text', array('label'=>'电台覆盖人口',
+                'attr' => array(
+                    'maxlength' => '20',
+                ),
+                ));
+            $builder->add('strFMJoinAct',  'text', array('label'=>'电台加盟节目', 'attr'=>array('data-validate'=>'required',
+                'maxlength' => '30',)));
             $builder->add('boolIsOneRank',  'checkbox', array('label'=>'是否为唯一含榜单节目'));
-            $builder->add('intCastType', 'choice', array('label'=>'是否播出XX榜成品节目',
+            $builder->add('intCastType', 'choice', array('label'=>'是否播出热歌风云榜成品节目',
                 'attr'=>array('data-validate'=>'required'),
                 'choices'=>$this->Choice->getCastTypelist()));
             $builder->add('intCastWeekDay', 'choice', array('label'=>false,
@@ -111,16 +127,26 @@ class FMType extends AbstractType
         if($this->step==2){
             $builder->add('strAvatar', 'file', array('label'=>false,
                 'data_class'=>null));
-            $builder->add('strUserName', 'text', array('label'=>'主持人姓名'));
+            $builder->add('strUserName', 'text', array('label'=>'主持人姓名',
+                'attr' => array(
+                    'maxlength' => '10',
+                ),
+                ));
             $builder->add('strUserNickName', 'text', array('label'=>'主持人艺名',
-                'attr'=>array('data-validate'=>'required')));
+                'attr'=>array('data-validate'=>'required',
+                    'maxlength' => '15',)));
             $builder->add('intUserGender', 'choice', array('label'=>'性别',
                 'choices'=>$this->Choice->getGenderlist()));
             $builder->add('strSeniority', 'text', array('label'=>'从事主持人时间',
                 'attr'=>array('data-validate'=>'required')));
-            $builder->add('strUserCitizenId', 'text', array('label'=>'身份证号'));
+            $builder->add('strUserCitizenId', 'text', array('label'=>'身份证号',
+                'attr' => array(
+                    'maxlength' => '20',
+                ),
+                ));
             $builder->add('strUserMobile', 'text', array('label'=>'移动电话',
-                'attr'=>array('data-validate'=>'required')));
+                'attr'=>array('data-validate'=>'required',
+                    'maxlength' => '20',)));
             $builder->add('intBusyWeekDayFrom1', 'choice', array('label'=>false,
                 'choices'=>$this->Choice->getWeeklist()));
             $builder->add('intBusyWeekDayTo1', 'choice', array('label'=>false,
@@ -186,8 +212,16 @@ class FMType extends AbstractType
             $builder->add('boolBusyTimeTo5Tomorrow', 'checkbox', array('label'=>false,
                 'attr'=>array('data-validate'=>'',
                     'class'=>'busy_time_to_5_tomorrow')));
-            $builder->add('strUserTel', 'text', array('label'=>'固定电话'));
-            $builder->add('strUserQQ', 'text', array('label'=>'常用QQ'));
+            $builder->add('strUserTel', 'text', array('label'=>'固定电话',
+                'attr' => array(
+                    'maxlength' => '15',
+                ),
+                ));
+            $builder->add('strUserQQ', 'text', array('label'=>'常用QQ',
+                'attr' => array(
+                    'maxlength' => '15',
+                ),
+                ));
         }
         if($this->step!=2)
             $builder->add('下一步', 'submit', array('label'=>false,

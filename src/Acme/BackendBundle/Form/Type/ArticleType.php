@@ -51,6 +51,9 @@ class ArticleType extends AbstractType
         ));
         $builder->add('strTitle', 'text', array(
             'label' => "文章标题",
+            'attr' => array(
+                'maxlength' => '20',
+            ),
         ));
         $builder->add('strThumb', 'file', array(
             'label' => '缩略图',
@@ -58,6 +61,9 @@ class ArticleType extends AbstractType
         ));
         $builder->add('textSummary', 'textarea', array(
             'label' => '文章摘要',
+            'attr' => array(
+                'maxlength' => '250',
+            ),
         ));
         $builder->add('textContent', 'ckeditor', array(
             'label' => '文章內容',

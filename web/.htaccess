@@ -8,8 +8,8 @@ AddType audio/x-wav .wav
     RewriteEngine On
 
     # Explicitly disable rewriting for front controllers
-    RewriteRule ^/app_dev.php - [L]
-    RewriteRule ^/app.php - [L]
+    #RewriteRule ^/app_dev.php - [L]
+    #RewriteRule ^/app.php - [L]
 
     # Fix the bundles folder
     #RewriteRule ^bundles/(.*)$ /bundles/$1  [QSA,L]

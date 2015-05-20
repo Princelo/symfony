@@ -13,7 +13,11 @@ class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('strContent', 'textarea', array('label'=>'点评内容'));
+        $builder->add('strContent', 'textarea', array('label'=>'点评内容',
+            'attr' => array(
+                'maxlegnth' => '200'
+            ))
+        );
         $builder->add('提交', 'submit', array(
             ));
     }

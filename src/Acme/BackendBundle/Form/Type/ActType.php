@@ -24,12 +24,14 @@ class ActType extends AbstractType
             )));
         $builder->add('strTitle', 'text', array('label'=>'节目名称',
             'attr'=>array(
-                'data-validate'=>'required'
+                'data-validate'=>'required',
+                'maxlegnth' => '30'
             )));
         $builder->add('strIntro', 'text', array('label'=>'节目介绍'));
         $builder->add('strOtherLink', 'text', array('label'=>'外部链接',
             'attr' => array(
-                'class' => 'otherlink'
+                'class' => 'otherlink',
+                'maxlegnth' => '200'
             )
         ));
 

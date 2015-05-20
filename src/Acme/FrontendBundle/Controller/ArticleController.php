@@ -116,7 +116,7 @@ class ArticleController extends CustomerController
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo(600);
         $queryActlist = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getQueryArticleList($category_id, 600);
+            ->getQueryArticleList($category_id, '', 600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7, 600);
         switch($category_id)
@@ -185,7 +185,7 @@ class ArticleController extends CustomerController
         $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
             ->getArrFrontendInfo(600);
         $queryActlist = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getQueryArticleList($category_id, 600);
+            ->getQueryArticleList($category_id, '', 600);
         $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
             ->getArrCoopList(7, 600);
         switch($category_id)

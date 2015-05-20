@@ -171,6 +171,7 @@ class CustomerController extends Controller implements InitializableControllerIn
             }
             $objORM->flush();
         }
+        opcache_reset();
     }
 
 
