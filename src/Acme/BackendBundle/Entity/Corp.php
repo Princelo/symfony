@@ -73,7 +73,7 @@ class Corp implements UserInterface, \Serializable
      */
     public $strAddressInfo;
     /**
-     * @ORM\Column(type="string",length=10, nullable=true)
+     * @ORM\Column(type="string",length=20, nullable=true)
      */
     public $strZipCode;
     /**
