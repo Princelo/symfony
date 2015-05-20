@@ -51,10 +51,10 @@ class CorpType extends AbstractType
                 ));
                 $builder->add('password', 'repeated', array(
                     'first_options'  => array('label'=>'登录密码',
-                        'attr' => array('data-validate'=>"required"),
+                        'attr' => array('data-validate'=>"required,mypassword"),
                     ),
                     'second_options' => array('label'=>'确认登录密码',
-                        'attr' => array('data-validate'=>"required"),
+                        'attr' => array('data-validate'=>"required,myconfirm"),
                     ),
                     'type'        => 'password',
                 ));
