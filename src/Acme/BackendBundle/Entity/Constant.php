@@ -25,7 +25,7 @@ class Constant {
     const LEVELCP = 4;
     const LEVELAP = 5;
     const CASTTYPE0   =  '播出，且不剪广告';
-    const CASTTYPE1   =  '播出，不剪广告，还只播出xx搒';
+    const CASTTYPE1   =  '播出，不剪广告，还只播出热歌风云搒';
     const CASTTYPE2   =  '播出，但会剪广告';
     const CASTTYPE3   =  '不播出，只投票无播出机会';
     const CASTTYPE4   =  '不播出，先投票可考虑以后播出';

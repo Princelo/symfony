@@ -90,7 +90,7 @@ class EditFMType extends AbstractType
                     'maxlength'=>'30',
                     )));
             $builder->add('boolIsOneRank',  'checkbox', array('label'=>'是否为唯一含榜单节目'));
-            $builder->add('intCastType', 'choice', array('label'=>'是否播出XX榜成品节目',
+            $builder->add('intCastType', 'choice', array('label'=>'是否播出热歌风云榜成品节目',
                 'attr'=>array('data-validate'=>'required'),
                 'choices'=>$this->Choice->getCastTypelist()));
             $builder->add('intCastWeekDay', 'choice', array('label'=>false,
