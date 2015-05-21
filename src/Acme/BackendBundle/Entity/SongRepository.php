@@ -231,6 +231,23 @@ class SongRepository extends EntityRepository
                     Song s
                 WHERE
                     s.intRankZone = {$intZone}
+                    AND
+                      s.boolIsRank = TRUE
+                    AND (
+                            (
+                                (
+                                    now() BETWEEN s.timeRankTimeFrom AND s.timeRankTimeTo
+                                )
+                            AND s.timeRankTimeFrom IS NOT NULL
+                            AND s.timeRankTimeTo IS NOT NULL
+                    )OR(
+                            (
+                                now() BETWEEN s.timeRankTime AND (s.timeRankTime + interval '60 days')
+                            )
+                            AND s.timeRankTimeFrom IS NULL
+                            AND s.timeRankTimeTo IS NULL
+                        )
+                    )
                 GROUP BY s.id
             ",
             $rsm
