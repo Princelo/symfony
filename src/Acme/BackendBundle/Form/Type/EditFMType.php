@@ -75,7 +75,7 @@ class EditFMType extends AbstractType
                     )));
             $builder->add('strFMFactor',  'text', array('label'=>'电台功率'));
             $builder->add('strSite',  'text', array('label'=>'官方网站',
-                'maxlength' => '30',
+                'attr'=>array('maxlength' => '30'),
                 ));
             $builder->add('strFMFoundTime',  'text', array('label'=>'电台创建时间',
                 'attr'=>array('data-validate'=>'required,mydate',
