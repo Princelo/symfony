@@ -359,9 +359,10 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="autoplay" />';
+            var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="" />';
             $('#play-bar').show();
             $('#play-bar').append(player);
+            $(player).attr('autoplay','autoplay');
             audiojs.events.ready(function() {
                 var as = audiojs.createAll();
             });
