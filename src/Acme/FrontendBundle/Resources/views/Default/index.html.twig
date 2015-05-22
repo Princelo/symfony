@@ -362,7 +362,7 @@
             var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="autoplay" />';
             //$('#play-bar').show();
             document.getElementById('play-bar').style.display = 'block';
-            document.getElementById('play-bar').innerHTML = player;
+            document.getElementById('play-bar').innerHTML += player;
             //$('#play-bar').append(player);
             audiojs.events.ready(function() {
                 var as = audiojs.createAll();
