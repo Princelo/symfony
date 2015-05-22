@@ -380,6 +380,22 @@ class DefaultController extends CustomerController
     }
 
     /**
+     * @param $id
+     * @return Response
+     * @Route("/download_song_appendix/{id}", name="_unvadmin_download_song_appendix")
+     */
+    public function downloadSongAppendix($id)
+    {
+        $this->init();
+        $song_appendix = $this->getDoctrine()->getManager()->getRepository('AcmeBackendBundle:Song')->find($id);
+        return $this->render('AcmeBackendBundle:Default:song_download_appendix.html.twig',
+            array(
+                'menu' => $this->menu,
+                'appendix' => $song_appendix
+            ));
+    }
+
+    /**
      * @param $type
      * @param $id
      * @return Response
@@ -392,6 +408,7 @@ class DefaultController extends CustomerController
                 return $this->getSongDownloadResponse($id);
             break;
             default:
+                return $this->getSongAppendixDownloadResponse($id, $type);
             break;
         }
 
@@ -412,10 +429,68 @@ class DefaultController extends CustomerController
             ->create('../web/uploads/gallery/'.$song->getStrSongFile(), 'application/octet-stream', $options);
     }
 
+    protected function getSongAppendixDownloadResponse($id, $type)
+    {
+        $objORM = $this->getDoctrine()->getManager();
+        $song =
+            $objORM->getRepository('AcmeBackendBundle:Song')->find($id);
+        switch($type)
+        {
+            case 'auth':
+                $type_name = ' - 授权书';
+                $path = 'song_auth';
+                $file = $song->getStrAuthFile();
+                break;
+            case 'lyric':
+                $type_name = ' - 歌词';
+                $path = 'song_lyric';
+                $file = $song->getStrLyricFile();
+                break;
+            case 'cover':
+                $type_name = ' - 封面';
+                $path = 'song_cover';
+                $file = $song->getStrCoverFile();
+                break;
+            case 'pro':
+                $type_name = ' - 宣传文案';
+                $path = 'song_pro';
+                $file = $song->getStrPromotionFile();
+                break;
+            default:
+                $type_name = '';
+                $path = 'gallery';
+                $file = $song->getStrSongFile();
+                break;
+        }
+        $options = array(
+            'serve_filename' => $song->getStrTitle().$type_name.".".pathinfo($file, PATHINFO_EXTENSION),
+            'absolute_path' => false,
+            'inline' => false,
+        );
+        return $this->get('igorw_file_serve.response_factory')
+            ->create("../web/uploads/{$path}/".$file, 'application/octet-stream', $options);
+    }
+
     public function fileHandleUploadFileWithoutType($form, $strField, $strDir)
     {
         $fileOri = $form[$strField]->getData();
         if($fileOri=="" || $fileOri == null)
+            return "";
+        $extension = $fileOri->guessExtension();
+        if (!$extension) {
+            $extension = 'bin';
+        }
+        $file = date('YmdHis').rand(1000, 9999).'.'.$extension;
+        $fileOri->move($strDir, $file);
+        @unlink($fileOri);
+        return $file;
+    }
+
+    public function fileHandleUploadFile($form, $type, $strField, $strDir)
+    {
+        //$fileOri = $form->getData()->getMember()[$strField]->getData();
+        $fileOri = $form[$type][$strField]->getData();
+        if($fileOri=="")
             return "";
         $extension = $fileOri->guessExtension();
         if (!$extension) {

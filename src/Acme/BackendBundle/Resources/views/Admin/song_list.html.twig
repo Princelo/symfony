@@ -104,6 +104,7 @@
                         <th>上传日期</th>
                         <th>打榜状态</th>
                         <th>下载</th>
+                        <th>下载附属文件</th>
                         <th>点评</th>
                         <th></th>
                         <th></th>
@@ -155,6 +156,9 @@
                             <td id="songid{{ item.id }}">
                                 <a href="{{ app.url }}/app.php{{ path('_unvadmin_download', {'type': 'song', 'id': item.id}) }}" target="_self" class="btn btn-primary">下载歌曲</a><br>
                                 <a style="display:none;" href="javascript:;" onclick="play('{{ item.file | md5 }}{{ item.id }}', {{ item.id }})" >PLAY</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('_unvadmin_download_song_appendix', {'id': item.id}) }}" target="_self" class="btn btn-primary">下载附属文件</a>
                             </td>
                             <td>
                                 <a href="javascript:;" onclick="openDialog({{ item.id }})" class="btn btn-primary">我要点评({{ item.comment_count }})</a>

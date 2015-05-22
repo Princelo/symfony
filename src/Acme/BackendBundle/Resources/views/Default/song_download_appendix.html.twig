@@ -1,0 +1,43 @@
+{% extends 'AcmeBackendBundle:Default:layout.html.twig' %}
+{% block body %}
+    <script src="http://medialoot.com/preview/lumino/js/bootstrap-table.js"></script>
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="">歌曲查询</li>
+        <li class="active">歌曲查询</li>
+    </ol>
+    <div class="col-lg-12">
+        <h1 class="page-header">歌曲查询</h1>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">歌曲查询</div>
+            <div class="panel-body" id="">
+                <div>
+                    {% if appendix.strAuthFile+appendix.strPromotionFile+appendix.strLyricFile+appendix.strCoverFile == '' %}
+                        <div class="myalert mybg-warning btn pull-left">
+                        对不起，本歌曲没有附属文件可供下载
+                        </div>
+                        {% else %}
+                        {% if appendix.strAuthFile != '' %}
+                            <a href="{{ path('_unvadmin_download', {'type': 'auth', id: appendix.id}) }}" class="btn btn-primary">授权书下载</a>
+                        {%  endif %}
+                        {% if appendix.strPromotionFile != '' %}
+                            <a href="{{ path('_unvadmin_download', {'type': 'pro', id: appendix.id}) }}" class="btn btn-primary">宣传文案下载</a>
+                        {% endif %}
+                        {% if appendix.strLyricFile != '' %}
+                            <a href="{{ path('_unvadmin_download', {'type': 'lyric', id: appendix.id}) }}" class="btn btn-primary">歌词文件下载</a>
+                        {% endif %}
+                        {% if appendix.strCoverFile != '' %}
+                            <a href="{{ path('_unvadmin_download', {'type': 'cover', id: appendix.id}) }}" class="btn btn-primary">歌曲封面下载</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .myalert.mybg-warning{background: #ffb53e;max-height: 30px !important; margin:0 !important;
+            color:#fff;line-height:30px !important; cursor: normal; padding:0px 12px;}
+    </style>
+{% endblock %}

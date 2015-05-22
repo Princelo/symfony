@@ -28,7 +28,8 @@ class ChampionlogRepository extends EntityRepository
                     WITH c.intSongId = s.id
                     JOIN AcmeBackendBundle:Member m
                     WITH c.intMemberId = m.id
-                WHERE c.intZone = {$intZone}"
+                WHERE c.intZone = {$intZone}
+                ORDER BY c.id DESC"
             )
             ->setMaxResults($intLimit);
         if($cache_time > 0) {

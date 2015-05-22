@@ -115,7 +115,7 @@ class SongRepository extends EntityRepository
                     {$where}
                     GROUP BY s.id, s.strTitle, s.intRankZone, s.strCorpName, s.timeRankTimeFrom, s.timeRankTimeTo,
                         s.timeRankTime, s.timeUploadDateTime, m.strShortName
-                    ORDER BY upload_time DESC
+                    ORDER BY s.id DESC
                     "
             );
         if($cache_time > 0) {

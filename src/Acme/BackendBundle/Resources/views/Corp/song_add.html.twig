@@ -159,7 +159,7 @@
             <td>{{ form_label(form.song.strPromotionFile) }}</td>
             <td>
                 <div class="col-md-3">
-                {{ form_widget(form.song.strPromotionFile, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.song.strPromotionFile, {'attr': {'class': 'form-control', 'data-validate': 'required'}}) }}
                     </div>
                 <span class="form_errors">{{ form_errors(form.song.strPromotionFile) }}</span></td>
         </tr>

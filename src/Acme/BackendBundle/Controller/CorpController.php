@@ -114,7 +114,15 @@ class CorpController extends DefaultController
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $songModel = $form->getData();
+                $strPromotionFile = $this->fileHandleUploadFile($form, 'song', 'strPromotionFile', 'uploads/song_pro');
+                $strCoverFile = $this->fileHandleUploadFile($form, 'song', 'strCoverFile', 'uploads/song_cover');
+                $strLyricFile = $this->fileHandleUploadFile($form, 'song', 'strLyricFile', 'uploads/song_lyric');
+                $strAuthFile = $this->fileHandleUploadFile($form, 'song', 'strAuthFile', 'uploads/song_auth');
                 $song = $songModel->getSong();
+                $song->setStrPromotionFile($strPromotionFile);
+                $song->setStrCoverFile($strCoverFile);
+                $song->setStrLyricFile($strLyricFile);
+                $song->setStrAuthFile($strAuthFile);
                 $song->setTimeUploadDateTime(new \DateTime());
                 $current_member = $this->getUser();
                 $song->setMember($current_member);
