@@ -75,29 +75,4 @@
             <div style="clear:both"></div>
         </ul>
     </div>
-    <script>
-        var play = function(token, id)
-        {
-            $('audio').each(function(){
-                $(this).remove();
-                console.log('should remove');
-            });
-            $('.audiojs').remove();
-            var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="autoplay" />';
-            $('#play-bar').show();
-            $('#play-bar').append(player);
-            audiojs.events.ready(function() {
-                var as = audiojs.createAll();
-            });
-        }
-        var stop = function()
-        {
-            $('audio').each(function(){
-                $(this).remove();
-                console.log('should remove');
-            });
-            $('.audiojs').remove();
-            $('#play-bar').hide();
-        }
-    </script>
 {% endblock %}

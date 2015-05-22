@@ -352,31 +352,5 @@
         setInterval(function(){
             clock2.innerHTML = countdown(targetDate).toString();
         }, 1000);
-        var play = function(token, id)
-        {
-            $('audio').each(function(){
-                $(this).remove();
-                console.log('should remove');
-            });
-            $('.audiojs').remove();
-            var player = '<audio id="audio" src="/app.php/play/'+token+'" />';
-            //$('#play-bar').show();
-            document.getElementById('play-bar').style.display = 'block';
-            document.getElementById('play-bar').innerHTML += player;
-            //$('#play-bar').append(player);
-            audiojs.events.ready(function() {
-                var as = audiojs.createAll();
-            });
-            document.getElementById('audio').play();
-        }
-        var stop = function()
-        {
-            $('audio').each(function(){
-                $(this).remove();
-                console.log('should remove');
-            });
-            $('.audiojs').remove();
-            $('#play-bar').hide();
-        }
     </script>
 {% endblock %}
