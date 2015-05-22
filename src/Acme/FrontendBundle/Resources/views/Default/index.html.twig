@@ -359,13 +359,12 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="" />';
+            var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="autoplay" />';
             $('#play-bar').show();
             $('#play-bar').append(player);
-            audiojs.events.ready(function() {
+            /*audiojs.events.ready(function() {
                 var as = audiojs.createAll();
-                $("audio")[$('audio').size()-1].play();
-            });
+            });*/
         }
         var stop = function()
         {
