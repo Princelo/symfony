@@ -55,7 +55,7 @@
     $(".timepicker").keydown(false);
     $.verify.addRules({
         uniqueemail: function(r) {
-            var ajax = $.ajax({url:"/check_unique_email/" + r.val().trim(), async:false});
+            var ajax = $.ajax({url:"/ajax/check_unique_email/" + r.val().trim(), async:false});
             var data = ajax.responseText;
             if(data == 'false'){
                 return '此帐号已被占用';
