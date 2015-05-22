@@ -359,7 +359,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio id="audio" src="/app.php/play/'+token+'" preload="auto" />';
+            var player = '<audio id="audio" src="/app.php/play/'+token+'" autoplay="autoplay" />';
             //$('#play-bar').show();
             document.getElementById('play-bar').style.display = 'block';
             document.getElementById('play-bar').innerHTML += player;
@@ -367,9 +367,7 @@
             audiojs.events.ready(function() {
                 var as = audiojs.createAll();
             });
-            document.getElementById('audio').play();
-            $(".play-pause p.play").hide();
-            $(".play-pause p.pause").show();
+            //document.getElementById('audio').play();
         }
         var stop = function()
         {
