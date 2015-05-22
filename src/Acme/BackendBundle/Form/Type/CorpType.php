@@ -120,7 +120,7 @@ class CorpType extends AbstractType
                     )));
                 $builder->add('strZipCode',  'text', array('label'=>'邮政编码',
                     'attr' => array(
-                        'maxlength' => '10',
+                        'maxlength' => '6',
                     ),
                     ));
                 $builder->add('strTel',  'text', array('label'=>'公司电话',
