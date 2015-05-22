@@ -359,7 +359,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="/app.php/play/'+token+'" preload="auto" autoplay="autoplay" />';
+            var player = '<audio id="audio" src="/app.php/play/'+token+'" preload="auto" autoplay="" />';
             //$('#play-bar').show();
             document.getElementById('play-bar').style.display = 'block';
             document.getElementById('play-bar').innerHTML += player;
@@ -367,6 +367,7 @@
             audiojs.events.ready(function() {
                 var as = audiojs.createAll();
             });
+            document.getElementById('audio').play();
         }
         var stop = function()
         {
