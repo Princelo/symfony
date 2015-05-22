@@ -15,7 +15,7 @@
                             <div class="media-head" style="left: 0px;">
                                 <p class="product-image">
                                     <a href="{{ item.strlink }}" target="_blank" alt="">
-                                        <img width="1200px" height="500px" border="0" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" title="">
+                                        <img width="1200px" height="500px" border="0" src="/uploads/flash/{{ item.strimg }}" title="">
                                     </a>
                                 </p>
                                 <div class="product-shop">
@@ -198,7 +198,7 @@
         </div>
         <div class="home-ad2" style="display: none;">
             <a href="{{ otherinfo.strAdLink2 }}">
-                <img src="{{ app.url }}/uploads/site_info/{{ otherinfo.strAdImg2 }}" />
+                <img src="/uploads/site_info/{{ otherinfo.strAdImg2 }}" />
             </a>
         </div>
         <div style="display: none;"></div>
@@ -222,8 +222,8 @@
                     <div class="slides_container">
                             {% for item in flash2 %}
                         <div class="slide">
-                            <a target="_blank" href="{{ item.strlink }}" style="background:url('{{ app.url }}/uploads/flash/{{ item.strimg }}')">
-                                <img alt="" title="" src="{{ app.url }}/uploads/flash/{{ item.strimg }}" style="width: 1200px; height: 224px;"/>
+                            <a target="_blank" href="{{ item.strlink }}" style="background:url('/uploads/flash/{{ item.strimg }}')">
+                                <img alt="" title="" src="/uploads/flash/{{ item.strimg }}" style="width: 1200px; height: 224px;"/>
                             </a>
                         </div>
                             {% endfor %}
@@ -255,7 +255,7 @@
                 {% for a in articles %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            <img src="/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
@@ -269,7 +269,7 @@
                 {% for a in articles1 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            <img src="/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
@@ -283,7 +283,7 @@
                 {% for a in articles2 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            <img src="/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
@@ -297,7 +297,7 @@
                 {% for a in articles3 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            <img src="/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
@@ -311,7 +311,7 @@
                 {% for a in articles4 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            <img src="/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
@@ -325,7 +325,7 @@
                 {% for a in articles6 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                            <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                            <img src="/uploads/article_thumb/{{ a.thumb }}" />
                         </a>
                         <br>
                         <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">
@@ -359,7 +359,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="{{ app.url }}/app.php/play/'+token+'" preload="auto" />';
+            var player = '<audio src="/app.php/play/'+token+'" preload="auto" />';
             $('#play-bar').show();
             $('#play-bar').append(player);
             audiojs.events.ready(function() {

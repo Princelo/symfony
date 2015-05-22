@@ -45,7 +45,7 @@
             $(".timepicker").keydown(false);
             $.verify.addRules({
                 uniqueemail: function(r) {
-                    var ajax = $.ajax({url:"{{ app.url }}/ajax/check_unique_email/" + r.val().trim(), async:false});
+                    var ajax = $.ajax({url:"/ajax/check_unique_email/" + r.val().trim(), async:false});
                     var data = ajax.responseText;
                     if(data == 'false'){
                         return '此帐号已被占用';
@@ -301,7 +301,7 @@
     <div class="menu">
         <ul>
             <li>
-                <a href="{{ app.url }}" >首页</a>
+                <a href="/" >首页</a>
             </li>
             <li>
                 <a href="" >榜单查询</a>

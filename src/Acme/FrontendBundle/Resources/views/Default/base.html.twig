@@ -55,7 +55,7 @@
     $(".timepicker").keydown(false);
     $.verify.addRules({
         uniqueemail: function(r) {
-            var ajax = $.ajax({url:"{{ app.url }}/check_unique_email/" + r.val().trim(), async:false});
+            var ajax = $.ajax({url:"/check_unique_email/" + r.val().trim(), async:false});
             var data = ajax.responseText;
             if(data == 'false'){
                 return '此帐号已被占用';
@@ -307,11 +307,11 @@
 <body>
 {% block header %}
     <div class="header">
-        <img src="{{ app.url }}/uploads/site_info/{{ otherinfo.strtopimg }}" />
+        <img src="/uploads/site_info/{{ otherinfo.strtopimg }}" />
         <div class="menu">
             <ul>
                 <li>
-                    <a href="{{ app.url }}" >首页</a>
+                    <a href="/" >首页</a>
                 </li>
                 <li>
                     <a href="{{ path('_report') }}" >榜单查询</a>
@@ -335,7 +335,7 @@
                     <a href="{{ path('_register_fm') }}" >电台联盟</a>
                 </li>
                 <li>
-                    <a href="{{ app.url }}{{ path('_login') }}" >用户登录</a>
+                    <a href="{{ path('_login') }}" >用户登录</a>
                 </li>
                 <li class="last">
                     <a href="javascript:;" onclick="coming();" >高校联盟</a>
@@ -372,7 +372,7 @@
         {% for c in coops %}
             <li style="float: left; margin-left:55px; {% if loop.index == 1 %} margin-left:0 {% endif %}">
                 <a href="{{ c.strLink }}">
-                    <img src="{{ app.url }}/uploads/coop/{{ c.strThumb }}" style="width:185px; height:99px; border: 2px solid #c6c6c6; border-radius: 1px;"/>
+                    <img src="/uploads/coop/{{ c.strThumb }}" style="width:185px; height:99px; border: 2px solid #c6c6c6; border-radius: 1px;"/>
                     <p style="width:185px; text-align:center; height:30px; line-height: 30px; color:#000;">{{ c.strTitle }}</p>
                 </a>
             </li>

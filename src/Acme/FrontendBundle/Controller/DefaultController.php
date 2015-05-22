@@ -132,8 +132,8 @@ class DefaultController extends CustomerController
         $request = $this->getRequest();
         $session = $request->getSession();
         $boolIsVistor = $session->get('is_visitor');
-        //if(!$boolIsVistor)
-            //return new Response('請勿盜鏈 Please Do Not Pivate Link');
+        if(!$boolIsVistor)
+            return new Response('請勿盜鏈 Please Do Not Pivate Link');
         $objORM = $this->getDoctrine()->getManager();
         $act =
             $objORM->getRepository('AcmeBackendBundle:Act')->find($id);

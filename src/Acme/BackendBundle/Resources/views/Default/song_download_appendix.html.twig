@@ -20,16 +20,16 @@
                         </div>
                         {% else %}
                         {% if appendix.strAuthFile != '' %}
-                            <a href="{{ app.url }}/app.php{{ path('_unvadmin_download', {'type': 'auth', id: appendix.id}) }}" class="btn btn-primary">授权书下载</a>
+                            <a href="/app.php{{ path('_unvadmin_download', {'type': 'auth', id: appendix.id}) }}" class="btn btn-primary">授权书下载</a>
                         {%  endif %}
                         {% if appendix.strPromotionFile != '' %}
-                            <a href="{{ app.url }}/app.php{{ path('_unvadmin_download', {'type': 'pro', id: appendix.id}) }}" class="btn btn-primary">宣传文案下载</a>
+                            <a href="/app.php{{ path('_unvadmin_download', {'type': 'pro', id: appendix.id}) }}" class="btn btn-primary">宣传文案下载</a>
                         {% endif %}
                         {% if appendix.strLyricFile != '' %}
-                            <a href="{{ app.url }}/app.php{{ path('_unvadmin_download', {'type': 'lyric', id: appendix.id}) }}" class="btn btn-primary">歌词文件下载</a>
+                            <a href="/app.php{{ path('_unvadmin_download', {'type': 'lyric', id: appendix.id}) }}" class="btn btn-primary">歌词文件下载</a>
                         {% endif %}
                         {% if appendix.strCoverFile != '' %}
-                            <a href="{{ app.url }}/app.php{{ path('_unvadmin_download', {'type': 'cover', id: appendix.id}) }}" class="btn btn-primary">歌曲封面下载</a>
+                            <a href="/app.php{{ path('_unvadmin_download', {'type': 'cover', id: appendix.id}) }}" class="btn btn-primary">歌曲封面下载</a>
                         {% endif %}
                     {% endif %}
                 </div>

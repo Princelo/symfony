@@ -20,7 +20,7 @@
         <div class="left fm-details">
             <div class="fm-section fm-details-section">
                 <div class="title">电台简介</div>
-                <img src="{{ app.url }}/uploads/fmlogo/{{ fm.strLogo }}" />
+                <img src="/uploads/fmlogo/{{ fm.strLogo }}" />
                 <div class="details">
                     <ul>
                         <li>简称: {{ fm.strShortName }}</li>
@@ -35,7 +35,7 @@
             <div class="fm-section fm-host-section">
                 <div class="title">主持人介绍</div>
                 <span>播名: {{ fm.strUserNickName }}</span>
-                <img src="{{ app.url }}/uploads/fmavatar/{{ fm.strAvatar }}" />
+                <img src="/uploads/fmavatar/{{ fm.strAvatar }}" />
             </div>
             <div class="fm-section fm-search">
                 <form action="{{ path('_fm_detail', {'id': fm.id}) }}" method="get">
@@ -157,7 +157,7 @@
                 console.log('should remove');
             });
             $('.audiojs').remove();
-            var player = '<audio src="{{ app.url }}/app.php/play/'+token+'" preload="auto" />';
+            var player = '<audio src="/app.php/play/'+token+'" preload="auto" />';
             $('#play-bar').show();
             $('#play-bar').append(player);
             audiojs.events.ready(function() {

@@ -49,7 +49,7 @@
                     {% for a in hot_pics %}
                         <li>
                             <a href="{{ path('_article_detail', {"id": a.id}) }}">
-                                <img src="{{ app.url }}/uploads/article_thumb/{{ a.thumb }}" />
+                                <img src="/uploads/article_thumb/{{ a.thumb }}" />
                             </a>
                             <br>
                             <a class="title" href="{{ path('_article_detail', {"id": a.id}) }}">

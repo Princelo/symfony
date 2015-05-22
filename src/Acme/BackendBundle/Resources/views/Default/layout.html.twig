@@ -67,7 +67,7 @@
                 //$(".timepicker").keydown(false);
                 $.verify.addRules({
                     uniqueemail: function(r) {
-                        var ajax = $.ajax({url:"{{ app.url }}/ajax/check_unique_email/" + r.val().trim(), async:false});
+                        var ajax = $.ajax({url:"/ajax/check_unique_email/" + r.val().trim(), async:false});
                         var data = ajax.responseText;
                         if(data == 'false'){
                             return '此帐号已被占用';
@@ -371,9 +371,9 @@
             <!-- 第三级菜单 -->
             {% for item in menu_block.item %}
                 {% if item.param is defined %}
-                    <a id="menu_x" href="{{ app.url }}{{ path(item.route, {category: item.param, page:1}) }}" target="_self" class="submenuA" hidefocus="true" style="outline:none;">
+                    <a id="menu_x" href="{{ path(item.route, {category: item.param, page:1}) }}" target="_self" class="submenuA" hidefocus="true" style="outline:none;">
                 {% else %}
-                    <a id="menu_x" href="{{ app.url }}{{ path(item.route) }}" target="_self" class="submenuA" hidefocus="true" style="outline:none;">
+                    <a id="menu_x" href="{{ path(item.route) }}" target="_self" class="submenuA" hidefocus="true" style="outline:none;">
                 {% endif %}
                 {{ item.name }}
             </a>
