@@ -91,7 +91,7 @@ a{text-decoration: none;}
 span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 
 /**************newest rank********************/
-.audio-list{width:865px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
+.audio-list{width:865px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 624px; margin-bottom:22px;}
 .audio-list li{min-height:26px; float:left; width:833px; text-align: -webkit-center; line-height: 26px;}
 .audio-list ul{padding:0 16px;}
 .audio-list div.title{background: #e15a22; color:#fff; font-weight: bold; height:30px; font-size: 14px; line-height: 30px;
@@ -115,7 +115,7 @@ a.play-btn{width:20px; height: 19px; background: url('images/play.png') no-repea
 /************champion*************/
 .champion-list .title { height: 41px; margin: 0;
     background: url('../images/tit_hot_room.png') no-repeat; line-height: 40px; padding-left:16px; font-size:16px; color:#fff;}
-.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; min-height: 552px; margin-bottom:22px;}
+.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; height: 624px; margin-bottom:22px;}
 .champion-list ul{padding: 15px 0;}
 .champion-list li{ float: left; margin-left: 35px; width: 230px; border-bottom: 1px solid #ebebeb; padding-bottom:3px;}
 .champion-list li:hover{background:rgb(224,224,224)}
