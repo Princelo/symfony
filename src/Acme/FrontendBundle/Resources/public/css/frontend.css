@@ -115,7 +115,8 @@ a.play-btn{width:20px; height: 19px; background: url('images/play.png') no-repea
 /************champion*************/
 .champion-list .title { height: 41px; margin: 0;
     background: url('../images/tit_hot_room.png') no-repeat; line-height: 40px; padding-left:16px; font-size:16px; color:#fff;}
-.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; height: 624px; margin-bottom:22px;}
+.champion-list{width:300px;border: 1px solid #EBEBEB; border-radius: 4px; background-color: #FFF; height: 624px; margin-bottom:22px;
+overflow:hidden;}
 .champion-list ul{padding: 15px 0;}
 .champion-list li{ float: left; margin-left: 35px; width: 230px; border-bottom: 1px solid #ebebeb; padding-bottom:3px;}
 .champion-list li:hover{background:rgb(224,224,224)}
