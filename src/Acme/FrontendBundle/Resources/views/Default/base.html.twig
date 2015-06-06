@@ -27,6 +27,7 @@
     function isValidDate( input ) {
         var date = new Date( input );
         input = input.split( '-' );
+        return true;
         return date.getFullYear()  === parseInt(input[0]) &&
                 date.getMonth() + 1 === parseInt(input[1]) &&
                 date.getDay() === parseInt(input[2]);
