@@ -29,7 +29,7 @@
         input = input.split( '-' );
         return date.getFullYear()  === parseInt(input[0]) &&
                 date.getMonth() + 1 === parseInt(input[1]) &&
-                date.getDate() === parseInt(input[2]);
+                date.getDay() === parseInt(input[2]);
     }
     function isValidTime( input ){
         if(input.indexOf(':')==-1)
