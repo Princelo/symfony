@@ -85,7 +85,7 @@
                 </div>
                 <ul>
                     {% for s in rank_songs_prc %}
-                        <li  {% if loop.index is odd %}class="color"{% endif %}>
+                        <li  {% if loop.index is odd %}class="color"{% endif %}{% if loop.index <=3 %}style="background: #e15a22;"{% endif %}>
                             <span class="index">{{ loop.index }}</span>
                             <span class="title">{{ s.title }}</span>
                     <span class="artist">
@@ -127,7 +127,7 @@
                 </div>
                 <ul>
                     {% for s in rank_songs_hktw %}
-                        <li  {% if loop.index is odd %}class="color"{% endif %}>
+                        <li  {% if loop.index is odd %}class="color"{% endif %}{% if loop.index <=3 %}style="background: #e15a22;"{% endif %}>
                             <span class="index">{{ loop.index }}</span>
                             <span class="title">{{ s.title }}</span>
                     <span class="artist">
