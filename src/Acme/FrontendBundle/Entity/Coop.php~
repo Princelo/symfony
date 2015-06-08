@@ -27,7 +27,7 @@ class Coop
     protected $strThumb;
 
     /**
-     * @ORM\Column(type="string", length=25, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strTitle;
 

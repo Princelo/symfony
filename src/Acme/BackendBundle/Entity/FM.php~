@@ -38,17 +38,17 @@ class FM implements UserInterface, \Serializable
     public $password;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     public $username;
 
     /**
-     * @ORM\Column(type="string",length=50, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      * @Assert\NotBlank(message="电台全称必填", groups={"fm_registration_step_two"})
      */
     public $strFullName;
     /**
-     * @ORM\Column(type="string",length=50, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      * @Assert\NotBlank(message="电台简称必填", groups={"fm_registration_step_two"})
      */
     public $strShortName;
@@ -72,11 +72,11 @@ class FM implements UserInterface, \Serializable
      */
     public $strSite;
     /**
-     * @ORM\Column(type="string",length=50, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      */
     public $strUserName;
     /**
-     * @ORM\Column(type="string",length=30, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      * @Assert\NotBlank(message="艺名必填", groups={"fm_registration_step_three"})
      */
     public $strUserNickName;
@@ -85,7 +85,7 @@ class FM implements UserInterface, \Serializable
      */
     public $intUserGender;
     /**
-     * @ORM\Column(type="string",length=20, nullable=true)
+     * @ORM\Column(type="string",length=255, nullable=true)
      */
     public $strUserCitizenId;
     /**
@@ -151,11 +151,11 @@ class FM implements UserInterface, \Serializable
      */
     public $strFMFoundTime;
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     public $strFMCoverPopular;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="电台加盟必填", groups={"fm_registration_step_two"})
      */
     public $strFMJoinAct;
@@ -176,7 +176,7 @@ class FM implements UserInterface, \Serializable
      */
     public $boolCastTimeToTomorrow;
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="主持人从事时间必填", groups={"fm_registration_step_three"})
      */
     public $strSeniority;

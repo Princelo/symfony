@@ -42,11 +42,11 @@ class OtherInfo
      */
     protected $strTopImg;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strSiteTitle;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strSiteSubTitle;
     /**

@@ -10,6 +10,33 @@
                 <div class="content">
                     {{ article.textContent|raw }}
                 </div>
+                {% if article.strSongFile is defined %}
+                    <div class="article_play" style="color:#f60; font-weight: bold; position: absolute; left: 15px; bottom: 64px;">
+                        点这里试听音乐：<a onclick="article_play('{{ article.strSongFile }}')" class="article_play play-btn"></a>
+                    </div>
+                    <div id="play-bar">
+                        <span class="close-btn" onclick="stop()"></span>
+                    </div>
+                    <script>
+                        var article_play = function(str)
+                        {
+                            $('audio').each(function(){
+                                $(this).remove();
+                                console.log('should remove');
+                            });
+                            $('.audiojs').remove();
+                            var player = '<audio id="audio" src="/uploads/article_song/'+str+'" />';
+                            //$('#play-bar').show();
+                            document.getElementById('play-bar').style.display = 'block';
+                            document.getElementById('play-bar').innerHTML += player;
+                            //$('#play-bar').append(player);
+                            audiojs.events.ready(function() {
+                                var as = audiojs.createAll();
+                            });
+                            document.getElementById('audio').play();
+                        }
+                    </script>
+                {% endif %}
                 <!-- JiaThis Button BEGIN -->
                 <div class="jiathis-block jiathis_style_32x32">
                     <a class="jiathis_button_qzone"></a>

@@ -38,7 +38,7 @@ class Member implements AdvancedUserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(message="請填寫郵箱帳號.", groups={"admin_registration_step_one"})
      * @Assert\Email(message="請正確填寫郵箱格式")
      */
@@ -66,12 +66,12 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $strAvatar;
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"admin_registration_step_two"})
      */
     protected $strFullName;
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"admin_registration_step_two"})
      */
     protected $strShortName;
@@ -91,7 +91,7 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $strAddressInfo;
     /**
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $strZipCode;
     /**
@@ -108,11 +108,11 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $strIntro;
     /**
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strUserName;
     /**
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strUserNickName;
     /**
@@ -120,7 +120,7 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $intUserGender;
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $strUserCitizenId;
     /**
@@ -140,7 +140,7 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $timeLastLoginTime;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strSite;
     /**
@@ -156,11 +156,11 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $timeUpdateTime;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strEMail;
     /**
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     protected $strPassword;
     /**
@@ -185,7 +185,7 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $intFMValueType;
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strFMFactor;
     /**
@@ -193,11 +193,11 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $strFMFoundTime;
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strFMCoverPopular;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strFMJoinAct;
     /**
@@ -217,7 +217,7 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $boolCastTimeToTomorrow;
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strSeniority;
     /**

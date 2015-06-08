@@ -39,15 +39,15 @@ class Song
      */
     protected $intSpecialId;
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strLyricist;
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strComposer;
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strCorpName;
     /**
@@ -158,7 +158,7 @@ class Song
     protected $member;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $strSpecial;
 

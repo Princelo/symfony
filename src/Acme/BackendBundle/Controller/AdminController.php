@@ -395,6 +395,7 @@ class AdminController extends DefaultController
         $objArticle = $objORM->getRepository('AcmeFrontendBundle:Article')
             ->find($id);
         $strOriThumb = $objArticle->getStrThumb();
+        $strOriSongFile = $objArticle->getStrSongFile();
         $type = new ArticleType();
         $form = $this->createForm($type, $objArticle, array(
             //'validation_groups' => array('corp_song_add'),
@@ -407,10 +408,16 @@ class AdminController extends DefaultController
                 if($form->getData()->getStrThumb() != null){
                     $strThumb = $this->fileHandleUploadFileWithoutType($form, 'strThumb', 'uploads/article_thumb');
                     $objArticle->setStrThumb($strThumb);
-                    $objORM->persist($objArticle);
                 }else{
                     $objArticle->setStrThumb($strOriThumb);
                 }
+                if($form->getData()->getStrSongFile() != null){
+                    $strSongFile = $this->fileHandleUploadFileWithoutType($form, 'strSongFile', 'uploads/article_song');
+                    $objArticle->setStrSongFile($strSongFile);
+                }else{
+                    $objArticle->setStrSongFile($strOriSongFile);
+                }
+                $objORM->persist($objArticle);
                 $objORM->flush();
 
                 return $this->redirect($this->generateUrl('_admin_article_edit', array('id' => $id)));
@@ -449,7 +456,9 @@ class AdminController extends DefaultController
                 $objArticle = $form->getData();
                 $objArticle->setTimeCreateTime(new \DateTime());
                 $strThumb = $this->fileHandleUploadFileWithoutType($form, 'strThumb', 'uploads/article_thumb');
+                $strSongFile = $this->fileHandleUploadFileWithoutType($form, 'strSongFile', 'uploads/article_song');
                 $objArticle->setStrThumb($strThumb);
+                $objArticle->setStrSongFile($strSongFile);
                 $objORM->persist($objArticle);
                 $objORM->flush();
 
