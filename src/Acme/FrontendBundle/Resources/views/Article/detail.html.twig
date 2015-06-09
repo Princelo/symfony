@@ -10,7 +10,7 @@
                 <div class="content">
                     {{ article.textContent|raw }}
                 </div>
-                {% if article.strSongFile is defined %}
+                {% if article.strSongFile != '' %}
                     <div class="article_play" style="color:#f60; font-weight: bold; position: absolute; left: 15px; bottom: 64px;">
                         点这里试听音乐：<a onclick="article_play('{{ article.strSongFile }}')" class="article_play play-btn"></a>
                     </div>
