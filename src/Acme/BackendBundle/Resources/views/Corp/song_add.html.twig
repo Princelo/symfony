@@ -160,7 +160,7 @@
             <td>
                 <div class="col-md-3">
                 {{ form_widget(form.song.strPromotionFile, {'attr': {'class': 'form-control', 'data-validate': 'required'}}) }}
-                    </div>
+                </div>
                 <span class="form_errors">{{ form_errors(form.song.strPromotionFile) }}</span></td>
         </tr>
         <tr>
@@ -168,7 +168,8 @@
             <td>
                 <div class="col-md-3">
                 {{ form_widget(form.song.strCoverFile, {'attr': {'class': 'form-control'}}) }}
-                    </div>
+                </div>
+                <span class="form_errors" style="color: #f60;">请上传jpg/png格式文件</span>
                 <span class="form_errors">{{ form_errors(form.song.strCoverFile) }}</span></td>
         </tr>
         <tr>
@@ -176,7 +177,7 @@
             <td>
                 <div class="col-md-3">
                 {{ form_widget(form.song.strLyricFile, {'attr': {'class': 'form-control'}}) }}
-                    </div>
+                </div>
                 <span class="form_errors">{{ form_errors(form.song.strLyricFile) }}</span></td>
         </tr>
         <tr>
@@ -184,10 +185,9 @@
             <td>
                 <div class="col-md-3">
                 {{ form_widget(form.song.strAuthFile, {'attr': {'class': 'form-control'}}) }}
-                    </div>
-                <div class="col-md-3">
-                    <a href="/uploads/attachment/热歌风云榜授权书模板.doc" class="btn btn-primary">(下载授权书模板)</a>
                 </div>
+                <span class="warning" style="text-align: left; color:#f60">请上传doc/docx格式文件</span>
+                <a href="/uploads/attachment/热歌风云榜授权书模板.doc" class="btn btn-primary">(下载授权书模板)</a>
                 <span class="form_errors">{{ form_errors(form.song.strAuthFile) }}</span></td>
         </tr>
         <tr>
