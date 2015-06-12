@@ -236,14 +236,14 @@
         <div style="clear:both"></div>
         <div class="article-list img">
             <div class="nav-content">
-                <span class="tag tag5 current" onmouseover="display(5);"><a href="{{ path('_article_img_list', {"category_id": "5"}) }}">明星访谈</a></span>
-                <span class="tag tag1" onmouseover="display(1);"><a href="{{ path('_article_list', {"category_id": "1"}) }}" >行业资讯</a></span>
+                <span class="tag tag1 current" onmouseover="display(1);"><a href="{{ path('_article_list', {"category_id": "1"}) }}">新歌首发</a></span>
+                <span class="tag tag5" onmouseover="display(5);"><a href="{{ path('_article_img_list', {"category_id": "5"}) }}" >名人访谈</a></span>
                 <span class="tag tag2" onmouseover="display(2);"><a href="{{ path('_article_list', {"category_id": "2"}) }}">娱乐新闻</a></span>
                 <span class="tag tag3" onmouseover="display(3);"><a href="{{ path('_article_list', {"category_id": "3"}) }}">每日星闻榜</a></span>
                 <span class="tag tag4" onmouseover="display(4);"><a href="{{ path('_article_img_list', {"category_id": "4"}) }}">热点图片</a></span>
                 <span class="tag tag6" onmouseover="display(6);"><a href="{{ path('_article_img_list', {"category_id": "6"}) }}">DJ介紹</a></span>
             </div>
-            <style> .article-list.img > ul{display:none;} #category5 {display:block;}</style>
+            <style> .article-list.img > ul{display:none;} #category1 {display:block;}</style>
             <script>
                 function display(category_id){
                     $(".article-list.img > ul").hide(); $("#category"+category_id).show();
@@ -251,8 +251,8 @@
                     $(".nav-content .tag"+category_id).addClass('current');
                 }
             </script>
-            <ul id="category5">
-                {% for a in articles %}
+            <ul id="category1">
+                {% for a in articles1 %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
                             <img src="/uploads/article_thumb/{{ a.thumb }}" />
@@ -265,8 +265,8 @@
                 {% endfor %}
                 <div style="clear:both;"></div>
             </ul>
-            <ul id="category1">
-                {% for a in articles1 %}
+            <ul id="category5">
+                {% for a in articles %}
                     <li>
                         <a href="{{ path('_article_detail', {"id": a.id}) }}">
                             <img src="/uploads/article_thumb/{{ a.thumb }}" />
