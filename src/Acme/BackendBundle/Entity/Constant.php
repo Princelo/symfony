@@ -51,11 +51,11 @@ class Constant {
     const RANK_WAITING  =   2;
     const RANK_EXPIRE   =   3;
     const NOT_RANK  =   4;
-    const CATEGORY1 =   '新歌首发';
+    const CATEGORY5 =   '新歌首发';
     const CATEGORY2 =   '娱乐快报';
     const CATEGORY3 =   '每日星闻榜';
     const CATEGORY4 =   '热点图片';
-    const CATEGORY5 =   '名人访谈';
+    const CATEGORY1 =   '名人访谈';
     const CATEGORY6 =   'DJ介紹';
     const ACTTYPE1 = "热歌风云榜全国版";
     const ACTTYPE2 = "版头片花";
