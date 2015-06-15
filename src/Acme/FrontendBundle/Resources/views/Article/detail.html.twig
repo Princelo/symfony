@@ -28,7 +28,7 @@
                                 console.log('should remove');
                             });
                             $('.audiojs').remove();
-                            var player = '<audio id="audio" src="/uploads/article_song/{{ article.strSongFile }}" />';
+                            var player = '<audio id="audio" src="/uploads/article_song/{{ article.strSongFile }}" preload="none" />';
                             document.getElementById('article_audiojs').innerHTML += player;
                             audiojs.events.ready(function() {
                                 var as = audiojs.createAll();
