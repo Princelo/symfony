@@ -12,29 +12,27 @@
                 </div>
                 {% if article.strSongFile != '' %}
                     <div class="article_play" style="color:#f60; font-weight: bold; position: absolute; left: 15px; bottom: 64px;">
-                        点这里试听音乐：<a onclick="article_play('{{ article.strSongFile }}')" class="article_play play-btn"></a>
+                        <div style="float:left; font-size: 24px; line-height: 36px;">试听音乐：</div><div id="article_audiojs" style="float:left;"></div>
                     </div>
                     <div id="play-bar">
                         <span class="close-btn" onclick="stop()"></span>
                     </div>
+                    <style>
+                        .audiojs .play-pause {
+                            padding: 4px 0px;
+                        }
+                    </style>
                     <script>
-                        var article_play = function(str)
-                        {
                             $('audio').each(function(){
                                 $(this).remove();
                                 console.log('should remove');
                             });
                             $('.audiojs').remove();
-                            var player = '<audio id="audio" src="/uploads/article_song/'+str+'" />';
-                            //$('#play-bar').show();
-                            document.getElementById('play-bar').style.display = 'block';
-                            document.getElementById('play-bar').innerHTML += player;
-                            //$('#play-bar').append(player);
+                            var player = '<audio id="audio" src="/uploads/article_song/{{ article.strSongFile }}" />';
+                            document.getElementById('article_audiojs').innerHTML += player;
                             audiojs.events.ready(function() {
                                 var as = audiojs.createAll();
                             });
-                            document.getElementById('audio').play();
-                        }
                     </script>
                 {% endif %}
                 <!-- JiaThis Button BEGIN -->
