@@ -1,6 +1,25 @@
 {% extends 'AcmeFrontendBundle:Default:base.html.twig' %}
 
 {% block body %}
+    <script>
+        var playact = function(token, id)
+        {
+            $('audio').each(function(){
+                $(this).remove();
+                console.log('should remove');
+            });
+            $('.audiojs').remove();
+            var player = '<audio id="audio" src="/app.php/playact/'+token+'" />';
+            //$('#play-bar').show();
+            document.getElementById('play-bar').style.display = 'block';
+            document.getElementById('play-bar').innerHTML += player;
+            //$('#play-bar').append(player);
+            audiojs.events.ready(function() {
+                var as = audiojs.createAll();
+            });
+            document.getElementById('audio').play();
+        }
+    </script>
     <div class="main-partition">
     <div id="play-bar">
         <span class="close-btn" onclick="stop()"></span>
@@ -11,7 +30,7 @@
             {% for a in acts %}
                 <li style="width: 249px; padding-left:10px; padding-bottom: 4px; float:left; margin:16px; border-bottom:1px dashed #f60;">
                     <span>{{ a.title }}</span>
-                    <a href="javascript:;" onclick="play('{{ a.file | md5 }}{{ a.id }}', {{ a.id }})" class="play-btn"></a>
+                    <a href="javascript:;" onclick="playact('{{ a.file | md5 }}{{ a.id }}', {{ a.id }})" class="play-btn"></a>
                 </li>
             {% endfor %}
             <div style="clear:both;"></div>
