@@ -129,7 +129,7 @@ class DefaultController extends CustomerController
         $intTermNo = null;
         $intTermNo = $request->query->get('term_no');
         if($intTermNo == null)
-            $intTermNo = $request->getSession()->get('current_term_no');
+            $intTermNo = $request->getSession()->get('last_term_no');
         $arrLastRankSongHKTW = $objORM->getRepository('AcmeBackendBundle:Rank')
             ->getArrNewestRankList(Constant::HKTWZONE, 999, $intTermNo);
         $intCurrentTermNo = $request->getSession()->get('current_term_no');
