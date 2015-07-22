@@ -4,7 +4,7 @@
             <h2 align="left">发送新微博</h2>
             <form action="{{ path('_weibo') }}" >
                 <div class="form-group">
-                    <input type="text" name="text" style="width:300px" class="form-control" />
+                    <input type="text" name="text" style="width:300px" class="form-control" value="{{ message_template }}"/>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary from-control" />
