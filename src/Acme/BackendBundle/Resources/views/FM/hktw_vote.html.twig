@@ -18,6 +18,26 @@
             for(var key in voted_list){
                 addVote(voted_list[key].sid)
             }
+            {%  if code_url is defined %}
+            $(".dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                width:800,
+                open: function(ev, ui){
+                    console.log(ev);
+                }
+            });
+            var openDialog = function()
+            {
+                $('#dialog').dialog('open');
+            }
+            function closeIframe()
+            {
+                $('#dialog').dialog('close');
+                return false;
+            }
+            {% endif %}
         });
     </script>
     <form action="{{ path('_fm_votelog_persist') }}" method="post">
@@ -191,7 +211,12 @@
             });
 
             request.done(function(msg) {
-                alert(msg);
+                {%  if code_url is defined %}
+                    alert(msg + "\n发则微博通知大家吧！");
+                    $('#dialog').dialog('open');
+                {% else %}
+                    alert(msg);
+                {% endif %}
             });
 
             request.fail(function(jqXHR, textStatus) {
@@ -236,4 +261,9 @@
             background-color: #AFEEEE;
         }
     </style>
+    {%  if code_url is defined %}
+        <div class="dialog" id="dialog">
+            <iframe id="" src="{{ code_url }}"></iframe>
+        </div>
+    {% endif %}
 {% endblock %}

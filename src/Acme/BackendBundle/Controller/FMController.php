@@ -151,6 +151,8 @@ class FMController extends DefaultController
         $jsonSonglist = json_encode($arrSonglist);
         $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC', Constant::PRCZONE);
+        $sae_to_auth_v2 = new \SaeTOAuthV2(\SaeConfig::WB_AKEY, \SaeConfig::WB_SKEY);
+        $code_url = $sae_to_auth_v2->getAuthorizeURL( $this->generateUrl('_weibo_callback', array('slug' => 'prc_vote')) );
 
         return $this->render('AcmeBackendBundle:FM:prc_vote.html.twig',
             array(
@@ -160,6 +162,7 @@ class FMController extends DefaultController
                 'songlist' => $arrSonglist,
                 'term_no' => $intLatestTermNo + 1,
                 'voted_list_json' => json_encode($arrVotedList),
+                'code_url' => $code_url,
             ));
     }
 
@@ -181,6 +184,8 @@ class FMController extends DefaultController
         $jsonSonglist = json_encode($arrSonglist);
         $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC', Constant::HKTWZONE);
+        $sae_to_auth_v2 = new \SaeTOAuthV2(\SaeConfig::WB_AKEY, \SaeConfig::WB_SKEY);
+        $code_url = $sae_to_auth_v2->getAuthorizeURL( $this->generateUrl('_weibo_callback', array('slug' => 'hktw_vote')) );
 
         return $this->render('AcmeBackendBundle:FM:hktw_vote.html.twig',
             array(
@@ -190,6 +195,7 @@ class FMController extends DefaultController
                 'songlist' => $arrSonglist,
                 'term_no' => $intLatestTermNo + 1,
                 'voted_list_json' => json_encode($arrVotedList),
+                'code_url' => $code_url,
             ));
     }
 

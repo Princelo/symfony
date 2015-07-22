@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:wb="http://open.weibo.com/wb">
 <head>
     <meta name="renderer" content="webkit">
     <!-- Force latest IE rendering engine or ChromeFrame if installed -->
@@ -19,6 +19,7 @@
     <script src="{{ asset('bundles/acmefrontend/js/html5shiv.js') }}"></script>
     <script src="{{ asset('bundles/acmefrontend/js/respond.min.js') }}"></script>
     <![endif]-->
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=363066804&debug=true" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('bundles/acmefrontend/css/bootstrap-ie6.css') }}"/>
@@ -61,6 +62,18 @@
         function isNumber(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
+        WB2.anyWhere(function(W){
+            W.parseCMD("/test", function(sResult, bStatus){
+                try{
+                    //to do something...
+                    console.log('test');
+                }catch(e){}
+            },{
+                uid: '2117597272'
+            }{
+                method: 'get'
+            });
+        });
     </script>
 <script>
     $(document).ready(function(){

@@ -358,6 +358,11 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $sina_openid;
+
 
     public function __construct(){
         //$this->arrStrArtistName = new ArrayCollection();
@@ -2310,5 +2315,28 @@ class Member implements AdvancedUserInterface, \Serializable
     public function getIntLastCommentId()
     {
         return $this->intLastCommentId;
+    }
+
+    /**
+     * Set sina_openid
+     *
+     * @param string $sinaOpenid
+     * @return Member
+     */
+    public function setSinaOpenid($sinaOpenid)
+    {
+        $this->sina_openid = $sinaOpenid;
+
+        return $this;
+    }
+
+    /**
+     * Get sina_openid
+     *
+     * @return string 
+     */
+    public function getSinaOpenid()
+    {
+        return $this->sina_openid;
     }
 }

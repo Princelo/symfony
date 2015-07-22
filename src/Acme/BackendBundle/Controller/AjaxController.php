@@ -50,4 +50,14 @@ class AjaxController extends Controller
         $response = new Response();
         return $response;
     }
+
+
+    /**
+     * @Route("/test")
+     */
+    public  function test()
+    {
+        $response = new Response('test');
+        return $response;
+    }
 } 

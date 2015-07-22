@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "42baebf119b8421be5a1e4c79db90975",
+    "hash": "7d48977f7886bafcac65ee607c542f46",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1674,7 +1674,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/732bfa62ea1e30dbbda12486f971573274d3b48f",
+                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/77f65e3d86a5e21b9bf3710d7e021595df2b6417",
                 "reference": "732bfa62ea1e30dbbda12486f971573274d3b48f",
                 "shasum": ""
             },
@@ -2165,13 +2165,57 @@
                 "templating"
             ],
             "time": "2015-04-19 08:30:27"
+        },
+        {
+            "name": "xiaosier/libweibo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xiaosier/libweibo.git",
+                "reference": "61be700cd15f4c53496b998c8ae8fdd73084eb38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xiaosier/libweibo/zipball/61be700cd15f4c53496b998c8ae8fdd73084eb38",
+                "reference": "61be700cd15f4c53496b998c8ae8fdd73084eb38",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "saetv2.ex.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "lazypeople",
+                    "email": "hfutming@gmail.com",
+                    "homepage": "http://lazy.changes.com.cn",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP sdk for Weibo open platform",
+            "homepage": "http://github.com/xiaosier/libweibo",
+            "keywords": [
+                "sdk",
+                "weibo"
+            ],
+            "time": "2015-03-26 03:17:59"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "snc/redis-bundle": 20
+        "snc/redis-bundle": 20,
+        "xiaosier/libweibo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

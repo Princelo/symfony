@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Acme\BackendBundle\Entity\Menu;
 use Acme\BackendBundle\Form\Type\CommentType;
 use Acme\CoreBundle\Controller\CustomerController;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\Security\Core\SecurityContext;
 /**
  * Class DefaultController
  * @package Acme\BackendBundle\Controller
@@ -513,6 +515,135 @@ class DefaultController extends CustomerController
             return $this->redirect($this->generateUrl('_fm_info_edit'));
         if($this->getUser()->getIntType()==Constant::ADMIN)
             return $this->redirect($this->generateUrl('_admin_info_edit'));
+    }
+
+    /**
+     * @param $slug
+     * @param Request $request
+     * @return Response
+     * @Route("/weibo_callback/{slug}", name="_weibo_callback")
+     */
+    public function weiboCallbackAction($slug, Request $request)
+    {
+        $response = $this->weiboSend($slug, $request);
+        $sae_to_auth_v2 = new \SaeTOAuthV2( \SaeConfig::WB_AKEY , \SaeConfig::WB_SKEY );
+        if (isset($_REQUEST['code'])) {
+            $keys = array();
+            $keys['code'] = $_REQUEST['code'];
+            $keys['redirect_uri'] = \SaeConfig::WB_CALLBACK_URL . "\\{$slug}";
+            try {
+                $token = $sae_to_auth_v2->getAccessToken( 'code', $keys ) ;
+            } catch (\OAuthException $e) {
+                $user = $request->getSession()->get(SecurityContext::LAST_USERNAME);
+                \Monolog\Handler\error_log("{$user}授权失败 错误代码：".$e->getMessage());
+                return new Response("授权失败<br /> 错误代码：".$e->getMessage());
+            }
+        }
+        if (isset($token)) {
+            $session = $request->getSession();
+            $session->set('weibo_token', $token);
+            $response->headers->setCookie(new Cookie('weibojs_'.$sae_to_auth_v2->client_id, http_build_query($token)));
+            return $response;
+        } else {
+            $user = $request->getSession()->get(SecurityContext::LAST_USERNAME);
+            \Monolog\Handler\error_log("{$user}授权失败");
+            return new Response('授权失败');
+        }
+    }
+
+    /**
+     * @param $slug
+     * @param Request $request
+     * @return Response
+     */
+    protected function weiboSend($slug, Request $request)
+    {
+        $template_message = null;
+        switch (strval($slug)) {
+            case 'prc_vote':
+                $template_message = $this->getWeiboTemplatePrc($request);
+                break;
+            case 'hktw_vote':
+                $template_message = $this->getWeiboTemplateHktw($request);
+                break;
+            default :
+                break;
+        }
+        return $this->render('AcmeBackendBundle:Default:weibo.html.twig',
+            array(
+                'message_template' => $template_message,
+            ));
+    }
+
+    protected function getWeiboTemplatePrc(Request $request)
+    {
+        $user = $this->getUser();
+        $fullname = $user->getStrFullName();
+        $current_term_no = $request->getSession()->get('current_term_no');
+        $this->init();
+        $objORM = $this->getDoctrine()->getManager();
+        $term_no = $request->getSession()->get('current_term_no');
+        $user_id = $user->getId();
+        $votelog = $objORM->getRepository('AcmeBackendBundle:Votelog')
+            ->getArrVotedTopThree($term_no, $user_id, Constant::PRCZONE);
+        if(count($votelog) != 3)
+        {
+            exit('你的投票不足三名，暂不能发送微博');
+        }
+        $template_message = "#热歌风云榜电台投票#"
+            ."#{$fullname}#第{$current_term_no}期内地榜单发布 :"
+            ."冠军 《".$votelog[0]['strTitle']."》, "
+            ."亚军 《".$votelog[1]['strTitle']."》, "
+            ."季军 《".$votelog[2]['strTitle']."》, "
+            ."详见 :http://rege100.com 冠军上传人#{$votelog[0]['strShortName']}#, @亚洲热歌风云榜 rege100.com";
+        return $template_message;
+    }
+
+    protected function getWeiboTemplateHktw(Request $request)
+    {
+        $user = $this->getUser();
+        $fullname = $user->getStrFullName();
+        $current_term_no = $request->getSession()->get('current_term_no');
+        $this->init();
+        $objORM = $this->getDoctrine()->getManager();
+        $term_no = $request->getSession()->get('current_term_no');
+        $user_id = $user->getId();
+        $votelog = $objORM->getRepository('AcmeBackendBundle:Votelog')
+            ->getArrVotedTopThree($term_no, $user_id, Constant::HKTWZONE);
+        if(count($votelog) != 3)
+        {
+            exit('你的投票不足三名，暂不能发送微博');
+        }
+        $template_message = "#热歌风云榜电台投票#"
+            ."#{$fullname}#第{$current_term_no}期港台榜单发布 :"
+            ."冠军 《".$votelog[0]['strTitle']."》, "
+            ."亚军 《".$votelog[1]['strTitle']."》, "
+            ."季军 《".$votelog[2]['strTitle']."》, "
+            ."详见 :http://rege100.com 冠军上传人#{$votelog[0]['strShortName']}#, @亚洲热歌风云榜 rege100.com";
+        return $template_message;
+    }
+
+    /**
+     * @Route("/weibo_send", name="_weibo_send")
+     */
+    public function weiboSendAction()
+    {
+        if(isset($_REQUEST['text']) && $_REQUEST['text'] != '' ) {
+            $sae_to_auth_v2 = new \SaeTOAuthV2( \SaeConfig::WB_AKEY , \SaeConfig::WB_SKEY );
+            $ret = $sae_to_auth_v2->update( $_REQUEST['text'] );
+            if ( isset($ret['error_code']) && $ret['error_code'] > 0 ) {
+                \Monolog\Handler\error_log("{$ret['error_code']} 发送失败");
+                return new Response('发送失败: ERROR_CODE'. $ret['error_code']);
+            } else {
+                return $this->render('AcmeBackendBundle:Default:weibo.html.twig',
+                    array(
+                        'close' => true,
+                    ));
+            }
+        } else {
+
+        }
+
     }
 
 }

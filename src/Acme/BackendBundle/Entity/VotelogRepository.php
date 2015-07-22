@@ -179,5 +179,26 @@ class VotelogRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getArrVotedTopThree($intTermNo, $member_id, $intZone)
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('s.strTitle', 'm.strShortName', 'v.intIndex')
+            ->from('AcmeBackendBundle:Song', 's')
+            ->join('AcmeBackendBundle:Votelog', 'v', 'WITH', 'v.intSongId=s.id')
+            ->join('AcmeBackendBundle:Member', 'm', 'WITH' , 'm.id=v.intMemberId')
+            ->where('v.intIndex < 4')
+            ->andWhere('v.intMemberId = :member_id')
+            ->andWhere(' v.intTermNo = :int_term_no')
+            ->andWhere(' v.intZone = :int_zone')
+            ->orderBy('v.intIndex')
+            ->setParameters([
+                'member_id' => $member_id,
+                'int_term_no' => $intTermNo,
+                'int_zone' => $intZone
+            ])
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

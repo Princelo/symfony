@@ -358,6 +358,11 @@ class Member implements AdvancedUserInterface, \Serializable
      */
     protected $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $sina_openid;
+
 
     public function __construct(){
         //$this->arrStrArtistName = new ArrayCollection();
