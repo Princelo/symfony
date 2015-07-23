@@ -34,12 +34,10 @@
             }
     );
 </script>
-{% if close == 'true' %}
+{% if close == true %}
     <script>
         alert('发送微博成功!');
         window.parent.closeIframe();
-        $sae_to_auth_v2 = new \SaeTOAuthV2( \SaeConfig::WB_AKEY , \SaeConfig::WB_SKEY );
-        $ret = $sae_to_auth_v2->update( $_REQUEST['text'] );
     </script>
 {% endif %}
 </body>
