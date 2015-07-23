@@ -152,7 +152,8 @@ class FMController extends DefaultController
         $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC', Constant::PRCZONE);
         $sae_to_auth_v2 = new \SaeTOAuthV2(\SaeConfig::WB_AKEY, \SaeConfig::WB_SKEY);
-        $code_url = $sae_to_auth_v2->getAuthorizeURL( $this->generateUrl('_weibo_callback', array('slug' => 'prc_vote')) );
+        $request->getSession()->set('current_vote', 'prc_vote');
+        $code_url = $sae_to_auth_v2->getAuthorizeURL( 'http://rege100.com/unvadmin/weibo_callback' );
 
         return $this->render('AcmeBackendBundle:FM:prc_vote.html.twig',
             array(
@@ -185,7 +186,8 @@ class FMController extends DefaultController
         $arrVotedList = $objORM->getRepository('AcmeBackendBundle:Votelog')
             ->getArrVotedList($session->get('current_term_no'), $this->objMember->getId(), 'ASC', Constant::HKTWZONE);
         $sae_to_auth_v2 = new \SaeTOAuthV2(\SaeConfig::WB_AKEY, \SaeConfig::WB_SKEY);
-        $code_url = $sae_to_auth_v2->getAuthorizeURL( $this->generateUrl('_weibo_callback', array('slug' => 'hktw_vote')) );
+        $request->getSession()->set('current_vote', 'hktw_vote');
+        $code_url = $sae_to_auth_v2->getAuthorizeURL( 'http://rege100.com/unvadmin/weibo_callback' );
 
         return $this->render('AcmeBackendBundle:FM:hktw_vote.html.twig',
             array(

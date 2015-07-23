@@ -521,16 +521,17 @@ class DefaultController extends CustomerController
      * @param $slug
      * @param Request $request
      * @return Response
-     * @Route("/weibo_callback/{slug}", name="_weibo_callback")
+     * @Route("/weibo_callback", name="_weibo_callback")
      */
-    public function weiboCallbackAction($slug, Request $request)
+    public function weiboCallbackAction(Request $request)
     {
+        $slug = $request->getSession()->get('current_vote');
         $response = $this->weiboSend($slug, $request);
         $sae_to_auth_v2 = new \SaeTOAuthV2( \SaeConfig::WB_AKEY , \SaeConfig::WB_SKEY );
         if (isset($_REQUEST['code'])) {
             $keys = array();
             $keys['code'] = $_REQUEST['code'];
-            $keys['redirect_uri'] = \SaeConfig::WB_CALLBACK_URL . "\\{$slug}";
+            $keys['redirect_uri'] = \SaeConfig::WB_CALLBACK_URL;
             try {
                 $token = $sae_to_auth_v2->getAccessToken( 'code', $keys ) ;
             } catch (\OAuthException $e) {
