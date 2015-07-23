@@ -596,7 +596,7 @@ class DefaultController extends CustomerController
             ."冠军 《".$votelog[0]['strTitle']."》, "
             ."亚军 《".$votelog[1]['strTitle']."》, "
             ."季军 《".$votelog[2]['strTitle']."》, "
-            ."详见 :http://rege100.com 冠军上传人#{$votelog[0]['strShortName']}#, @亚洲热歌风云榜 rege100.com";
+            ."详见 :http://rege100.com, @亚洲热歌风云榜 rege100.com";
         return $template_message;
     }
 
@@ -620,7 +620,7 @@ class DefaultController extends CustomerController
             ."冠军 《".$votelog[0]['strTitle']."》, "
             ."亚军 《".$votelog[1]['strTitle']."》, "
             ."季军 《".$votelog[2]['strTitle']."》, "
-            ."详见 :http://rege100.com 冠军上传人#{$votelog[0]['strShortName']}#, @亚洲热歌风云榜 rege100.com";
+            ."详见 :http://rege100.com, @亚洲热歌风云榜 rege100.com";
         return $template_message;
     }
 
