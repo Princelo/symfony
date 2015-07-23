@@ -627,11 +627,16 @@ class DefaultController extends CustomerController
     /**
      * @Route("/weibo_send", name="_weibo_send")
      */
-    public function weiboSendAction()
+    public function weiboSendAction( Request $request)
     {
         if(isset($_REQUEST['text']) && $_REQUEST['text'] != '' ) {
-            $sae_to_auth_v2 = new \SaeTOAuthV2( \SaeConfig::WB_AKEY , \SaeConfig::WB_SKEY );
-            $ret = $sae_to_auth_v2->update( $_REQUEST['text'] );
+            $token = $request->getSession()->get('weibo_token');
+            $c = new \SaeTClientV2( WB_AKEY , WB_SKEY , $token['access_token'] );
+            $ms  = $c->home_timeline(); // done
+            $uid_get = $c->get_uid();
+            $uid = $uid_get['uid'];
+            $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
+            $ret = $c->update( $_REQUEST['text'] );	//发送微博
             if ( isset($ret['error_code']) && $ret['error_code'] > 0 ) {
                 \Monolog\Handler\error_log("{$ret['error_code']} 发送失败");
                 return new Response('发送失败: ERROR_CODE'. $ret['error_code']);
