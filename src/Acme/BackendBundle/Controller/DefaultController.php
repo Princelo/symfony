@@ -535,7 +535,7 @@ class DefaultController extends CustomerController
             try {
                 $token = $sae_to_auth_v2->getAccessToken( 'code', $keys ) ;
             } catch (\OAuthException $e) {
-                $user = $request->getSession()->get(SecurityContext::LAST_USERNAME);
+                $user = $this->getUser()->getId();
                 \Monolog\Handler\error_log("{$user}授权失败 错误代码：".$e->getMessage());
                 return new Response("授权失败<br /> 错误代码：".$e->getMessage());
             }
@@ -546,7 +546,7 @@ class DefaultController extends CustomerController
             $response->headers->setCookie(new Cookie('weibojs_'.$sae_to_auth_v2->client_id, http_build_query($token)));
             return $response;
         } else {
-            $user = $request->getSession()->get(SecurityContext::LAST_USERNAME);
+            $user = $this->getUser()->getId();
             \Monolog\Handler\error_log("{$user}授权失败");
             return new Response('授权失败');
         }
