@@ -101,10 +101,10 @@ span.required {padding: 0 5px; color:#f77e1b; font-weight: bold;}
 .audio-list span{float:left; text-align: center; width:64px; height:28px; overflow: hidden;}
 .audio-list span.index{width:32px;}
 .audio-list span.title{width:180px;}
-.audio-list span.artist{width:75px;}
-.audio-list span.corp{width:175px;}
+.audio-list span.artist{width:100px;}
+.audio-list span.corp{width:165px;}
 .audio-list span.change{width:60px;}
-.audio-list span.score{width:50px;}
+.audio-list span.score{width:40px;}
 /*.audio-list span.play{width:50px; position: absolute;}*/
 .audio-list .rank-countdown{border-radius:4px 4px 0 0; border:1px solid #e60; border-bottom:0; padding-left:12px;
     line-height:26px; color:#e15a22;}

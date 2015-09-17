@@ -13,6 +13,48 @@ class ArticleController extends CustomerController
 {
 
     /**
+     * @return Response
+     * @Route("/article", name="_article")
+     */
+    public function articleAllAction()
+    {
+        $request = $this->getRequest();
+        $objORM = $this->getDoctrine()->getManager();
+        $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
+            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
+        $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
+            ->getArrFrontendInfo(600);
+        $arrStarNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC', 600);
+        $arrHotPic = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC', 600);
+        $arrHotNewsB = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(1, 8, 'timeCreateTime', 'DESC', 600);
+        $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(2, 8, 'timeCreateTime', 'DESC', 600);
+        $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
+            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC', 600);
+        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
+            ->getArrCoopList(7, 600);
+        $response = $this->render('AcmeFrontendBundle:Article:all.html.twig',
+            array(
+                'otherinfo' => $arrFrontendInfo,
+                'fms' => $arrFMList,
+                'star_news' => $arrStarNewsList,
+                'hot_pics' => $arrHotPic,
+                'hot_news_b' => $arrHotNewsB,
+                'hot_news_a' => $arrHotNewsA,
+                'star_interviews' => $arrStarInterviewList,
+                'coops' => $arrCoopList,
+            )
+        );
+        $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
+        $response->isNotModified($request);
+
+        return $response;
+    }
+    /**
      * @param $id
      * @return Response
      * @Route("/article_detail/{id}", name="_article_detail")
@@ -58,48 +100,6 @@ class ArticleController extends CustomerController
         return $response;
     }
 
-    /**
-     * @return Response
-     * @Route("/article", name="_article")
-     */
-    public function articleAllAction()
-    {
-        $request = $this->getRequest();
-        $objORM = $this->getDoctrine()->getManager();
-        $arrFMList = $objORM->getRepository('AcmeBackendBundle:Member')
-            ->getArrFMList(20, 'timeCreateTime', 'DESC', 600);
-        $arrFrontendInfo = $objORM->getRepository('AcmeFrontendBundle:OtherInfo')
-            ->getArrFrontendInfo(600);
-        $arrStarNewsList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(3, 8, 'timeCreateTime', 'DESC', 600);
-        $arrHotPic = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(4, 4, 'timeCreateTime', 'DESC', 600);
-        $arrHotNewsB = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(1, 8, 'timeCreateTime', 'DESC', 600);
-        $arrHotNewsA = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(2, 8, 'timeCreateTime', 'DESC', 600);
-        $arrStarInterviewList = $objORM->getRepository('AcmeFrontendBundle:Article')
-            ->getArrArticleList(5, 4, 'timeCreateTime', 'DESC', 600);
-        $arrCoopList = $objORM->getRepository('AcmeFrontendBundle:Coop')
-            ->getArrCoopList(7, 600);
-        $response = $this->render('AcmeFrontendBundle:Article:all.html.twig',
-            array(
-                'otherinfo' => $arrFrontendInfo,
-                'fms' => $arrFMList,
-                'star_news' => $arrStarNewsList,
-                'hot_pics' => $arrHotPic,
-                'hot_news_b' => $arrHotNewsB,
-                'hot_news_a' => $arrHotNewsA,
-                'star_interviews' => $arrStarInterviewList,
-                'coops' => $arrCoopList,
-            )
-        );
-        $response->setETag(md5($response->getContent()));
-        $response->setPublic(); // make sure the response is public/cacheable
-        $response->isNotModified($request);
-
-        return $response;
-    }
 
     /**
      * @param $category_id
