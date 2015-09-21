@@ -52,7 +52,7 @@ class ArticleType extends AbstractType
         $builder->add('strTitle', 'text', array(
             'label' => "文章标题",
             'attr' => array(
-                'maxlength' => '20',
+                'maxlength' => '50',
             ),
         ));
         $builder->add('strThumb', 'file', array(
