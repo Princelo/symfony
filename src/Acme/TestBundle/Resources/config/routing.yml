@@ -1,0 +1,3 @@
+acme_test_homepage:
+    path:     /test_page
+    defaults: { _controller: AcmeTestBundle:Test:index }

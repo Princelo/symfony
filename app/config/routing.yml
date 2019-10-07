@@ -6,6 +6,10 @@ acme_backend:
     resource: "@AcmeBackendBundle/Resources/config/routing.yml"
     prefix:   /
 
+acme_test:
+    resource: "@AcmeTestBundle/Resources/config/routing.yml"
+    prefix:   /
+
 acme_store:
     resource: "@AcmeStoreBundle/Resources/config/routing.yml"
     prefix:   /
